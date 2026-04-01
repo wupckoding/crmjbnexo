@@ -1,16 +1,10 @@
 -- =============================================
 -- CRM JBNEXO - Instalación Completa
--- Ejecutar este archivo en phpMyAdmin o MySQL CLI
+-- Seleccione su base de datos en phpMyAdmin antes de importar
 -- =============================================
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
-CREATE DATABASE IF NOT EXISTS crmjbnexo
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE crmjbnexo;
 
 -- =============================================
 -- 1. TABLA USUARIOS
