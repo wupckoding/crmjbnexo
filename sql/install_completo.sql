@@ -268,9 +268,11 @@ CREATE TABLE IF NOT EXISTS eventos (
     fecha_fin DATETIME DEFAULT NULL,
     todo_el_dia TINYINT(1) DEFAULT 0,
     usuario_id INT NOT NULL,
+    asignado_a INT DEFAULT NULL,
     cliente_id INT DEFAULT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (asignado_a) REFERENCES usuarios(id) ON DELETE SET NULL,
     FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
