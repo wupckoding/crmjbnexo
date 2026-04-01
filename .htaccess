@@ -14,8 +14,9 @@ RewriteRule ^sql/ - [F,L]
     Require all denied
 </FilesMatch>
 
-# PHP settings for hosting
-<IfModule mod_php.c>
+# PHP settings for Apache mod_php only (ignored on LiteSpeed/CGI)
+# For Hostinger/LiteSpeed, use .user.ini instead
+<IfModule mod_php7.c>
     php_value upload_max_filesize 20M
     php_value post_max_size 25M
     php_value max_execution_time 120
