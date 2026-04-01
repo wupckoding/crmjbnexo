@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Bóveda';
+$pageTitle = __('bov_titulo', 'Bóveda Segura');
 $currentPage = 'boveda';
 
 if ($_SESSION['user_role'] !== 'admin') {
@@ -25,18 +25,18 @@ include 'includes/sidebar.php';
                 <div class="w-8 h-8 rounded-lg bg-nexo-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 text-nexo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 </div>
-                Bóveda Segura
+                <?php echo __('bov_titulo', 'Bóveda Segura'); ?>
             </h2>
-            <p class="text-xs dark:text-white/40 text-gray-400 mt-1">Almacenamiento cifrado de credenciales, archivos y enlaces</p>
+            <p class="text-xs dark:text-white/40 text-gray-400 mt-1"><?php echo __('bov_subtitulo'); ?></p>
         </div>
         <div class="flex items-center gap-2">
             <button @click="showCatManager = true" class="px-3 py-2 rounded-xl text-xs font-medium dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
-                Categorías
+                <?php echo __('bov_categorias'); ?>
             </button>
             <button @click="openNew()" class="btn-purple px-4 py-2 rounded-xl text-xs font-medium text-white flex items-center gap-2 shrink-0">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Nuevo Item
+                <?php echo __('bov_nuevo_item'); ?>
             </button>
         </div>
     </div>
@@ -46,42 +46,42 @@ include 'includes/sidebar.php';
         <div class="dark:bg-dark-800 bg-white rounded-xl border dark:border-white/[0.06] border-gray-200 p-3.5 cursor-pointer transition-all" :class="filtroTipo === '' ? 'ring-2 ring-nexo-500/50' : 'hover:dark:border-white/10 hover:border-gray-300'" @click="filtroTipo = ''">
             <div class="flex items-center justify-between mb-2">
                 <div class="w-8 h-8 rounded-lg bg-nexo-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-nexo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
-                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider">Total</span>
+                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider"><?php echo __('bov_total'); ?></span>
             </div>
             <p class="text-2xl font-bold" x-text="items.length"></p>
-            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">items guardados</p>
+            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('bov_items_guardados'); ?></p>
         </div>
         <div class="dark:bg-dark-800 bg-white rounded-xl border dark:border-white/[0.06] border-gray-200 p-3.5 cursor-pointer transition-all" :class="filtroTipo === 'password' ? 'ring-2 ring-amber-500/50' : 'hover:dark:border-white/10 hover:border-gray-300'" @click="filtroTipo = filtroTipo === 'password' ? '' : 'password'">
             <div class="flex items-center justify-between mb-2">
                 <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg></div>
-                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider">Claves</span>
+                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider"><?php echo __('bov_claves'); ?></span>
             </div>
             <p class="text-2xl font-bold text-amber-500" x-text="items.filter(i=>i.tipo==='password').length"></p>
-            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">contraseñas</p>
+            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('bov_contrasenas'); ?></p>
         </div>
         <div class="dark:bg-dark-800 bg-white rounded-xl border dark:border-white/[0.06] border-gray-200 p-3.5 cursor-pointer transition-all" :class="filtroTipo === 'file' ? 'ring-2 ring-blue-500/50' : 'hover:dark:border-white/10 hover:border-gray-300'" @click="filtroTipo = filtroTipo === 'file' ? '' : 'file'">
             <div class="flex items-center justify-between mb-2">
                 <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
-                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider">Archivos</span>
+                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider"><?php echo __('bov_archivos'); ?></span>
             </div>
             <p class="text-2xl font-bold text-blue-500" x-text="items.filter(i=>i.tipo==='file').length"></p>
-            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">documentos</p>
+            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('bov_documentos'); ?></p>
         </div>
         <div class="dark:bg-dark-800 bg-white rounded-xl border dark:border-white/[0.06] border-gray-200 p-3.5 cursor-pointer transition-all" :class="filtroTipo === 'link' ? 'ring-2 ring-emerald-500/50' : 'hover:dark:border-white/10 hover:border-gray-300'" @click="filtroTipo = filtroTipo === 'link' ? '' : 'link'">
             <div class="flex items-center justify-between mb-2">
                 <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
-                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider">Links</span>
+                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider"><?php echo __('bov_links'); ?></span>
             </div>
             <p class="text-2xl font-bold text-emerald-500" x-text="items.filter(i=>i.tipo==='link').length"></p>
-            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">enlaces</p>
+            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('bov_enlaces_sub'); ?></p>
         </div>
         <div class="dark:bg-dark-800 bg-white rounded-xl border dark:border-white/[0.06] border-gray-200 p-3.5 cursor-pointer transition-all" :class="filtroTipo === 'note' ? 'ring-2 ring-purple-500/50' : 'hover:dark:border-white/10 hover:border-gray-300'" @click="filtroTipo = filtroTipo === 'note' ? '' : 'note'">
             <div class="flex items-center justify-between mb-2">
                 <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center"><svg class="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></div>
-                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider">Notas</span>
+                <span class="text-[10px] dark:text-white/25 text-gray-300 uppercase tracking-wider"><?php echo __('bov_notas_titulo'); ?></span>
             </div>
             <p class="text-2xl font-bold text-purple-500" x-text="items.filter(i=>i.tipo==='note').length"></p>
-            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5">notas seguras</p>
+            <p class="text-[10px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('bov_notas_seguras'); ?></p>
         </div>
     </div>
 
@@ -89,10 +89,10 @@ include 'includes/sidebar.php';
     <div class="flex flex-col sm:flex-row sm:items-center gap-3">
         <div class="relative flex-1 max-w-sm">
             <svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/25 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" x-model="search" placeholder="Buscar por título, URL, usuario..." class="w-full pl-9 pr-3 py-2 text-xs rounded-lg dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
+            <input type="text" x-model="search" placeholder="<?php echo __('bov_buscar'); ?>" class="w-full pl-9 pr-3 py-2 text-xs rounded-lg dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
         </div>
         <select x-model="filtroCat" class="px-3 py-2 text-xs rounded-lg dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
-            <option value="">Todas las categorías</option>
+            <option value=""><?php echo __('bov_todas_cats'); ?></option>
             <template x-for="cat in categorias" :key="cat.id">
                 <option :value="cat.id" x-text="cat.nombre + ' (' + cat.total + ')'"></option>
             </template>
@@ -100,10 +100,10 @@ include 'includes/sidebar.php';
         <template x-if="filtroTipo || filtroCat || search">
             <button @click="filtroTipo = ''; filtroCat = ''; search = ''" class="px-3 py-2 text-xs rounded-lg dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 hover:dark:bg-white/10 hover:bg-gray-200 transition-colors flex items-center gap-1.5">
                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                Limpiar filtros
+                <?php echo __('bov_limpiar_filtros'); ?>
             </button>
         </template>
-        <span class="text-[10px] dark:text-white/25 text-gray-400 ml-auto tabular-nums" x-text="filtered().length + ' de ' + items.length + ' items'"></span>
+        <span class="text-[10px] dark:text-white/25 text-gray-400 ml-auto tabular-nums" x-text="filtered().length + ' ' + _t.de + ' ' + items.length + ' ' + _t.items"></span>
     </div>
 
     <!-- Items grid -->
@@ -119,14 +119,14 @@ include 'includes/sidebar.php';
                     <div class="min-w-0">
                         <p class="font-semibold text-sm truncate" x-text="item.titulo"></p>
                         <div class="flex items-center gap-2 mt-0.5">
-                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded-md" :style="'background:'+((item.cat_color||'#6b7280')+'15')+';color:'+(item.cat_color||'#6b7280')" x-text="item.cat_nombre || 'Sin categoría'"></span>
+                            <span class="text-[10px] font-medium px-1.5 py-0.5 rounded-md" :style="'background:'+((item.cat_color||'#6b7280')+'15')+';color:'+(item.cat_color||'#6b7280')" x-text="item.cat_nombre || _t.sin_categoria"></span>
                             <span class="text-[10px] dark:text-white/25 text-gray-400" x-text="tipoLabel(item.tipo)"></span>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button @click="openEdit(item)" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/5 hover:bg-gray-100 dark:text-white/40 text-gray-400 hover:text-blue-500 transition-colors" title="Editar"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
-                    <button @click="confirmDel(item.id, item.titulo)" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/5 hover:bg-gray-100 dark:text-white/40 text-gray-400 hover:text-red-500 transition-colors" title="Eliminar"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                    <button @click="openEdit(item)" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/5 hover:bg-gray-100 dark:text-white/40 text-gray-400 hover:text-blue-500 transition-colors" title="<?php echo __('bov_editar'); ?>"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+                    <button @click="confirmDel(item.id, item.titulo)" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/5 hover:bg-gray-100 dark:text-white/40 text-gray-400 hover:text-red-500 transition-colors" title="<?php echo __('bov_eliminar'); ?>"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
                 </div>
             </div>
 
@@ -137,13 +137,13 @@ include 'includes/sidebar.php';
                     <div x-show="item.usuario_campo" class="flex items-center gap-2">
                         <svg class="w-3.5 h-3.5 dark:text-white/25 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         <span class="text-xs dark:text-white/60 text-gray-600 truncate flex-1 font-mono" x-text="item.usuario_campo"></span>
-                        <button @click="copyText(item.usuario_campo)" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="Copiar usuario"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                        <button @click="copyText(item.usuario_campo)" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="<?php echo __('bov_copiar_usuario'); ?>"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
                     </div>
                     <div x-show="item.password_dec" class="flex items-center gap-2" x-data="{show:false}">
                         <svg class="w-3.5 h-3.5 dark:text-white/25 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                         <span class="text-xs dark:text-white/60 text-gray-600 truncate flex-1 font-mono" x-text="show ? item.password_dec : '••••••••••••'"></span>
-                        <button @click="show = !show" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="Ver/Ocultar"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
-                        <button @click="copyText(item.password_dec)" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="Copiar clave"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
+                        <button @click="show = !show" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="<?php echo __('bov_ver_ocultar'); ?>"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></button>
+                        <button @click="copyText(item.password_dec)" class="shrink-0 w-6 h-6 flex items-center justify-center rounded-md dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="<?php echo __('bov_copiar_clave'); ?>"><svg class="w-3 h-3 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></button>
                     </div>
                     <div x-show="item.url" class="flex items-center gap-2">
                         <svg class="w-3.5 h-3.5 dark:text-white/25 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
@@ -162,7 +162,7 @@ include 'includes/sidebar.php';
                         <p class="text-xs font-medium truncate" x-text="item.archivo_nombre"></p>
                         <p class="text-[10px] dark:text-white/25 text-gray-400" x-text="formatSize(item.archivo_size)"></p>
                     </div>
-                    <a :href="'api/boveda.php?action=download&id='+item.id" class="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-nexo-600/10 text-nexo-400 hover:bg-nexo-600/20 transition-colors" title="Descargar">
+                    <a :href="'api/boveda.php?action=download&id='+item.id" class="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-nexo-600/10 text-nexo-400 hover:bg-nexo-600/20 transition-colors" title="<?php echo __('bov_descargar'); ?>">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     </a>
                 </div>
@@ -207,9 +207,9 @@ include 'includes/sidebar.php';
                 <div class="w-14 h-14 mx-auto mb-4 rounded-2xl dark:bg-white/5 bg-gray-50 flex items-center justify-center">
                     <svg class="w-7 h-7 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 </div>
-                <p class="text-sm dark:text-white/30 text-gray-400 mb-1">No se encontraron items</p>
-                <p class="text-xs dark:text-white/20 text-gray-300" x-show="search || filtroTipo || filtroCat">Prueba ajustando los filtros de búsqueda</p>
-                <button x-show="!search && !filtroTipo && !filtroCat" @click="openNew()" class="mt-3 px-4 py-2 rounded-lg text-xs font-medium bg-nexo-600 text-white hover:bg-nexo-700 transition-colors">Crear primer item</button>
+                <p class="text-sm dark:text-white/30 text-gray-400 mb-1"><?php echo __('bov_no_encontrados'); ?></p>
+                <p class="text-xs dark:text-white/20 text-gray-300" x-show="search || filtroTipo || filtroCat"><?php echo __('bov_ajustar_filtros'); ?></p>
+                <button x-show="!search && !filtroTipo && !filtroCat" @click="openNew()" class="mt-3 px-4 py-2 rounded-lg text-xs font-medium bg-nexo-600 text-white hover:bg-nexo-700 transition-colors"><?php echo __('bov_crear_primer'); ?></button>
             </div>
         </template>
     </div>
@@ -224,7 +224,7 @@ include 'includes/sidebar.php';
                         <svg class="w-4 h-4 text-nexo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                     </div>
                     <div>
-                        <h3 class="text-base font-bold" x-text="editId ? 'Editar Item' : 'Nuevo Item'"></h3>
+                        <h3 class="text-base font-bold" x-text="editId ? _t.editar_item : _t.nuevo_item"></h3>
                         <p class="text-[11px] dark:text-white/30 text-gray-400" x-text="editId ? 'Modifica los campos necesarios' : 'Añade un nuevo elemento a la bóveda'"></p>
                     </div>
                 </div>
@@ -258,9 +258,9 @@ include 'includes/sidebar.php';
                             <input type="text" x-model="form.titulo" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">Categoría</label>
+                            <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_categoria'); ?></label>
                             <select x-model="form.categoria_id" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
-                                <option value="">Sin categoría</option>
+                                <option value=""><?php echo __('bov_sin_categoria'); ?></option>
                                 <template x-for="cat in categorias" :key="cat.id">
                                     <option :value="cat.id" x-text="cat.nombre"></option>
                                 </template>
@@ -271,17 +271,17 @@ include 'includes/sidebar.php';
                     <!-- Password fields -->
                     <template x-if="form.tipo === 'password'">
                         <div class="space-y-3">
-                            <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">Usuario / Email</label>
+                            <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_usuario'); ?></label>
                                 <input type="text" x-model="form.usuario_campo" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors" autocomplete="off"></div>
                             <div class="relative">
-                                <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block" x-text="editId ? 'Nueva Contraseña (vacío = mantener)' : 'Contraseña'"></label>
+                                <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block" x-text="editId ? _t.nueva_contra : _t.contrasena"></label>
                                 <input :type="showPass ? 'text' : 'password'" x-model="form.password_raw" class="w-full px-3 py-2.5 pr-20 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 font-mono transition-colors" autocomplete="new-password">
                                 <div class="absolute right-2 top-[26px] flex gap-0.5">
                                     <button type="button" @click="showPass = !showPass" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><svg class="w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></button>
-                                    <button type="button" @click="form.password_raw = genPassword()" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="Generar"><svg class="w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+                                    <button type="button" @click="form.password_raw = genPassword()" class="w-7 h-7 flex items-center justify-center rounded-lg dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="<?php echo __('bov_generar'); ?>"><svg class="w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
                                 </div>
                             </div>
-                            <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">URL / Sitio</label>
+                            <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_url'); ?></label>
                                 <input type="text" x-model="form.url" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors"></div>
                         </div>
                     </template>
@@ -289,10 +289,10 @@ include 'includes/sidebar.php';
                     <!-- File upload -->
                     <template x-if="form.tipo === 'file'">
                         <div>
-                            <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">Archivo</label>
+                            <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_archivo_label'); ?></label>
                             <div class="border-2 border-dashed dark:border-white/10 border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:border-nexo-500/50 transition-colors" @click="$refs.fileInput.click()" @dragover.prevent @drop.prevent="handleDrop($event)">
                                 <svg class="w-8 h-8 mx-auto mb-2 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                                <p class="text-xs dark:text-white/40 text-gray-400" x-text="fileName || 'Click o arrastra un archivo aquí'"></p>
+                                <p class="text-xs dark:text-white/40 text-gray-400" x-text="fileName || _t.click_archivo"></p>
                             </div>
                             <input type="file" x-ref="fileInput" @change="handleFile($event)" class="hidden">
                         </div>
@@ -300,17 +300,17 @@ include 'includes/sidebar.php';
 
                     <!-- Link -->
                     <template x-if="form.tipo === 'link'">
-                        <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">URL *</label>
+                        <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_url_req'); ?></label>
                             <input type="url" x-model="form.url" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors" placeholder="https://..."></div>
                     </template>
 
                     <!-- Notes -->
-                    <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">Notas</label>
+                    <div><label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_notas'); ?></label>
                         <textarea x-model="form.notas" rows="3" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none transition-colors"></textarea></div>
 
                     <div class="flex gap-3 pt-2">
-                        <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
-                        <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white" x-text="saving ? 'Guardando...' : (editId ? 'Guardar Cambios' : 'Crear Item')" :disabled="saving"></button>
+                        <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('bov_cancelar'); ?></button>
+                        <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white" x-text="saving ? _t.guardando : (editId ? _t.guardar_cambios : _t.crear_item)" :disabled="saving"></button>
                     </div>
                 </form>
             </div>
@@ -322,11 +322,11 @@ include 'includes/sidebar.php';
         <div @click="showDel = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl p-6 text-center">
             <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-red-500/10 flex items-center justify-center"><svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></div>
-            <h3 class="text-base font-bold mb-1">Eliminar Item</h3>
-            <p class="text-sm dark:text-white/50 text-gray-500 mb-5">¿Eliminar <strong x-text="delName"></strong>? Esta acción no se puede deshacer.</p>
+            <h3 class="text-base font-bold mb-1"><?php echo __('bov_eliminar_item'); ?></h3>
+            <p class="text-sm dark:text-white/50 text-gray-500 mb-5">¿Eliminar <strong x-text="delName"></strong>? <?php echo __('bov_eliminar_confirma'); ?></p>
             <div class="flex gap-3">
-                <button @click="showDel = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
-                <button @click="deleteItem()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors">Eliminar</button>
+                <button @click="showDel = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('bov_cancelar'); ?></button>
+                <button @click="deleteItem()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"><?php echo __('bov_eliminar'); ?></button>
             </div>
         </div>
     </div>
@@ -341,16 +341,16 @@ include 'includes/sidebar.php';
                         <svg class="w-4 h-4 text-nexo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                     </div>
                     <div>
-                        <h3 class="text-base font-bold">Gestionar Categorías</h3>
-                        <p class="text-[11px] dark:text-white/30 text-gray-400">Crea, organiza y elimina categorías</p>
+                        <h3 class="text-base font-bold"><?php echo __('bov_gestionar_cats'); ?></h3>
+                        <p class="text-[11px] dark:text-white/30 text-gray-400"><?php echo __('bov_organiza_cats'); ?></p>
                     </div>
                 </div>
 
                 <!-- New category form -->
                 <form @submit.prevent="saveCat()" class="flex items-end gap-2 mb-5">
                     <div class="flex-1">
-                        <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block">Nueva categoría</label>
-                        <input type="text" x-model="catForm.nombre" required placeholder="Nombre de la categoría..." class="w-full px-3 py-2 text-sm rounded-lg dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
+                        <label class="text-[11px] font-medium dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('bov_nueva_cat'); ?></label>
+                        <input type="text" x-model="catForm.nombre" required placeholder="<?php echo __('bov_nombre_cat_ph'); ?>" class="w-full px-3 py-2 text-sm rounded-lg dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div class="flex items-center gap-1 pb-0.5">
                         <template x-for="c in ['#7c3aed','#10b981','#3b82f6','#f59e0b','#ef4444','#ec4899','#6b7280','#06b6d4']" :key="c">
@@ -366,15 +366,15 @@ include 'includes/sidebar.php';
                 <div class="space-y-1 max-h-64 overflow-y-auto">
                     <template x-if="categorias.length === 0">
                         <div class="text-center py-6">
-                            <p class="text-xs dark:text-white/30 text-gray-400">Sin categorías creadas</p>
+                            <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('bov_sin_cats'); ?></p>
                         </div>
                     </template>
                     <template x-for="cat in categorias" :key="cat.id">
                         <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg dark:hover:bg-white/[0.03] hover:bg-gray-50 transition-colors group/cat">
                             <span class="w-3 h-3 rounded-full shrink-0" :style="'background:'+cat.color"></span>
                             <span class="text-sm font-medium flex-1" x-text="cat.nombre"></span>
-                            <span class="text-[10px] dark:text-white/25 text-gray-400 tabular-nums" x-text="cat.total + ' items'"></span>
-                            <button @click="deleteCat(cat.id, cat.nombre, cat.total)" class="w-6 h-6 flex items-center justify-center rounded-md opacity-0 group-hover/cat:opacity-100 dark:hover:bg-white/10 hover:bg-gray-200 dark:text-white/30 text-gray-400 hover:text-red-500 transition-all" title="Eliminar categoría">
+                            <span class="text-[10px] dark:text-white/25 text-gray-400 tabular-nums" x-text="cat.total + ' ' + _t.items"></span>
+                            <button @click="deleteCat(cat.id, cat.nombre, cat.total)" class="w-6 h-6 flex items-center justify-center rounded-md opacity-0 group-hover/cat:opacity-100 dark:hover:bg-white/10 hover:bg-gray-200 dark:text-white/30 text-gray-400 hover:text-red-500 transition-all" title="<?php echo __('bov_eliminar_cat'); ?>">
                                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                             </button>
                         </div>
@@ -382,7 +382,7 @@ include 'includes/sidebar.php';
                 </div>
 
                 <div class="mt-5 pt-4 border-t dark:border-white/[0.06] border-gray-100">
-                    <button @click="showCatManager = false" class="w-full px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cerrar</button>
+                    <button @click="showCatManager = false" class="w-full px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('bov_cerrar'); ?></button>
                 </div>
             </div>
         </div>
@@ -391,6 +391,39 @@ include 'includes/sidebar.php';
 </main>
 
 <script>
+const _t = {
+    nuevo_item: <?php echo json_encode(__('bov_nuevo_item')); ?>,
+    editar_item: <?php echo json_encode(__('bov_editar_item')); ?>,
+    tipo_password: <?php echo json_encode(__('bov_tipo_password')); ?>,
+    tipo_archivo: <?php echo json_encode(__('bov_tipo_archivo')); ?>,
+    tipo_enlace: <?php echo json_encode(__('bov_tipo_enlace')); ?>,
+    tipo_nota: <?php echo json_encode(__('bov_tipo_nota')); ?>,
+    sin_categoria: <?php echo json_encode(__('bov_sin_categoria')); ?>,
+    contrasena: <?php echo json_encode(__('bov_contrasena')); ?>,
+    nueva_contra: <?php echo json_encode(__('bov_nueva_contra')); ?>,
+    click_archivo: <?php echo json_encode(__('bov_click_archivo')); ?>,
+    guardando: <?php echo json_encode(__('bov_guardando')); ?>,
+    guardar_cambios: <?php echo json_encode(__('bov_guardar_cambios')); ?>,
+    crear_item: <?php echo json_encode(__('bov_crear_item')); ?>,
+    de: <?php echo json_encode(__('bov_de')); ?>,
+    items: <?php echo json_encode(__('bov_items')); ?>,
+    copiado: <?php echo json_encode(__('bov_copiado')); ?>,
+    item_actualizado: <?php echo json_encode(__('bov_item_actualizado')); ?>,
+    item_creado: <?php echo json_encode(__('bov_item_creado')); ?>,
+    error_guardar: <?php echo json_encode(__('bov_error_guardar')); ?>,
+    error_conexion: <?php echo json_encode(__('bov_error_conexion')); ?>,
+    item_eliminado: <?php echo json_encode(__('bov_item_eliminado')); ?>,
+    cat_creada: <?php echo json_encode(__('bov_cat_creada')); ?>,
+    cat_eliminada: <?php echo json_encode(__('bov_cat_eliminada')); ?>,
+    confirm_elim_cat: <?php echo json_encode(__('bov_confirm_elim_cat')); ?>,
+    items_sin_cat: <?php echo json_encode(__('bov_items_sin_cat')); ?>,
+    justo_ahora: <?php echo json_encode(__('bov_justo_ahora')); ?>,
+    ayer: <?php echo json_encode(__('bov_ayer')); ?>,
+    hace: <?php echo json_encode(__('bov_hace')); ?>,
+    dias: <?php echo json_encode(__('bov_dias')); ?>,
+    min: <?php echo json_encode(__('bov_min')); ?>,
+    existente: <?php echo json_encode(__('bov_existente')); ?>,
+};
 function bovedaApp() {
     return {
         items: [], categorias: [],
@@ -437,7 +470,7 @@ function bovedaApp() {
             return m[t] || m.note;
         },
         tipoLabel(t) {
-            const m = {password:'Contraseña',file:'Archivo',link:'Enlace',note:'Nota'};
+            const m = {password:_t.tipo_password,file:_t.tipo_archivo,link:_t.tipo_enlace,note:_t.tipo_nota};
             return m[t] || t;
         },
 
@@ -452,13 +485,13 @@ function bovedaApp() {
         timeAgo(d) {
             if (!d) return '';
             const diff = Math.floor((Date.now() - new Date(d).getTime())/1000);
-            if (diff < 60) return 'Justo ahora';
-            if (diff < 3600) return Math.floor(diff/60) + ' min';
+            if (diff < 60) return _t.justo_ahora;
+            if (diff < 3600) return Math.floor(diff/60) + ' ' + _t.min;
             if (diff < 86400) return Math.floor(diff/3600) + 'h';
             const days = Math.floor(diff/86400);
-            if (days === 1) return 'Ayer';
-            if (days < 30) return 'Hace ' + days + ' días';
-            return new Date(d).toLocaleDateString('es');
+            if (days === 1) return _t.ayer;
+            if (days < 30) return (_t.hace ? _t.hace + ' ' : '') + days + ' ' + _t.dias;
+            return new Date(d).toLocaleDateString();
         },
 
         genPassword() {
@@ -470,7 +503,7 @@ function bovedaApp() {
 
         copyText(text) {
             navigator.clipboard.writeText(text);
-            this.showToast('Copiado al portapapeles');
+            this.showToast(_t.copiado);
         },
 
         handleFile(e) {
@@ -496,7 +529,7 @@ function bovedaApp() {
                 usuario_campo: item.usuario_campo || '', password_raw: '',
                 url: item.url || '', notas: item.notas || ''
             };
-            this.fileObj = null; this.fileName = item.archivo_nombre ? item.archivo_nombre + ' (existente)' : '';
+            this.fileObj = null; this.fileName = item.archivo_nombre ? item.archivo_nombre + ' ' + _t.existente : '';
             this.showPass = false;
             this.showModal = true;
         },
@@ -515,11 +548,11 @@ function bovedaApp() {
                 if (d.ok || d.id) {
                     this.showModal = false;
                     await this.load();
-                    this.showToast(this.editId ? 'Item actualizado' : 'Item creado');
+                    this.showToast(this.editId ? _t.item_actualizado : _t.item_creado);
                 } else {
-                    this.showToast(d.error || 'Error al guardar', 'error');
+                    this.showToast(d.error || _t.error_guardar, 'error');
                 }
-            } catch(e) { this.showToast('Error de conexión', 'error'); }
+            } catch(e) { this.showToast(_t.error_conexion, 'error'); }
             this.saving = false;
         },
 
@@ -531,7 +564,7 @@ function bovedaApp() {
             fd.append('id', this.delId);
             const r = await fetch('api/boveda.php', { method: 'POST', body: fd });
             const d = await r.json();
-            if (d.ok) { this.showDel = false; await this.load(); this.showToast('Item eliminado'); }
+            if (d.ok) { this.showDel = false; await this.load(); this.showToast(_t.item_eliminado); }
         },
 
         async saveCat() {
@@ -545,18 +578,18 @@ function bovedaApp() {
             if (d.ok) {
                 this.catForm = {nombre:'',color:'#7c3aed'};
                 await this.load();
-                this.showToast('Categoría creada');
+                this.showToast(_t.cat_creada);
             }
         },
 
         async deleteCat(id, name, total) {
-            if (!confirm('¿Eliminar la categoría "' + name + '"?' + (total > 0 ? ' Los ' + total + ' items asociados quedarán sin categoría.' : ''))) return;
+            if (!confirm(_t.confirm_elim_cat + ' "' + name + '"?' + (total > 0 ? ' ' + total + ' ' + _t.items_sin_cat : ''))) return;
             const fd = new FormData();
             fd.append('action', 'delete_cat');
             fd.append('id', id);
             const r = await fetch('api/boveda.php', { method: 'POST', body: fd });
             const d = await r.json();
-            if (d.ok) { await this.load(); this.showToast('Categoría eliminada'); }
+            if (d.ok) { await this.load(); this.showToast(_t.cat_eliminada); }
         }
     };
 }

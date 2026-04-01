@@ -1,5 +1,14 @@
 <?php
 /**
+ * i18n helper – returns translated string
+ */
+$_LANG = [];
+function __($key, $fallback = null) {
+    global $_LANG;
+    return $_LANG[$key] ?? $fallback ?? $key;
+}
+
+/**
  * Activity Logger - Include in any API/page to log actions
  * Usage: log_activity($pdo, 'crear', 'clientes', 'Creó cliente: Empresa X');
  */

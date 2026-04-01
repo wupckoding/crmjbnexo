@@ -1,7 +1,7 @@
 <?php
 require_once 'includes/auth_check.php';
 require_once 'includes/helpers.php';
-$pageTitle = 'Pipeline';
+$pageTitle = __('nav_pipeline');
 $currentPage = 'pipeline';
 
 $isAdmin = ($_SESSION['usuario_rol'] ?? '') === 'admin';
@@ -59,7 +59,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">Total Deals</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_total_deals'); ?></p>
             </div>
             <p class="text-2xl font-bold"><?php echo $totalDeals; ?></p>
         </div>
@@ -68,7 +68,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg bg-nexo-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-nexo-400 text-nexo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">En Pipeline</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_en_pipeline'); ?></p>
             </div>
             <p class="text-2xl font-bold dark:text-nexo-400 text-nexo-600" x-text="totalPipeline()"><?php echo $enPipeline; ?></p>
         </div>
@@ -77,7 +77,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-emerald-400 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">Ganados</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_ganados'); ?></p>
             </div>
             <p class="text-2xl font-bold dark:text-emerald-400 text-emerald-600"><?php echo $ganados; ?></p>
         </div>
@@ -86,7 +86,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-red-400 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">Perdidos</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_perdidos'); ?></p>
             </div>
             <p class="text-2xl font-bold dark:text-red-400 text-red-600"><?php echo $perdidos; ?></p>
         </div>
@@ -95,7 +95,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-blue-400 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">Conversión</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_conversion'); ?></p>
             </div>
             <p class="text-2xl font-bold dark:text-blue-400 text-blue-600"><?php echo $convRate; ?>%</p>
         </div>
@@ -104,7 +104,7 @@ include 'includes/sidebar.php';
                 <div class="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 dark:text-amber-400 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 </div>
-                <p class="text-xs dark:text-white/40 text-gray-400">Archivados</p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('pip_archivados'); ?></p>
             </div>
             <p class="text-2xl font-bold dark:text-amber-400 text-amber-600" x-text="archivedCount()"><?php echo $archivados; ?></p>
         </div>
@@ -116,7 +116,7 @@ include 'includes/sidebar.php';
         <div class="flex items-center dark:bg-white/5 bg-gray-100 rounded-xl p-0.5">
             <button @click="viewTab = 'pipeline'" class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors" :class="viewTab === 'pipeline' ? 'bg-nexo-600 text-white shadow-sm' : 'dark:text-white/50 text-gray-500 hover:dark:text-white/70'">Pipeline</button>
             <button @click="viewTab = 'archived'" class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors flex items-center gap-1" :class="viewTab === 'archived' ? 'bg-amber-600 text-white shadow-sm' : 'dark:text-white/50 text-gray-500 hover:dark:text-white/70'">
-                Archivados
+                <?php echo __('pip_archivados'); ?>
                 <span class="text-[10px] px-1.5 py-0.5 rounded-full" :class="viewTab === 'archived' ? 'bg-white/20' : 'dark:bg-white/10 bg-gray-200'" x-text="archivedCount()"></span>
             </button>
         </div>
@@ -124,14 +124,14 @@ include 'includes/sidebar.php';
         <!-- Search -->
         <div class="relative flex-1 min-w-[200px] max-w-xs">
             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" x-model="search" placeholder="Buscar cliente, empresa..." class="w-full pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
+            <input type="text" x-model="search" placeholder="<?php echo __('pip_buscar'); ?>" class="w-full pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
         </div>
 
         <?php if ($isAdmin): ?>
         <!-- Filter by user (admin only) -->
         <select x-model="filterUser" class="text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 px-3 py-2 outline-none focus:border-nexo-500/50 dark:text-white/70 text-gray-600">
-            <option value="">Todos los agentes</option>
-            <option value="unassigned">Sin asignar</option>
+            <option value=""><?php echo __('pip_todos_agentes'); ?></option>
+            <option value="unassigned"><?php echo __('pip_sin_asignar'); ?></option>
             <?php foreach ($usuarios as $u): ?>
             <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nombre']); ?> (<?php echo $u['rol']; ?>)</option>
             <?php endforeach; ?>
@@ -143,7 +143,7 @@ include 'includes/sidebar.php';
             <!-- Add client button -->
             <button @click="showAddModal = true" class="flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-xl bg-nexo-600 hover:bg-nexo-700 text-white transition-colors">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                <span class="hidden sm:inline">Nuevo Deal</span>
+                <span class="hidden sm:inline"><?php echo __('pip_nuevo_deal'); ?></span>
             </button>
         </div>
     </div>
@@ -175,7 +175,7 @@ include 'includes/sidebar.php';
                 <template x-if="clientesByStage('<?php echo htmlspecialchars(addslashes($etapa['nombre'])); ?>').length === 0">
                     <div class="flex flex-col items-center justify-center h-32 text-center">
                         <svg class="w-8 h-8 dark:text-white/10 text-gray-200 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
-                        <p class="text-[10px] dark:text-white/15 text-gray-300">Arrastra deals aquí</p>
+                        <p class="text-[10px] dark:text-white/15 text-gray-300"><?php echo __('pip_arrastra'); ?></p>
                     </div>
                 </template>
 
@@ -274,8 +274,8 @@ include 'includes/sidebar.php';
                 <div class="w-16 h-16 rounded-2xl dark:bg-white/5 bg-gray-100 flex items-center justify-center mb-4">
                     <svg class="w-8 h-8 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                 </div>
-                <p class="text-sm dark:text-white/30 text-gray-400">No hay deals archivados</p>
-                <p class="text-xs dark:text-white/15 text-gray-300 mt-1">Los deals archivados aparecerán aquí</p>
+                <p class="text-sm dark:text-white/30 text-gray-400"><?php echo __('pip_no_archivados'); ?></p>
+                <p class="text-xs dark:text-white/15 text-gray-300 mt-1"><?php echo __('pip_archivados_desc'); ?></p>
             </div>
         </template>
 
@@ -321,8 +321,8 @@ include 'includes/sidebar.php';
                     <div class="flex items-center justify-between pt-2 border-t dark:border-white/[0.04] border-gray-100">
                         <span class="text-[10px] dark:text-white/20 text-gray-300" x-text="timeAgo(cli.creado_en)"></span>
                         <div class="flex items-center gap-1">
-                            <button @click="unarchiveClient(cli)" class="px-2 py-1 text-[10px] font-medium rounded-lg bg-nexo-600/10 dark:text-nexo-400 text-nexo-600 hover:bg-nexo-600/20 transition-colors">Restaurar</button>
-                            <button @click="confirmDelete(cli)" class="px-2 py-1 text-[10px] font-medium rounded-lg bg-red-500/10 dark:text-red-400 text-red-600 hover:bg-red-500/20 transition-colors">Eliminar</button>
+                            <button @click="unarchiveClient(cli)" class="px-2 py-1 text-[10px] font-medium rounded-lg bg-nexo-600/10 dark:text-nexo-400 text-nexo-600 hover:bg-nexo-600/20 transition-colors"><?php echo __('pip_restaurar'); ?></button>
+                            <button @click="confirmDelete(cli)" class="px-2 py-1 text-[10px] font-medium rounded-lg bg-red-500/10 dark:text-red-400 text-red-600 hover:bg-red-500/20 transition-colors"><?php echo __('btn_eliminar'); ?></button>
                         </div>
                     </div>
                 </div>
@@ -336,7 +336,7 @@ include 'includes/sidebar.php';
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showAddModal = false"></div>
             <div class="relative w-full max-w-lg dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.08] border-gray-200 shadow-2xl p-6">
                 <div class="flex items-center justify-between mb-5">
-                    <h3 class="text-lg font-bold">Nuevo Deal</h3>
+                    <h3 class="text-lg font-bold"><?php echo __('pip_nuevo_deal'); ?></h3>
                     <button @click="showAddModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg dark:hover:bg-white/10 hover:bg-gray-100">
                         <svg class="w-5 h-5 dark:text-white/40 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
@@ -344,29 +344,29 @@ include 'includes/sidebar.php';
                 <div class="space-y-3">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Nombre *</label>
-                            <input type="text" x-model="newClient.nombre" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="Nombre del contacto">
+                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('usr_nombre'); ?> *</label>
+                            <input type="text" x-model="newClient.nombre" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="<?php echo __('usr_nombre'); ?>">
                         </div>
                         <div>
-                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Empresa</label>
+                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('tabla_empresa'); ?></label>
                             <input type="text" x-model="newClient.empresa" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="Nombre empresa">
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Email</label>
+                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('usr_email'); ?></label>
                             <input type="email" x-model="newClient.email" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="email@ejemplo.com">
                         </div>
                         <div>
-                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Teléfono</label>
+                            <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('usr_telefono'); ?></label>
                             <input type="text" x-model="newClient.telefono" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="+1 555 1234">
                         </div>
                     </div>
                     <?php if ($isAdmin): ?>
                     <div>
-                        <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Asignar a</label>
+                        <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('pip_asignar_a'); ?></label>
                         <select x-model="newClient.asignado_a" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="">Sin asignar</option>
+                            <option value=""><?php echo __('pip_sin_asignar'); ?></option>
                             <?php foreach ($usuarios as $u): ?>
                             <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nombre']); ?></option>
                             <?php endforeach; ?>
@@ -375,14 +375,14 @@ include 'includes/sidebar.php';
                     <?php endif; ?>
                     <div>
                         <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Notas</label>
-                        <textarea x-model="newClient.notas" rows="2" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="Notas sobre el deal..."></textarea>
+                        <textarea x-model="newClient.notas" rows="2" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="<?php echo __('pip_notas_deal'); ?>"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-end gap-2 mt-5">
-                    <button @click="showAddModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors">Cancelar</button>
+                    <button @click="showAddModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                     <button @click="createClient()" :disabled="!newClient.nombre.trim() || addingClient" class="px-4 py-2 text-sm font-medium rounded-xl bg-nexo-600 hover:bg-nexo-700 text-white transition-colors disabled:opacity-40">
-                        <span x-show="!addingClient">Crear Deal</span>
-                        <span x-show="addingClient">Creando...</span>
+                        <span x-show="!addingClient"><?php echo __('pip_crear_deal'); ?></span>
+                        <span x-show="addingClient"><?php echo __('pip_creando'); ?></span>
                     </button>
                 </div>
             </div>
@@ -395,20 +395,20 @@ include 'includes/sidebar.php';
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="showAssignModal = false">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showAssignModal = false"></div>
             <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.08] border-gray-200 shadow-2xl p-6">
-                <h3 class="text-lg font-bold mb-1">Reasignar Cliente</h3>
+                <h3 class="text-lg font-bold mb-1"><?php echo __('pip_reasignar'); ?></h3>
                 <p class="text-xs dark:text-white/40 text-gray-400 mb-4" x-text="'Cliente: ' + (assignTarget?.nombre || '')"></p>
-                <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block">Asignar a</label>
+                <label class="text-xs dark:text-white/40 text-gray-500 mb-1 block"><?php echo __('pip_asignar_a'); ?></label>
                 <select x-model="assignUserId" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 mb-4">
-                    <option value="">Sin asignar</option>
+                    <option value=""><?php echo __('pip_sin_asignar'); ?></option>
                     <?php foreach ($usuarios as $u): ?>
                     <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nombre']); ?> (<?php echo $u['rol']; ?>)</option>
                     <?php endforeach; ?>
                 </select>
                 <div class="flex justify-end gap-2">
-                    <button @click="showAssignModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors">Cancelar</button>
+                    <button @click="showAssignModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                     <button @click="doAssign()" :disabled="assigning" class="px-4 py-2 text-sm font-medium rounded-xl bg-nexo-600 hover:bg-nexo-700 text-white transition-colors disabled:opacity-40">
-                        <span x-show="!assigning">Asignar</span>
-                        <span x-show="assigning">Asignando...</span>
+                        <span x-show="!assigning"><?php echo __('pip_asignar_a'); ?></span>
+                        <span x-show="assigning"><?php echo __('pip_asignando'); ?></span>
                     </button>
                 </div>
             </div>
@@ -421,12 +421,12 @@ include 'includes/sidebar.php';
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4" @keydown.escape.window="showNoteModal = false">
             <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showNoteModal = false"></div>
             <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.08] border-gray-200 shadow-2xl p-6">
-                <h3 class="text-lg font-bold mb-1">Nota Rápida</h3>
+                <h3 class="text-lg font-bold mb-1"><?php echo __('pip_nota_rapida'); ?></h3>
                 <p class="text-xs dark:text-white/40 text-gray-400 mb-4" x-text="noteTarget?.nombre || ''"></p>
-                <textarea x-model="noteText" rows="4" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="Escribe una nota..."></textarea>
+                <textarea x-model="noteText" rows="4" class="w-full px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="<?php echo __('pip_escribe_nota'); ?>"></textarea>
                 <div class="flex justify-end gap-2 mt-4">
-                    <button @click="showNoteModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors">Cancelar</button>
-                    <button @click="saveNote()" :disabled="savingNote" class="px-4 py-2 text-sm font-medium rounded-xl bg-nexo-600 hover:bg-nexo-700 text-white transition-colors disabled:opacity-40">Guardar</button>
+                    <button @click="showNoteModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors"><?php echo __('btn_cancelar'); ?></button>
+                    <button @click="saveNote()" :disabled="savingNote" class="px-4 py-2 text-sm font-medium rounded-xl bg-nexo-600 hover:bg-nexo-700 text-white transition-colors disabled:opacity-40"><?php echo __('btn_guardar'); ?></button>
                 </div>
             </div>
         </div>
@@ -440,11 +440,11 @@ include 'includes/sidebar.php';
                 <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-3">
                     <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </div>
-                <h3 class="text-lg font-bold mb-1">Eliminar Permanentemente</h3>
+                <h3 class="text-lg font-bold mb-1"><?php echo __('pip_eliminar_perm'); ?></h3>
                 <p class="text-sm dark:text-white/50 text-gray-500 mb-5">Se eliminará <span class="font-semibold" x-text="deleteTarget?.nombre"></span> y todos sus datos asociados.</p>
                 <div class="flex justify-center gap-2">
-                    <button @click="showDeleteModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors">Cancelar</button>
-                    <button @click="doDelete()" :disabled="deleting" class="px-4 py-2 text-sm font-medium rounded-xl bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-40">Eliminar</button>
+                    <button @click="showDeleteModal = false" class="px-4 py-2 text-sm rounded-xl dark:hover:bg-white/5 hover:bg-gray-100 transition-colors"><?php echo __('btn_cancelar'); ?></button>
+                    <button @click="doDelete()" :disabled="deleting" class="px-4 py-2 text-sm font-medium rounded-xl bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-40"><?php echo __('btn_eliminar'); ?></button>
                 </div>
             </div>
         </div>

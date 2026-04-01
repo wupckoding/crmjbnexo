@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Detalle Cliente';
+$pageTitle = __('cdet_titulo', 'Detalle Cliente');
 $currentPage = 'clientes';
 
 $id = (int)($_GET['id'] ?? 0);
@@ -103,28 +103,28 @@ include 'includes/sidebar.php';
                         <span class="dark:text-white/60 text-gray-500"><?php echo htmlspecialchars($cliente['vendedor'] ?? '—'); ?></span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg dark:bg-white/5 bg-gray-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div><span class="dark:text-white/60 text-gray-500">Desde: <?php echo date('d/m/Y', strtotime($cliente['creado_en'])); ?></span></div>
+                <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg dark:bg-white/5 bg-gray-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div><span class="dark:text-white/60 text-gray-500"><?php echo __('cdet_desde', 'Desde:'); ?> <?php echo date('d/m/Y', strtotime($cliente['creado_en'])); ?></span></div>
             </div>
 
             <?php if ($cliente['notas']): ?>
             <div class="mt-4 pt-4 border-t dark:border-white/[0.06] border-gray-100">
-                <p class="text-xs font-medium dark:text-white/40 text-gray-400 mb-1">Notas</p>
+                <p class="text-xs font-medium dark:text-white/40 text-gray-400 mb-1"><?php echo __('cdet_notas', 'Notas'); ?></p>
                 <p class="text-sm dark:text-white/60 text-gray-500"><?php echo nl2br(htmlspecialchars($cliente['notas'])); ?></p>
             </div>
             <?php endif; ?>
 
             <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t dark:border-white/[0.06] border-gray-100">
-                <div class="text-center"><p class="text-lg font-bold">$<?php echo number_format($totalFacturado, 0, ',', '.'); ?></p><p class="text-[10px] dark:text-white/30 text-gray-400">Facturado</p></div>
-                <div class="text-center"><p class="text-lg font-bold text-emerald-400">$<?php echo number_format($totalPagado, 0, ',', '.'); ?></p><p class="text-[10px] dark:text-white/30 text-gray-400">Pagado</p></div>
+                <div class="text-center"><p class="text-lg font-bold">$<?php echo number_format($totalFacturado, 0, ',', '.'); ?></p><p class="text-[10px] dark:text-white/30 text-gray-400"><?php echo __('cdet_facturado', 'Facturado'); ?></p></div>
+                <div class="text-center"><p class="text-lg font-bold text-emerald-400">$<?php echo number_format($totalPagado, 0, ',', '.'); ?></p><p class="text-[10px] dark:text-white/30 text-gray-400"><?php echo __('cdet_pagado', 'Pagado'); ?></p></div>
             </div>
         </div>
 
         <!-- Invoices -->
         <div class="lg:col-span-2 space-y-4">
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
-                <h3 class="font-semibold text-sm mb-3">Facturas</h3>
+                <h3 class="font-semibold text-sm mb-3"><?php echo __('cdet_facturas', 'Facturas'); ?></h3>
                 <?php if (empty($facturas)): ?>
-                <p class="text-sm dark:text-white/40 text-gray-400">Sin facturas</p>
+                <p class="text-sm dark:text-white/40 text-gray-400"><?php echo __('cdet_sin_facturas', 'Sin facturas'); ?></p>
                 <?php else: ?>
                 <div class="space-y-2">
                     <?php foreach ($facturas as $f):
@@ -141,9 +141,9 @@ include 'includes/sidebar.php';
 
             <!-- Interactions -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
-                <h3 class="font-semibold text-sm mb-3">Historial de Interacciones</h3>
+                <h3 class="font-semibold text-sm mb-3"><?php echo __('cdet_historial', 'Historial de Interacciones'); ?></h3>
                 <?php if (empty($interacciones)): ?>
-                <p class="text-sm dark:text-white/40 text-gray-400">Sin interacciones registradas</p>
+                <p class="text-sm dark:text-white/40 text-gray-400"><?php echo __('cdet_sin_interacciones', 'Sin interacciones registradas'); ?></p>
                 <?php else: ?>
                 <div class="space-y-3">
                     <?php foreach ($interacciones as $int):

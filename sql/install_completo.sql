@@ -468,7 +468,8 @@ INSERT INTO configuracion_global (clave, valor) VALUES
 ('empresa_telefono', ''),
 ('empresa_direccion', ''),
 ('logo_url', ''),
-('color_primario', '#7c3aed');
+('color_primario', '#7c3aed'),
+('idioma', 'es');
 
 -- Permisos por defecto
 INSERT INTO permisos (rol, modulo, puede_ver, puede_crear, puede_editar, puede_eliminar) VALUES

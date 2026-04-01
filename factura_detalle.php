@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Detalle Factura';
+$pageTitle = __('fdet_titulo', 'Detalle Factura');
 $currentPage = 'facturas';
 
 $id = (int)($_GET['id'] ?? 0);
@@ -45,16 +45,16 @@ include 'includes/sidebar.php';
             </div>
             <div class="text-right">
                 <p class="text-sm font-mono dark:text-white/60 text-gray-500"><?php echo $factura['numero']; ?></p>
-                <p class="text-xs dark:text-white/40 text-gray-400">Emitida: <?php echo date('d/m/Y', strtotime($factura['fecha_emision'])); ?></p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('fdet_emitida', 'Emitida:'); ?> <?php echo date('d/m/Y', strtotime($factura['fecha_emision'])); ?></p>
                 <?php if ($factura['fecha_vencimiento']): ?>
-                <p class="text-xs dark:text-white/40 text-gray-400">Vence: <?php echo date('d/m/Y', strtotime($factura['fecha_vencimiento'])); ?></p>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('fdet_vence', 'Vence:'); ?> <?php echo date('d/m/Y', strtotime($factura['fecha_vencimiento'])); ?></p>
                 <?php endif; ?>
             </div>
         </div>
 
         <!-- Client info -->
         <div class="mb-6 pb-6 border-b dark:border-white/[0.06] border-gray-200">
-            <p class="text-xs dark:text-white/30 text-gray-400 mb-1 uppercase tracking-wider">Facturar a:</p>
+            <p class="text-xs dark:text-white/30 text-gray-400 mb-1 uppercase tracking-wider"><?php echo __('fdet_facturar_a', 'Facturar a:'); ?></p>
             <p class="font-semibold"><?php echo htmlspecialchars($factura['cn']); ?></p>
             <?php if ($factura['cem']): ?><p class="text-sm dark:text-white/50 text-gray-500"><?php echo htmlspecialchars($factura['cem']); ?></p><?php endif; ?>
             <p class="text-sm dark:text-white/50 text-gray-500"><?php echo htmlspecialchars($factura['ce']); ?></p>
@@ -63,7 +63,7 @@ include 'includes/sidebar.php';
 
         <!-- Items table -->
         <table class="w-full text-sm mb-6">
-            <thead><tr class="border-b dark:border-white/[0.06] border-gray-200"><th class="pb-2 text-left text-xs dark:text-white/40 text-gray-400 font-medium">Descripción</th><th class="pb-2 text-center text-xs dark:text-white/40 text-gray-400 font-medium w-20">Cant.</th><th class="pb-2 text-right text-xs dark:text-white/40 text-gray-400 font-medium w-28">Precio</th><th class="pb-2 text-right text-xs dark:text-white/40 text-gray-400 font-medium w-28">Total</th></tr></thead>
+            <thead><tr class="border-b dark:border-white/[0.06] border-gray-200"><th class="pb-2 text-left text-xs dark:text-white/40 text-gray-400 font-medium"><?php echo __('fdet_descripcion', 'Descripción'); ?></th><th class="pb-2 text-center text-xs dark:text-white/40 text-gray-400 font-medium w-20"><?php echo __('fdet_cant', 'Cant.'); ?></th><th class="pb-2 text-right text-xs dark:text-white/40 text-gray-400 font-medium w-28"><?php echo __('fdet_precio', 'Precio'); ?></th><th class="pb-2 text-right text-xs dark:text-white/40 text-gray-400 font-medium w-28"><?php echo __('fdet_total', 'Total'); ?></th></tr></thead>
             <tbody>
                 <?php foreach ($items as $it): ?>
                 <tr class="border-b dark:border-white/[0.04] border-gray-50">
@@ -79,20 +79,20 @@ include 'includes/sidebar.php';
         <!-- Totals -->
         <div class="flex justify-end">
             <div class="w-64 space-y-2">
-                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400">Subtotal</span><span>$<?php echo number_format($factura['subtotal'], 2, ',', '.'); ?></span></div>
+                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400"><?php echo __('fdet_subtotal', 'Subtotal'); ?></span><span>$<?php echo number_format($factura['subtotal'], 2, ',', '.'); ?></span></div>
                 <?php if (($factura['impuesto_monto'] ?? 0) > 0): ?>
-                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400">Impuesto (<?php echo $factura['impuesto_porcentaje']; ?>%)</span><span>$<?php echo number_format($factura['impuesto_monto'], 2, ',', '.'); ?></span></div>
+                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400"><?php echo __('fdet_impuesto', 'Impuesto'); ?> (<?php echo $factura['impuesto_porcentaje']; ?>%)</span><span>$<?php echo number_format($factura['impuesto_monto'], 2, ',', '.'); ?></span></div>
                 <?php endif; ?>
                 <?php if ($factura['descuento'] > 0): ?>
-                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400">Descuento</span><span class="text-red-400">-$<?php echo number_format($factura['descuento'], 2, ',', '.'); ?></span></div>
+                <div class="flex justify-between text-sm"><span class="dark:text-white/50 text-gray-400"><?php echo __('fdet_descuento', 'Descuento'); ?></span><span class="text-red-400">-$<?php echo number_format($factura['descuento'], 2, ',', '.'); ?></span></div>
                 <?php endif; ?>
-                <div class="flex justify-between text-lg font-bold pt-2 border-t dark:border-white/[0.06] border-gray-200"><span>Total</span><span>$<?php echo number_format($factura['total'], 2, ',', '.'); ?></span></div>
+                <div class="flex justify-between text-lg font-bold pt-2 border-t dark:border-white/[0.06] border-gray-200"><span><?php echo __('fdet_total', 'Total'); ?></span><span>$<?php echo number_format($factura['total'], 2, ',', '.'); ?></span></div>
             </div>
         </div>
 
         <?php if ($factura['notas']): ?>
         <div class="mt-6 pt-4 border-t dark:border-white/[0.06] border-gray-200">
-            <p class="text-xs dark:text-white/30 text-gray-400 mb-1">Notas:</p>
+            <p class="text-xs dark:text-white/30 text-gray-400 mb-1"><?php echo __('fdet_notas', 'Notas:'); ?></p>
             <p class="text-sm dark:text-white/60 text-gray-500"><?php echo nl2br(htmlspecialchars($factura['notas'])); ?></p>
         </div>
         <?php endif; ?>
@@ -101,15 +101,15 @@ include 'includes/sidebar.php';
     <!-- Actions -->
     <div class="flex flex-wrap gap-2">
         <?php if ($factura['estado'] === 'borrador'): ?>
-        <button onclick="updateStatus(<?php echo $id; ?>, 'enviada')" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white">Marcar como Enviada</button>
+        <button onclick="updateStatus(<?php echo $id; ?>, 'enviada')" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white"><?php echo __('fdet_marcar_enviada', 'Marcar como Enviada'); ?></button>
         <?php endif; ?>
         <?php if (in_array($factura['estado'], ['enviada','vencida'])): ?>
-        <button onclick="updateStatus(<?php echo $id; ?>, 'pagada')" class="px-4 py-2 rounded-xl text-sm font-medium bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors">Marcar como Pagada</button>
+        <button onclick="updateStatus(<?php echo $id; ?>, 'pagada')" class="px-4 py-2 rounded-xl text-sm font-medium bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors"><?php echo __('fdet_marcar_pagada', 'Marcar como Pagada'); ?></button>
         <?php endif; ?>
         <?php if ($factura['estado'] !== 'cancelada' && $factura['estado'] !== 'pagada'): ?>
-        <button onclick="updateStatus(<?php echo $id; ?>, 'cancelada')" class="px-4 py-2 rounded-xl text-sm font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors">Cancelar</button>
+        <button onclick="updateStatus(<?php echo $id; ?>, 'cancelada')" class="px-4 py-2 rounded-xl text-sm font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"><?php echo __('fdet_cancelar', 'Cancelar'); ?></button>
         <?php endif; ?>
-        <button onclick="window.print()" class="px-4 py-2 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Imprimir / PDF</button>
+        <button onclick="window.print()" class="px-4 py-2 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('fdet_imprimir', 'Imprimir / PDF'); ?></button>
     </div>
 </div>
 </main>

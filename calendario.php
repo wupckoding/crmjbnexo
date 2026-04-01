@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Calendario';
+$pageTitle = __('cal_titulo');
 $currentPage = 'calendario';
 $uid = $_SESSION['user_id'];
 
@@ -9,14 +9,14 @@ $anio = isset($_GET['anio']) ? (int)$_GET['anio'] : (int)date('Y');
 
 // Tipo config
 $tipoConfig = [
-    'reunion'      => ['label'=>'Reunión',      'bg'=>'bg-nexo-500/10',    'text'=>'text-nexo-400',    'dot'=>'bg-nexo-500'],
-    'llamada'      => ['label'=>'Llamada',       'bg'=>'bg-blue-500/10',    'text'=>'text-blue-400',    'dot'=>'bg-blue-500'],
-    'tarea'        => ['label'=>'Tarea',         'bg'=>'bg-emerald-500/10', 'text'=>'text-emerald-400', 'dot'=>'bg-emerald-500'],
-    'recordatorio' => ['label'=>'Recordatorio',  'bg'=>'bg-amber-500/10',   'text'=>'text-amber-400',   'dot'=>'bg-amber-500'],
-    'seguimiento'  => ['label'=>'Seguimiento',   'bg'=>'bg-cyan-500/10',    'text'=>'text-cyan-400',    'dot'=>'bg-cyan-500'],
-    'entrega'      => ['label'=>'Entrega',       'bg'=>'bg-green-500/10',   'text'=>'text-green-400',   'dot'=>'bg-green-500'],
-    'evento'       => ['label'=>'Evento',        'bg'=>'bg-purple-500/10',  'text'=>'text-purple-400',  'dot'=>'bg-purple-500'],
-    'feriado'      => ['label'=>'Feriado',       'bg'=>'bg-red-500/10',     'text'=>'text-red-400',     'dot'=>'bg-red-500'],
+    'reunion'      => ['label'=>__('cal_reunion'),      'bg'=>'bg-nexo-500/10',    'text'=>'text-nexo-400',    'dot'=>'bg-nexo-500'],
+    'llamada'      => ['label'=>__('cal_llamada'),       'bg'=>'bg-blue-500/10',    'text'=>'text-blue-400',    'dot'=>'bg-blue-500'],
+    'tarea'        => ['label'=>__('cal_tarea'),         'bg'=>'bg-emerald-500/10', 'text'=>'text-emerald-400', 'dot'=>'bg-emerald-500'],
+    'recordatorio' => ['label'=>__('cal_recordatorio'),  'bg'=>'bg-amber-500/10',   'text'=>'text-amber-400',   'dot'=>'bg-amber-500'],
+    'seguimiento'  => ['label'=>__('cal_seguimiento'),   'bg'=>'bg-cyan-500/10',    'text'=>'text-cyan-400',    'dot'=>'bg-cyan-500'],
+    'entrega'      => ['label'=>__('cal_entrega'),       'bg'=>'bg-green-500/10',   'text'=>'text-green-400',   'dot'=>'bg-green-500'],
+    'evento'       => ['label'=>__('cal_evento'),        'bg'=>'bg-purple-500/10',  'text'=>'text-purple-400',  'dot'=>'bg-purple-500'],
+    'feriado'      => ['label'=>__('cal_feriado'),       'bg'=>'bg-red-500/10',     'text'=>'text-red-400',     'dot'=>'bg-red-500'],
 ];
 
 // Color config
@@ -107,9 +107,23 @@ $usuarios = $pdo->query("SELECT id, nombre, rol FROM usuarios WHERE activo = 1 O
 $primerDia = mktime(0, 0, 0, $mes, 1, $anio);
 $diasEnMes = (int)date('t', $primerDia);
 $diaInicio = (int)date('w', $primerDia); // 0=Sun
-$meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-$mesesCorto = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-$diasSemana = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+$_idioma = $_idioma ?? 'es';
+if ($_idioma === 'pt') {
+    $meses = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    $mesesCorto = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    $diasSemana = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+    $diasCorto = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+} elseif ($_idioma === 'en') {
+    $meses = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+    $mesesCorto = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    $diasSemana = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    $diasCorto = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+} else {
+    $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    $mesesCorto = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    $diasSemana = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    $diasCorto = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+}
 
 $prevM = $mes - 1; $prevY = $anio;
 if ($prevM < 1) { $prevM = 12; $prevY--; }
@@ -155,13 +169,13 @@ include 'includes/sidebar.php';
                 <svg class="w-5 h-5 text-nexo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             </div>
             <div>
-                <h1 class="text-lg font-bold dark:text-white text-gray-900">Calendario</h1>
-                <p class="text-xs dark:text-white/40 text-gray-400">Gestión de eventos y reuniones</p>
+                <h1 class="text-lg font-bold dark:text-white text-gray-900"><?php echo __('cal_titulo'); ?></h1>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('cal_subtitulo'); ?></p>
             </div>
         </div>
         <button @click="openCreate()" class="px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-nexo-600 hover:bg-nexo-700 transition-colors shadow-lg shadow-nexo-600/20 flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Nuevo Evento
+            <?php echo __('cal_nuevo_evento'); ?>
         </button>
     </div>
 
@@ -175,7 +189,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-xl font-bold dark:text-white text-gray-900"><?php echo $totalMes; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Este Mes</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('cal_este_mes'); ?></p>
                 </div>
             </div>
         </div>
@@ -187,7 +201,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-xl font-bold dark:text-white text-gray-900"><?php echo $eventosHoy; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Hoy</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('cal_hoy'); ?></p>
                 </div>
             </div>
         </div>
@@ -199,7 +213,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-xl font-bold dark:text-white text-gray-900"><?php echo $eventosSemana; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Esta Semana</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('cal_esta_semana'); ?></p>
                 </div>
             </div>
         </div>
@@ -211,7 +225,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-xl font-bold dark:text-white text-gray-900"><?php echo $tareasPend; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Tareas Pend.</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('cal_tareas_pend'); ?></p>
                 </div>
             </div>
         </div>
@@ -233,12 +247,12 @@ include 'includes/sidebar.php';
                         <svg class="w-4 h-4 dark:text-white/60 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 </div>
-                <a href="?mes=<?php echo (int)date('m'); ?>&anio=<?php echo (int)date('Y'); ?>" class="px-3 py-1.5 text-xs font-medium rounded-lg dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors dark:text-white/60 text-gray-600">Hoy</a>
+                <a href="?mes=<?php echo (int)date('m'); ?>&anio=<?php echo (int)date('Y'); ?>" class="px-3 py-1.5 text-xs font-medium rounded-lg dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors dark:text-white/60 text-gray-600"><?php echo __('cal_hoy'); ?></a>
             </div>
 
             <!-- Day headers -->
             <div class="grid grid-cols-7 dark:bg-dark-900/50 bg-gray-50">
-                <?php foreach (['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'] as $idx => $d): ?>
+                <?php foreach ($diasCorto as $idx => $d): ?>
                 <div class="px-2 py-2.5 text-center text-[11px] font-semibold uppercase tracking-wider <?php echo ($idx === 0 || $idx === 6) ? 'dark:text-white/25 text-gray-300' : 'dark:text-white/40 text-gray-400'; ?>"><?php echo $d; ?></div>
                 <?php endforeach; ?>
             </div>
@@ -283,7 +297,7 @@ include 'includes/sidebar.php';
                     </div>
                     <?php endforeach;
                     if (count($evsDia) > 3): ?>
-                    <span class="text-[9px] font-medium dark:text-white/25 text-gray-400 pl-1">+<?php echo count($evsDia) - 3; ?> más</span>
+                    <span class="text-[9px] font-medium dark:text-white/25 text-gray-400 pl-1">+<?php echo count($evsDia) - 3; ?> <?php echo __('cal_mas'); ?></span>
                     <?php endif; ?>
                 </div>
                 <?php endfor;
@@ -320,7 +334,7 @@ include 'includes/sidebar.php';
                         <div class="w-10 h-10 mx-auto rounded-xl dark:bg-white/5 bg-gray-100 flex items-center justify-center mb-2">
                             <svg class="w-5 h-5 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 12H4"/></svg>
                         </div>
-                        <p class="text-xs dark:text-white/30 text-gray-400">Sin eventos hoy</p>
+                        <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('cal_sin_eventos_hoy'); ?></p>
                     </div>
                     <?php else: foreach ($eventosDeHoy as $ev):
                         $tc = $tipoConfig[$ev['tipo'] ?? 'evento'] ?? $tipoConfig['evento'];
@@ -342,13 +356,13 @@ include 'includes/sidebar.php';
             <!-- Upcoming Events -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 overflow-hidden">
                 <div class="px-4 py-3 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                    <h3 class="text-sm font-bold dark:text-white text-gray-900">Próximos Eventos</h3>
+                    <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('cal_proximos'); ?></h3>
                     <span class="text-[10px] px-2 py-0.5 rounded-full dark:bg-white/5 bg-gray-100 dark:text-white/40 text-gray-400 font-medium"><?php echo count($proximos); ?></span>
                 </div>
                 <div class="p-2 max-h-[420px] overflow-y-auto">
                     <?php if (empty($proximos)): ?>
                     <div class="text-center py-6">
-                        <p class="text-xs dark:text-white/30 text-gray-400">Sin eventos próximos</p>
+                        <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('cal_sin_proximos'); ?></p>
                     </div>
                     <?php else: foreach ($proximos as $ev):
                         $tc = $tipoConfig[$ev['tipo'] ?? 'evento'] ?? $tipoConfig['evento'];
@@ -377,9 +391,9 @@ include 'includes/sidebar.php';
                             </div>
                         </div>
                         <?php if ($isToday): ?>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-nexo-500/15 text-nexo-400 font-semibold">Hoy</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-nexo-500/15 text-nexo-400 font-semibold"><?php echo __('cal_hoy'); ?></span>
                         <?php elseif ($isTomorrow): ?>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-blue-500/15 text-blue-400 font-medium">Mañana</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded-md bg-blue-500/15 text-blue-400 font-medium"><?php echo __('cal_manana'); ?></span>
                         <?php endif; ?>
                     </div>
                     <?php endforeach; endif; ?>
@@ -388,7 +402,7 @@ include 'includes/sidebar.php';
 
             <!-- Type legend -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
-                <p class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2.5">Tipos de Evento</p>
+                <p class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2.5"><?php echo __('cal_tipos_evento'); ?></p>
                 <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
                     <?php foreach ($tipoConfig as $tk => $tv): ?>
                     <div class="flex items-center gap-1.5">
@@ -430,8 +444,8 @@ include 'includes/sidebar.php';
                         <div class="w-12 h-12 mx-auto rounded-xl dark:bg-white/5 bg-gray-100 flex items-center justify-center mb-2">
                             <svg class="w-6 h-6 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
-                        <p class="text-xs dark:text-white/30 text-gray-400">Sin eventos este día</p>
-                        <button @click="showDayModal = false; openCreate(selectedDay)" class="mt-3 text-xs text-nexo-400 hover:text-nexo-300 font-medium">+ Agregar evento</button>
+                        <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('cal_sin_eventos_dia'); ?></p>
+                        <button @click="showDayModal = false; openCreate(selectedDay)" class="mt-3 text-xs text-nexo-400 hover:text-nexo-300 font-medium"><?php echo __('cal_agregar_evento'); ?></button>
                     </div>
                 </template>
                 <template x-for="ev in dayEvents" :key="ev.id">
@@ -497,7 +511,7 @@ include 'includes/sidebar.php';
                             </div>
                             <div>
                                 <p class="text-sm font-medium dark:text-white text-gray-900" x-text="selectedEvent.cliente_nombre"></p>
-                                <p class="text-xs dark:text-white/40 text-gray-400">Cliente vinculado</p>
+                                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('cal_cliente_vinculado'); ?></p>
                             </div>
                         </div>
                         <!-- Description -->
@@ -514,7 +528,7 @@ include 'includes/sidebar.php';
                             </div>
                             <div>
                                 <p class="text-sm dark:text-white/70 text-gray-600" x-text="selectedEvent.asignado_nombre"></p>
-                                <p class="text-xs dark:text-white/30 text-gray-400">Asignado a</p>
+                                <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('cal_asignado_a'); ?></p>
                             </div>
                         </div>
                         <!-- Creator -->
@@ -524,7 +538,7 @@ include 'includes/sidebar.php';
                             </div>
                             <div>
                                 <p class="text-sm dark:text-white/70 text-gray-600" x-text="selectedEvent.usuario_nombre"></p>
-                                <p class="text-xs dark:text-white/30 text-gray-400">Creado por</p>
+                                <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('cal_creado_por'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -538,7 +552,7 @@ include 'includes/sidebar.php';
         <div @click="showCreateModal = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative w-full max-w-lg dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
             <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900" x-text="form.id ? 'Editar Evento' : 'Nuevo Evento'"></h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900" x-text="form.id ? '<?php echo __('cal_editar_evento'); ?>' : '<?php echo __('cal_nuevo_evento'); ?>'"></h3>
                 <button @click="showCreateModal = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
                     <svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -546,28 +560,28 @@ include 'includes/sidebar.php';
             <div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">
                 <!-- Titulo -->
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Título *</label>
-                    <input type="text" x-model="form.titulo" placeholder="Nombre del evento" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_titulo_evento'); ?> *</label>
+                    <input type="text" x-model="form.titulo" placeholder="<?php echo __('cal_nombre_placeholder'); ?>" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                 </div>
                 <!-- Tipo + Cliente -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Tipo</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_tipo'); ?></label>
                         <select x-model="form.tipo" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="reunion">Reunión</option>
-                            <option value="llamada">Llamada</option>
-                            <option value="tarea">Tarea</option>
-                            <option value="recordatorio">Recordatorio</option>
-                            <option value="seguimiento">Seguimiento</option>
-                            <option value="entrega">Entrega</option>
-                            <option value="evento">Evento</option>
-                            <option value="feriado">Feriado</option>
+                            <option value="reunion"><?php echo __('cal_reunion'); ?></option>
+                            <option value="llamada"><?php echo __('cal_llamada'); ?></option>
+                            <option value="tarea"><?php echo __('cal_tarea'); ?></option>
+                            <option value="recordatorio"><?php echo __('cal_recordatorio'); ?></option>
+                            <option value="seguimiento"><?php echo __('cal_seguimiento'); ?></option>
+                            <option value="entrega"><?php echo __('cal_entrega'); ?></option>
+                            <option value="evento"><?php echo __('cal_evento'); ?></option>
+                            <option value="feriado"><?php echo __('cal_feriado'); ?></option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Cliente</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_cliente'); ?></label>
                         <select x-model="form.cliente_id" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="">Ninguno</option>
+                            <option value=""><?php echo __('cal_ninguno'); ?></option>
                             <?php foreach ($clientes as $cl): ?>
                             <option value="<?php echo $cl['id']; ?>"><?php echo htmlspecialchars($cl['nombre']); ?></option>
                             <?php endforeach; ?>
@@ -576,9 +590,9 @@ include 'includes/sidebar.php';
                 </div>
                 <!-- Asignar a -->
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Asignar a</label>
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_asignar_a'); ?></label>
                     <select x-model="form.asignado_a" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                        <option value="">Yo mismo</option>
+                        <option value=""><?php echo __('cal_yo_mismo'); ?></option>
                         <?php foreach ($usuarios as $u): ?>
                         <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nombre']); ?> (<?php echo $u['rol']; ?>)</option>
                         <?php endforeach; ?>
@@ -591,22 +605,22 @@ include 'includes/sidebar.php';
                         <div class="w-9 h-5 rounded-full dark:bg-white/10 bg-gray-200 peer-checked:bg-nexo-600 transition-colors"></div>
                         <div class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4"></div>
                     </div>
-                    <span class="text-xs font-medium dark:text-white/60 text-gray-600">Todo el día</span>
+                    <span class="text-xs font-medium dark:text-white/60 text-gray-600"><?php echo __('cal_todo_dia'); ?></span>
                 </label>
                 <!-- Dates -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Fecha Inicio *</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_fecha_inicio'); ?> *</label>
                         <input :type="form.todo_el_dia ? 'date' : 'datetime-local'" x-model="form.fecha_inicio" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Fecha Fin</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_fecha_fin'); ?></label>
                         <input :type="form.todo_el_dia ? 'date' : 'datetime-local'" x-model="form.fecha_fin" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                 </div>
                 <!-- Color picker -->
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Color</label>
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_color'); ?></label>
                     <div class="flex gap-2">
                         <?php
                         $colores = ['nexo'=>'bg-nexo-500','blue'=>'bg-blue-500','emerald'=>'bg-emerald-500','red'=>'bg-red-500','amber'=>'bg-amber-500','cyan'=>'bg-cyan-500'];
@@ -617,16 +631,16 @@ include 'includes/sidebar.php';
                 </div>
                 <!-- Descripcion -->
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Descripción</label>
-                    <textarea x-model="form.descripcion" rows="3" placeholder="Detalles del evento..." class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 resize-none transition-colors"></textarea>
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('cal_descripcion'); ?></label>
+                    <textarea x-model="form.descripcion" rows="3" placeholder="<?php echo __('cal_detalles_placeholder'); ?>" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 resize-none transition-colors"></textarea>
                 </div>
             </div>
             <!-- Actions -->
             <div class="px-5 py-4 border-t dark:border-white/[0.06] border-gray-100 flex gap-3">
-                <button @click="showCreateModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors dark:text-white/70 text-gray-600">Cancelar</button>
+                <button @click="showCreateModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors dark:text-white/70 text-gray-600"><?php echo __('btn_cancelar'); ?></button>
                 <button @click="saveEvent()" :disabled="!form.titulo.trim() || !form.fecha_inicio || saving" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-nexo-600 hover:bg-nexo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2">
                     <svg x-show="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                    <span x-text="form.id ? 'Guardar Cambios' : 'Crear Evento'"></span>
+                    <span x-text="form.id ? '<?php echo __('cal_guardar_cambios'); ?>' : '<?php echo __('cal_crear_evento'); ?>'"></span>
                 </button>
             </div>
         </div>
@@ -642,20 +656,20 @@ include 'includes/sidebar.php';
 <script>
 function calendarApp() {
     const tipoMap = {
-        reunion:      { label: 'Reunión',      bg: 'bg-nexo-500/10',    text: 'text-nexo-400',    dot: 'bg-nexo-500' },
-        llamada:      { label: 'Llamada',       bg: 'bg-blue-500/10',    text: 'text-blue-400',    dot: 'bg-blue-500' },
-        tarea:        { label: 'Tarea',         bg: 'bg-emerald-500/10', text: 'text-emerald-400', dot: 'bg-emerald-500' },
-        recordatorio: { label: 'Recordatorio',  bg: 'bg-amber-500/10',   text: 'text-amber-400',   dot: 'bg-amber-500' },
-        seguimiento:  { label: 'Seguimiento',   bg: 'bg-cyan-500/10',    text: 'text-cyan-400',    dot: 'bg-cyan-500' },
-        entrega:      { label: 'Entrega',       bg: 'bg-green-500/10',   text: 'text-green-400',   dot: 'bg-green-500' },
-        evento:       { label: 'Evento',        bg: 'bg-purple-500/10',  text: 'text-purple-400',  dot: 'bg-purple-500' },
-        feriado:      { label: 'Feriado',       bg: 'bg-red-500/10',     text: 'text-red-400',     dot: 'bg-red-500' },
+        reunion:      { label: <?php echo json_encode(__('cal_reunion')); ?>,      bg: 'bg-nexo-500/10',    text: 'text-nexo-400',    dot: 'bg-nexo-500' },
+        llamada:      { label: <?php echo json_encode(__('cal_llamada')); ?>,       bg: 'bg-blue-500/10',    text: 'text-blue-400',    dot: 'bg-blue-500' },
+        tarea:        { label: <?php echo json_encode(__('cal_tarea')); ?>,         bg: 'bg-emerald-500/10', text: 'text-emerald-400', dot: 'bg-emerald-500' },
+        recordatorio: { label: <?php echo json_encode(__('cal_recordatorio')); ?>,  bg: 'bg-amber-500/10',   text: 'text-amber-400',   dot: 'bg-amber-500' },
+        seguimiento:  { label: <?php echo json_encode(__('cal_seguimiento')); ?>,   bg: 'bg-cyan-500/10',    text: 'text-cyan-400',    dot: 'bg-cyan-500' },
+        entrega:      { label: <?php echo json_encode(__('cal_entrega')); ?>,       bg: 'bg-green-500/10',   text: 'text-green-400',   dot: 'bg-green-500' },
+        evento:       { label: <?php echo json_encode(__('cal_evento')); ?>,        bg: 'bg-purple-500/10',  text: 'text-purple-400',  dot: 'bg-purple-500' },
+        feriado:      { label: <?php echo json_encode(__('cal_feriado')); ?>,       bg: 'bg-red-500/10',     text: 'text-red-400',     dot: 'bg-red-500' },
     };
     const colorDots = {
         nexo:    'bg-nexo-500',    blue:    'bg-blue-500',    emerald: 'bg-emerald-500',
         red:     'bg-red-500',     amber:   'bg-amber-500',   cyan:    'bg-cyan-500',
     };
-    const meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const meses = <?php echo json_encode($meses); ?>;
 
     return {
         eventos: <?php echo $eventosJson; ?>,

@@ -195,8 +195,8 @@ include 'includes/sidebar.php';
         <div class="relative">
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-xl font-bold dark:text-white text-gray-900">¡Hola, <?php echo htmlspecialchars(explode(' ', $userNombre)[0]); ?>! 👋</h2>
-                    <p class="text-sm dark:text-white/50 text-gray-500 mt-0.5">Tu resumen de rendimiento — <?php echo strftime('%A %d de %B, %Y', strtotime('today')); ?></p>
+                    <h2 class="text-xl font-bold dark:text-white text-gray-900"><?php echo __('dash_hola'); ?>, <?php echo htmlspecialchars(explode(' ', $userNombre)[0]); ?>! 👋</h2>
+                    <p class="text-sm dark:text-white/50 text-gray-500 mt-0.5"><?php echo __('dash_resumen'); ?> — <?php echo strftime('%A %d de %B, %Y', strtotime('today')); ?></p>
                 </div>
                 <div class="flex items-center gap-3 flex-wrap">
                     <!-- Conversion rate badge -->
@@ -248,7 +248,7 @@ include 'includes/sidebar.php';
         <!-- Clientes -->
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm dark:text-white/50 text-gray-500"><?php echo $isAdmin ? 'Clientes' : 'Mis Clientes'; ?></span>
+                <span class="text-sm dark:text-white/50 text-gray-500"><?php echo $isAdmin ? __('cli_titulo') : __('dash_mis_clientes'); ?></span>
                 <div class="w-10 h-10 rounded-xl bg-nexo-600/15 flex items-center justify-center">
                     <svg class="w-5 h-5 text-nexo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
@@ -264,7 +264,7 @@ include 'includes/sidebar.php';
         <?php if ($isAdmin): ?>
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm dark:text-white/50 text-gray-500">Facturas</span>
+                <span class="text-sm dark:text-white/50 text-gray-500"><?php echo __('fac_titulo'); ?></span>
                 <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center">
                     <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
@@ -278,7 +278,7 @@ include 'includes/sidebar.php';
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-20 h-20 <?php echo $tasaConversion >= 50 ? 'bg-emerald-500/5' : ($tasaConversion >= 25 ? 'bg-amber-500/5' : 'bg-red-500/5'); ?> rounded-full -translate-y-6 translate-x-6"></div>
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm dark:text-white/50 text-gray-500">Tasa de Conversión</span>
+                <span class="text-sm dark:text-white/50 text-gray-500"><?php echo __('dash_tasa_conversion'); ?></span>
                 <div class="w-10 h-10 rounded-xl <?php echo $tasaConversion >= 50 ? 'bg-emerald-500/15' : ($tasaConversion >= 25 ? 'bg-amber-500/15' : 'bg-red-500/15'); ?> flex items-center justify-center">
                     <svg class="w-5 h-5 <?php echo $tasaConversion >= 50 ? 'text-emerald-400' : ($tasaConversion >= 25 ? 'text-amber-400' : 'text-red-400'); ?>" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
@@ -295,7 +295,7 @@ include 'includes/sidebar.php';
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full -translate-y-8 translate-x-8"></div>
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium dark:text-white/70 text-gray-600"><?php echo $isAdmin ? 'Ingresos del Mes' : 'Mi Producción'; ?></span>
+                <span class="text-sm font-medium dark:text-white/70 text-gray-600"><?php echo $isAdmin ? __('dash_ingresos_mes') : __('dash_mi_produccion'); ?></span>
                 <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
                     <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                 </div>
@@ -311,7 +311,7 @@ include 'includes/sidebar.php';
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-8 translate-x-8"></div>
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium dark:text-white/70 text-gray-600">Por Recibir</span>
+                <span class="text-sm font-medium dark:text-white/70 text-gray-600"><?php echo __('dash_por_recibir'); ?></span>
                 <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
                     <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
@@ -325,7 +325,7 @@ include 'includes/sidebar.php';
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-full -translate-y-8 translate-x-8"></div>
             <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium dark:text-white/70 text-gray-600">Mi Comisión (<?php echo (int)$comisionPct; ?>%)</span>
+                <span class="text-sm font-medium dark:text-white/70 text-gray-600"><?php echo __('dash_mi_comision'); ?> (<?php echo (int)$comisionPct; ?>%)</span>
                 <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
                     <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
@@ -347,7 +347,7 @@ include 'includes/sidebar.php';
                     <svg class="w-4.5 h-4.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                 </div>
                 <div>
-                    <h3 class="font-semibold">Metas del Día</h3>
+                    <h3 class="font-semibold"><?php echo __('dash_metas_dia'); ?></h3>
                     <p class="text-xs dark:text-white/40 text-gray-400"><?php echo date('l, d M Y'); ?></p>
                 </div>
             </div>
@@ -407,16 +407,16 @@ include 'includes/sidebar.php';
         <div class="panel-card xl:col-span-2 dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="font-semibold"><?php echo $isAdmin ? 'Reporte de Ingresos' : 'Mi Producción Mensual'; ?></h3>
+                    <h3 class="font-semibold"><?php echo $isAdmin ? __('dash_reporte_ingresos') : __('dash_produccion_mensual'); ?></h3>
                     <div class="flex items-center gap-4 mt-2">
                         <div class="flex items-center gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-sm bg-nexo-500"></div>
-                            <span class="text-xs dark:text-white/50 text-gray-500">Ingresos</span>
+                            <span class="text-xs dark:text-white/50 text-gray-500"><?php echo __('fin_ingresos'); ?></span>
                         </div>
                         <?php if ($isAdmin): ?>
                         <div class="flex items-center gap-1.5">
                             <div class="w-2.5 h-2.5 rounded-sm bg-red-400"></div>
-                            <span class="text-xs dark:text-white/50 text-gray-500">Gastos</span>
+                            <span class="text-xs dark:text-white/50 text-gray-500"><?php echo __('fin_gastos'); ?></span>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -434,8 +434,8 @@ include 'includes/sidebar.php';
         <!-- Latest customers (1/3) -->
         <div class="panel-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">Últimos Clientes</h3>
-                <a href="clientes.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors">Ver todos</a>
+                <h3 class="font-semibold"><?php echo __('dash_ultimos_clientes'); ?></h3>
+                <a href="clientes.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors"><?php echo __('dash_ver_todos'); ?></a>
             </div>
             <div class="space-y-3">
                 <?php foreach ($latestClientes as $cli): 
@@ -467,8 +467,8 @@ include 'includes/sidebar.php';
         <!-- Recent invoices -->
         <div class="panel-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold"><?php echo $isAdmin ? 'Facturas Recientes' : 'Mis Facturas'; ?></h3>
-                <a href="facturas.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors">Ver todas</a>
+                <h3 class="font-semibold"><?php echo $isAdmin ? __('dash_facturas_recientes') : __('dash_mis_facturas'); ?></h3>
+                <a href="facturas.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors"><?php echo __('dash_ver_todas'); ?></a>
             </div>
             <div class="space-y-3">
                 <?php foreach ($latestFacturas as $fac): 
@@ -493,8 +493,8 @@ include 'includes/sidebar.php';
         <?php if ($isAdmin): ?>
         <div class="panel-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">Equipo</h3>
-                <a href="usuarios.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors">Gestionar</a>
+                <h3 class="font-semibold"><?php echo __('dash_equipo'); ?></h3>
+                <a href="usuarios.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors"><?php echo __('dash_gestionar'); ?></a>
             </div>
             <div class="space-y-3">
                 <?php foreach ($teamUsers as $usr): 
@@ -524,8 +524,8 @@ include 'includes/sidebar.php';
         <!-- Employee: Mi Pipeline -->
         <div class="panel-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">Mi Pipeline</h3>
-                <a href="pipeline.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors">Ver todo</a>
+                <h3 class="font-semibold"><?php echo __('dash_mi_pipeline'); ?></h3>
+                <a href="pipeline.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors"><?php echo __('dash_ver_todos'); ?></a>
             </div>
             <div class="space-y-3">
                 <?php
@@ -558,8 +558,8 @@ include 'includes/sidebar.php';
         <?php if ($isAdmin): ?>
         <div class="panel-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="font-semibold">Balance Mensual</h3>
-                <a href="finanzas.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors">Detalle</a>
+                <h3 class="font-semibold"><?php echo __('dash_balance_mensual'); ?></h3>
+                <a href="finanzas.php" class="text-xs text-nexo-400 hover:text-nexo-300 transition-colors"><?php echo __('btn_detalle', 'Detalle'); ?></a>
             </div>
             
             <!-- Donut chart -->
@@ -570,7 +570,7 @@ include 'includes/sidebar.php';
                         <p class="text-lg font-bold <?php echo ($ingresosMes - $gastosMes) >= 0 ? 'text-emerald-400' : 'text-red-400'; ?>">
                             $<?php echo number_format(abs($ingresosMes - $gastosMes), 0, ',', '.'); ?>
                         </p>
-                        <p class="text-[10px] dark:text-white/40 text-gray-400"><?php echo ($ingresosMes - $gastosMes) >= 0 ? 'Utilidad' : 'Pérdida'; ?></p>
+                        <p class="text-[10px] dark:text-white/40 text-gray-400"><?php echo ($ingresosMes - $gastosMes) >= 0 ? __('dash_utilidad') : __('dash_perdida'); ?></p>
                     </div>
                 </div>
             </div>
@@ -579,19 +579,19 @@ include 'includes/sidebar.php';
                 <div class="flex items-center justify-between text-sm">
                     <div class="flex items-center gap-2">
                         <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
-                        <span class="dark:text-white/60 text-gray-500">Ingresos</span>
+                        <span class="dark:text-white/60 text-gray-500"><?php echo __('fin_ingresos'); ?></span>
                     </div>
                     <span class="font-semibold text-emerald-400">$<?php echo number_format($ingresosMes, 0, ',', '.'); ?></span>
                 </div>
                 <div class="flex items-center justify-between text-sm">
                     <div class="flex items-center gap-2">
                         <div class="w-2 h-2 rounded-full bg-red-400"></div>
-                        <span class="dark:text-white/60 text-gray-500">Gastos</span>
+                        <span class="dark:text-white/60 text-gray-500"><?php echo __('fin_gastos'); ?></span>
                     </div>
                     <span class="font-semibold text-red-400">$<?php echo number_format($gastosMes, 0, ',', '.'); ?></span>
                 </div>
                 <div class="pt-2 mt-2 border-t dark:border-white/[0.06] border-gray-200 flex items-center justify-between text-sm">
-                    <span class="dark:text-white/60 text-gray-500 font-medium">Margen</span>
+                    <span class="dark:text-white/60 text-gray-500 font-medium"><?php echo __('dash_margen'); ?></span>
                     <span class="font-bold"><?php echo $ingresosMes > 0 ? round((($ingresosMes - $gastosMes) / $ingresosMes) * 100) : 0; ?>%</span>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Clientes';
+$pageTitle = __('cli_titulo');
 $currentPage = 'clientes';
 
 $isAdmin = ($_SESSION['usuario_rol'] ?? '') === 'admin';
@@ -47,7 +47,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold"><?php echo $totalClientes; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Total Clientes</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('dash_total_clientes'); ?></p>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold"><?php echo $nuevosEsteMes; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Nuevos este mes</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('dash_nuevos_mes'); ?></p>
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold"><?php echo $countByStatus['ganado']; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Ganados</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('dash_ganados'); ?></p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold"><?php echo $countByStatus['negociando']; ?></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Negociando</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('dash_negociando'); ?></p>
                 </div>
             </div>
         </div>
@@ -92,18 +92,18 @@ include 'includes/sidebar.php';
             <!-- Instant search -->
             <div class="relative">
                 <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" x-model="search" placeholder="Buscar cliente..." class="pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-dark-700 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 w-56">
+                <input type="text" x-model="search" placeholder="<?php echo __('cli_buscar'); ?>" class="pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-dark-700 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 w-56">
             </div>
             <!-- Filter tabs with counters -->
             <div class="flex gap-1.5 flex-wrap">
                 <?php
                 $filters = [
-                    ''=>['Todos', $totalClientes],
-                    'nuevo'=>['Nuevos', $countByStatus['nuevo']],
-                    'contactado'=>['Contactados', $countByStatus['contactado']],
-                    'negociando'=>['Negociando', $countByStatus['negociando']],
-                    'ganado'=>['Ganados', $countByStatus['ganado']],
-                    'perdido'=>['Perdidos', $countByStatus['perdido']]
+                    ''=>[__('filtro_todos'), $totalClientes],
+                    'nuevo'=>[__('cli_nuevo_titulo'), $countByStatus['nuevo']],
+                    'contactado'=>[__('cli_contactado', 'Contactados'), $countByStatus['contactado']],
+                    'negociando'=>[__('cli_negociando'), $countByStatus['negociando']],
+                    'ganado'=>[__('cli_ganado', 'Ganados'), $countByStatus['ganado']],
+                    'perdido'=>[__('cli_perdido', 'Perdidos'), $countByStatus['perdido']]
                 ];
                 foreach ($filters as $k=>$v): ?>
                 <button @click="filtro = '<?php echo $k; ?>'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filtro === '<?php echo $k; ?>' ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo $v[0]; ?> <span class="opacity-60">(<?php echo $v[1]; ?>)</span></button>
@@ -118,7 +118,7 @@ include 'includes/sidebar.php';
             </button>
             <button @click="openNew()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white flex items-center gap-2 shrink-0">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Nuevo Cliente
+                <?php echo __('cli_nuevo'); ?>
             </button>
         </div>
     </div>
@@ -133,20 +133,20 @@ include 'includes/sidebar.php';
                             <input type="checkbox" @change="toggleAll($event.target.checked)" :checked="allSelected()" class="nexo-check">
                         </th>
                         <th @click="sortBy('nombre')" class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 cursor-pointer select-none hover:text-nexo-400 transition-colors">
-                            <span class="flex items-center gap-1">Cliente <span x-show="sortCol==='nombre'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
+                            <span class="flex items-center gap-1"><?php echo __('tabla_cliente'); ?> <span x-show="sortCol==='nombre'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
                         </th>
                         <th @click="sortBy('empresa')" class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden md:table-cell cursor-pointer select-none hover:text-nexo-400 transition-colors">
-                            <span class="flex items-center gap-1">Empresa <span x-show="sortCol==='empresa'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
+                            <span class="flex items-center gap-1"><?php echo __('tabla_empresa'); ?> <span x-show="sortCol==='empresa'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
                         </th>
-                        <th class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden lg:table-cell">Contacto</th>
+                        <th class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden lg:table-cell"><?php echo __('tabla_contacto'); ?></th>
                         <th @click="sortBy('estado')" class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 cursor-pointer select-none hover:text-nexo-400 transition-colors">
-                            <span class="flex items-center gap-1">Estado <span x-show="sortCol==='estado'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
+                            <span class="flex items-center gap-1"><?php echo __('tabla_estado'); ?> <span x-show="sortCol==='estado'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
                         </th>
-                        <th class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden lg:table-cell">Asignado</th>
+                        <th class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden lg:table-cell"><?php echo __('tabla_asignado'); ?></th>
                         <th @click="sortBy('creado_en')" class="text-left px-4 py-3 font-medium dark:text-white/50 text-gray-500 hidden xl:table-cell cursor-pointer select-none hover:text-nexo-400 transition-colors">
-                            <span class="flex items-center gap-1">Creado <span x-show="sortCol==='creado_en'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
+                            <span class="flex items-center gap-1"><?php echo __('tabla_creado'); ?> <span x-show="sortCol==='creado_en'" x-text="sortDir==='asc'?'↑':'↓'" class="text-nexo-400"></span></span>
                         </th>
-                        <th class="text-right px-4 py-3 font-medium dark:text-white/50 text-gray-500">Acciones</th>
+                        <th class="text-right px-4 py-3 font-medium dark:text-white/50 text-gray-500"><?php echo __('tabla_acciones'); ?></th>
                     </tr>
                 </thead>
                 <tbody class="divide-y dark:divide-white/[0.04] divide-gray-100">
@@ -188,14 +188,14 @@ include 'includes/sidebar.php';
                     </tr>
                     </template>
                     <template x-if="filtered().length === 0">
-                        <tr><td colspan="8" class="text-center py-12 dark:text-white/30 text-gray-400">No se encontraron clientes</td></tr>
+                        <tr><td colspan="8" class="text-center py-12 dark:text-white/30 text-gray-400"><?php echo __('cli_sin_resultados'); ?></td></tr>
                     </template>
                 </tbody>
             </table>
         </div>
         <!-- Results count -->
         <div class="px-4 py-2.5 border-t dark:border-white/[0.06] border-gray-100 text-xs dark:text-white/30 text-gray-400">
-            Mostrando <strong x-text="filtered().length"></strong> de <strong><?php echo $totalClientes; ?></strong> clientes
+            <?php echo __('tabla_mostrando'); ?> <strong x-text="filtered().length"></strong> <?php echo __('paginacion_de'); ?> <strong><?php echo $totalClientes; ?></strong> <?php echo __('cli_titulo'); ?>
         </div>
     </div>
 
@@ -206,17 +206,17 @@ include 'includes/sidebar.php';
             <h3 class="text-lg font-bold mb-4" x-text="editId ? 'Editar Cliente' : 'Nuevo Cliente'"></h3>
             <form @submit.prevent="saveClient()" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Nombre *</label><input type="text" x-model="form.nombre" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Empresa</label><input type="text" x-model="form.empresa" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_nombre'); ?> *</label><input type="text" x-model="form.nombre" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_empresa'); ?></label><input type="text" x-model="form.empresa" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">E-mail</label><input type="email" x-model="form.email" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Teléfono</label><input type="text" x-model="form.telefono" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_email'); ?></label><input type="email" x-model="form.email" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_telefono'); ?></label><input type="text" x-model="form.telefono" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Sitio Web</label><input type="text" x-model="form.sitio_web" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_sitio_web'); ?></label><input type="text" x-model="form.sitio_web" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
                     <div x-show="editId">
-                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Estado</label>
+                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_estado'); ?></label>
                         <select x-model="form.estado" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
                             <option value="nuevo">Nuevo</option>
                             <option value="contactado">Contactado</option>
@@ -228,7 +228,7 @@ include 'includes/sidebar.php';
                 </div>
                 <?php if ($isAdmin): ?>
                 <div>
-                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Asignado a</label>
+                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_asignado'); ?></label>
                     <select x-model="form.asignado_a" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
                         <?php foreach ($usuarios as $u): ?>
                         <option value="<?php echo $u['id']; ?>"><?php echo htmlspecialchars($u['nombre']); ?></option>
@@ -236,8 +236,8 @@ include 'includes/sidebar.php';
                     </select>
                 </div>
                 <?php endif; ?>
-                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Dirección</label><input type="text" x-model="form.direccion" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
-                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Notas</label><textarea x-model="form.notas" rows="2" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none"></textarea></div>
+                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_direccion'); ?></label><input type="text" x-model="form.direccion" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('cli_notas'); ?></label><textarea x-model="form.notas" rows="2" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none"></textarea></div>
                 <div class="flex gap-3 pt-2">
                     <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
                     <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white" x-text="saving ? 'Guardando...' : (editId ? 'Guardar Cambios' : 'Crear Cliente')" :disabled="saving"></button>

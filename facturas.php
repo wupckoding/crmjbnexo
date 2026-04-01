@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Facturas';
+$pageTitle = __('fac_titulo');
 $currentPage = 'facturas';
 
 $facturas = $pdo->query("SELECT f.*, c.nombre as cliente_nombre, c.email as cliente_email, c.empresa as cliente_empresa FROM facturas f JOIN clientes c ON f.cliente_id = c.id ORDER BY f.creado_en DESC")->fetchAll();
@@ -30,19 +30,19 @@ include 'includes/sidebar.php';
     <!-- KPIs -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
-            <p class="text-xs dark:text-white/40 text-gray-400 mb-1">Total Facturas</p>
+            <p class="text-xs dark:text-white/40 text-gray-400 mb-1"><?php echo __('fac_total_facturas'); ?></p>
             <p class="text-2xl font-bold"><?php echo $totalFacturas; ?></p>
         </div>
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
-            <p class="text-xs dark:text-white/40 text-gray-400 mb-1">Cobrado</p>
+            <p class="text-xs dark:text-white/40 text-gray-400 mb-1"><?php echo __('fac_cobrado'); ?></p>
             <p class="text-2xl font-bold dark:text-emerald-400 text-emerald-600">$<?php echo number_format($totalPagadas, 0, ',', '.'); ?></p>
         </div>
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
-            <p class="text-xs dark:text-white/40 text-gray-400 mb-1">Pendiente</p>
+            <p class="text-xs dark:text-white/40 text-gray-400 mb-1"><?php echo __('fac_pendiente'); ?></p>
             <p class="text-2xl font-bold dark:text-amber-400 text-amber-600">$<?php echo number_format($totalPendiente, 0, ',', '.'); ?></p>
         </div>
         <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
-            <p class="text-xs dark:text-white/40 text-gray-400 mb-1">Vencidas</p>
+            <p class="text-xs dark:text-white/40 text-gray-400 mb-1"><?php echo __('fac_vencidas'); ?></p>
             <p class="text-2xl font-bold dark:text-red-400 text-red-600"><?php echo $totalVencidas; ?></p>
         </div>
     </div>
@@ -50,22 +50,22 @@ include 'includes/sidebar.php';
     <!-- Toolbar -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
         <div class="flex gap-1.5 flex-wrap">
-            <button @click="filterEstado = ''" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === '' ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'">Todas</button>
-            <button @click="filterEstado = 'borrador'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'borrador' ? 'bg-gray-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'">Borrador</button>
-            <button @click="filterEstado = 'enviada'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'enviada' ? 'bg-blue-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'">Enviadas</button>
-            <button @click="filterEstado = 'pagada'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'pagada' ? 'bg-emerald-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'">Pagadas</button>
-            <button @click="filterEstado = 'vencida'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'vencida' ? 'bg-red-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'">Vencidas</button>
+            <button @click="filterEstado = ''" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === '' ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo __('fac_todas'); ?></button>
+            <button @click="filterEstado = 'borrador'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'borrador' ? 'bg-gray-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo __('fac_borrador'); ?></button>
+            <button @click="filterEstado = 'enviada'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'enviada' ? 'bg-blue-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo __('fac_enviada'); ?></button>
+            <button @click="filterEstado = 'pagada'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'pagada' ? 'bg-emerald-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo __('fac_pagada'); ?></button>
+            <button @click="filterEstado = 'vencida'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" :class="filterEstado === 'vencida' ? 'bg-red-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 dark:hover:bg-white/10 hover:bg-gray-200'"><?php echo __('fac_vencidas'); ?></button>
         </div>
         <div class="flex items-center gap-2 sm:ml-auto">
             <div class="relative">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" x-model="search" placeholder="Buscar..." class="w-44 pl-8 pr-3 py-1.5 text-xs rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
+                <input type="text" x-model="search" placeholder="<?php echo __('fac_buscar'); ?>" class="w-44 pl-8 pr-3 py-1.5 text-xs rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
             </div>
             <select x-model="sortBy" class="px-2 py-1.5 text-xs rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none">
-                <option value="fecha_desc">Más reciente</option>
-                <option value="fecha_asc">Más antigua</option>
-                <option value="total_desc">Mayor monto</option>
-                <option value="total_asc">Menor monto</option>
+                <option value="fecha_desc"><?php echo __('fac_mas_reciente'); ?></option>
+                <option value="fecha_asc"><?php echo __('fac_mas_antigua'); ?></option>
+                <option value="total_desc"><?php echo __('fac_mayor_monto'); ?></option>
+                <option value="total_asc"><?php echo __('fac_menor_monto'); ?></option>
             </select>
             <button @click="viewMode = viewMode === 'cards' ? 'table' : 'cards'" class="w-8 h-8 flex items-center justify-center rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 dark:hover:bg-white/10 hover:bg-gray-100 transition-colors">
                 <svg x-show="viewMode === 'cards'" class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
@@ -77,7 +77,7 @@ include 'includes/sidebar.php';
             </button>
             <button @click="showModal = true" class="btn-purple px-4 py-1.5 rounded-xl text-xs font-medium text-white flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Nueva
+                <?php echo __('fac_nueva'); ?>
             </button>
         </div>
     </div>
@@ -121,8 +121,8 @@ include 'includes/sidebar.php';
         <template x-if="filtered().length === 0">
             <div class="col-span-full text-center py-16">
                 <svg class="w-16 h-16 mx-auto dark:text-white/10 text-gray-200 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                <p class="dark:text-white/30 text-gray-400 text-sm">No hay facturas</p>
-                <button @click="showModal = true" class="mt-3 text-xs text-nexo-400 hover:text-nexo-300 font-medium">+ Crear primera factura</button>
+                <p class="dark:text-white/30 text-gray-400 text-sm"><?php echo __('fac_sin_facturas'); ?></p>
+                <button @click="showModal = true" class="mt-3 text-xs text-nexo-400 hover:text-nexo-300 font-medium">+ <?php echo __('fac_crear_primera'); ?></button>
             </div>
         </template>
     </div>
@@ -131,13 +131,13 @@ include 'includes/sidebar.php';
     <div x-show="viewMode === 'table'" class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 overflow-hidden">
         <table class="w-full text-sm">
             <thead><tr class="border-b dark:border-white/[0.06] border-gray-100">
-                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Número</th>
-                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Cliente</th>
-                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Emisión</th>
-                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Vencimiento</th>
-                <th class="text-right px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Total</th>
-                <th class="text-center px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Estado</th>
-                <th class="text-center px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400">Acciones</th>
+                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_numero'); ?></th>
+                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_cliente'); ?></th>
+                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_emision'); ?></th>
+                <th class="text-left px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_vencimiento'); ?></th>
+                <th class="text-right px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_total'); ?></th>
+                <th class="text-center px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('fac_estado'); ?></th>
+                <th class="text-center px-4 py-3 text-xs font-medium dark:text-white/40 text-gray-400"><?php echo __('tabla_acciones'); ?></th>
             </tr></thead>
             <tbody>
             <template x-for="f in filtered()" :key="f.id">
@@ -186,12 +186,12 @@ include 'includes/sidebar.php';
             <div class="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center bg-red-500/15">
                 <svg class="w-7 h-7 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             </div>
-            <h3 class="font-bold mb-1">¿Eliminar factura permanentemente?</h3>
+            <h3 class="font-bold mb-1"><?php echo __('fac_eliminar_titulo'); ?></h3>
             <p class="text-sm dark:text-white/50 text-gray-500 mb-1" x-text="deleteTarget.numero + ' - ' + deleteTarget.cliente"></p>
-            <p class="text-xs text-red-400 mb-4">Se eliminarán también los items y registros de ingreso asociados.</p>
+            <p class="text-xs text-red-400 mb-4"><?php echo __('fac_eliminar_desc'); ?></p>
             <div class="flex gap-3">
-                <button @click="showDeleteConfirm = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
-                <button @click="doDeleteFactura()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors">Eliminar</button>
+                <button @click="showDeleteConfirm = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
+                <button @click="doDeleteFactura()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors"><?php echo __('btn_eliminar'); ?></button>
             </div>
         </div>
     </div>
@@ -200,35 +200,35 @@ include 'includes/sidebar.php';
     <div x-show="showModal" x-transition x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div @click="showModal = false" class="absolute inset-0 bg-black/60"></div>
         <div class="relative w-full max-w-2xl dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
-            <h3 class="text-lg font-bold mb-4">Nueva Factura</h3>
+            <h3 class="text-lg font-bold mb-4"><?php echo __('fac_nueva'); ?></h3>
             <form method="POST" action="api/facturas.php" class="space-y-4">
                 <input type="hidden" name="action" value="create">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Número</label>
+                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('fac_numero'); ?></label>
                         <input type="text" name="numero" value="<?php echo htmlspecialchars($nextNum); ?>" readonly class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none opacity-60">
                     </div>
                     <div>
-                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Cliente *</label>
+                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('fac_cliente'); ?> *</label>
                         <select name="cliente_id" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="">Seleccionar...</option>
+                            <option value=""><?php echo __('fac_seleccionar'); ?></option>
                             <?php foreach ($clientes as $cl): ?><option value="<?php echo $cl['id']; ?>"><?php echo htmlspecialchars($cl['nombre']); ?></option><?php endforeach; ?>
                         </select>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Fecha Emisión</label><input type="date" name="fecha_emision" value="<?php echo date('Y-m-d'); ?>" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
-                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Fecha Vencimiento</label><input type="date" name="fecha_vencimiento" value="<?php echo date('Y-m-d', strtotime('+30 days')); ?>" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('fac_emision'); ?></label><input type="date" name="fecha_emision" value="<?php echo date('Y-m-d'); ?>" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
+                    <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('fac_vencimiento'); ?></label><input type="date" name="fecha_vencimiento" value="<?php echo date('Y-m-d', strtotime('+30 days')); ?>" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
                 </div>
 
                 <!-- Items -->
                 <div>
-                    <label class="text-xs dark:text-white/50 text-gray-500 mb-2 block font-medium">Servicios / Items</label>
+                    <label class="text-xs dark:text-white/50 text-gray-500 mb-2 block font-medium"><?php echo __('fac_servicios_items'); ?></label>
                     <template x-for="(item, index) in items" :key="index">
                         <div class="mb-3 p-3 rounded-xl dark:bg-white/[0.03] bg-gray-50/80 border dark:border-white/[0.04] border-gray-100">
                             <div class="flex gap-2 mb-2">
                                 <select @change="selectServicio(index, $event.target.value)" :value="item.servicio_id || ''" class="flex-1 px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-white border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
-                                    <option value="">Seleccionar servicio o escribir manual...</option>
+                                    <option value=""><?php echo __('fac_sel_servicio'); ?></option>
                                     <template x-for="sv in serviciosDisponibles" :key="sv.id">
                                         <option :value="sv.id" x-text="sv.nombre + ' — $' + Number(sv.precio).toLocaleString('es')"></option>
                                     </template>
@@ -256,7 +256,7 @@ include 'includes/sidebar.php';
                     </template>
                     <button type="button" @click="items.push({servicio_id:'',desc:'',qty:1,price:0})" class="text-xs text-nexo-400 hover:text-nexo-300 font-medium mt-1 flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        Agregar item
+                        <?php echo __('fac_agregar_item'); ?>
                     </button>
                 </div>
 
@@ -265,11 +265,11 @@ include 'includes/sidebar.php';
                     <span class="text-xl font-bold">$<span x-text="subtotal.toLocaleString()">0</span></span>
                 </div>
 
-                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Notas</label><textarea name="notas" rows="2" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none"></textarea></div>
+                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('fac_notas'); ?></label><textarea name="notas" rows="2" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none"></textarea></div>
 
                 <div class="flex gap-3 pt-2">
-                    <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
-                    <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white">Crear Factura</button>
+                    <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
+                    <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white"><?php echo __('fac_crear_factura'); ?></button>
                 </div>
             </form>
         </div>

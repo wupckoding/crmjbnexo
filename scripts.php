@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Scripts de Ventas';
+$pageTitle = __('scr_titulo', 'Scripts de Ventas');
 $currentPage = 'scripts';
 include 'includes/header.php';
 include 'includes/sidebar.php';
@@ -522,7 +522,7 @@ include 'includes/sidebar.php';
 <script>
 function scriptsApp() {
     return {
-        tabs: ['Script Principal', 'Romper Objeciones', 'Mentalidad & Reglas', 'WhatsApp Templates', 'Checklist'],
+        tabs: [<?php echo json_encode(__('scr_principal')); ?>, <?php echo json_encode(__('scr_objeciones')); ?>, <?php echo json_encode(__('scr_mentalidad')); ?>, <?php echo json_encode(__('scr_whatsapp')); ?>, <?php echo json_encode(__('scr_checklist')); ?>],
         activeTab: 0,
         openStep: 1,
         openObj: -1,

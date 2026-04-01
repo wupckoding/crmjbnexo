@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Avisos';
+$pageTitle = __('nav_avisos');
 $currentPage = 'avisos';
 $isAdmin = ($_SESSION['user_role'] ?? '') === 'admin';
 include 'includes/header.php';
@@ -17,14 +17,14 @@ include 'includes/sidebar.php';
                 <svg class="w-5 h-5 text-nexo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
             </div>
             <div>
-                <h2 class="text-xl font-bold">Tablero de Avisos</h2>
-                <p class="text-xs dark:text-white/40 text-gray-400 mt-0.5">Comunicados y avisos importantes de la empresa</p>
+                <h2 class="text-xl font-bold"><?php echo __('avi_tablero'); ?></h2>
+                <p class="text-xs dark:text-white/40 text-gray-400 mt-0.5"><?php echo __('avi_desc'); ?></p>
             </div>
         </div>
         <div class="flex items-center gap-3">
             <!-- Filter pills -->
             <div class="flex gap-1.5">
-                <template x-for="f in [{k:'',l:'Todos'},{k:'urgente',l:'Urgente'},{k:'importante',l:'Importante'},{k:'normal',l:'Normal'}]" :key="f.k">
+                <template x-for="f in [{k:'',l:'<?php echo __('filtro_todos'); ?>'},{k:'urgente',l:'<?php echo __('avi_urgente'); ?>'},{k:'importante',l:'<?php echo __('avi_importante'); ?>'},{k:'normal',l:'<?php echo __('avi_normal'); ?>'}]" :key="f.k">
                     <button @click="filtro = f.k" class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5" :class="filtro === f.k ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/60 text-gray-500 hover:dark:bg-white/10 hover:bg-gray-200'">
                         <span x-show="f.k" class="w-2 h-2 rounded-full shrink-0" :class="{'bg-red-400': f.k==='urgente', 'bg-amber-400': f.k==='importante', 'bg-emerald-400': f.k==='normal'}"></span>
                         <span x-text="f.l"></span>
@@ -34,7 +34,7 @@ include 'includes/sidebar.php';
             <?php if ($isAdmin): ?>
             <button @click="openNew()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white flex items-center gap-2 shrink-0">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Nuevo Aviso
+                <?php echo __('avi_nuevo'); ?>
             </button>
             <?php endif; ?>
         </div>
@@ -45,7 +45,7 @@ include 'includes/sidebar.php';
         <div class="space-y-3">
             <p class="text-xs font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider flex items-center gap-2">
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" clip-rule="evenodd"/></svg>
-                Fijados
+                <?php echo __('avi_fijados'); ?>
             </p>
             <template x-for="aviso in pinned()" :key="aviso.id">
                 <div class="relative">
@@ -96,7 +96,7 @@ include 'includes/sidebar.php';
     <!-- Regular avisos feed -->
     <div class="space-y-3">
         <template x-if="regular().length > 0">
-            <p class="text-xs font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider" x-text="pinned().length > 0 ? 'Recientes' : ''"></p>
+            <p class="text-xs font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider" x-text="pinned().length > 0 ? '<?php echo __('avi_recientes'); ?>' : ''"></p>
         </template>
         <template x-for="aviso in regular()" :key="aviso.id">
             <div class="stat-card dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5 space-y-3">
@@ -141,8 +141,8 @@ include 'includes/sidebar.php';
     <template x-if="filtered().length === 0 && !loading">
         <div class="text-center py-20 dark:text-white/30 text-gray-400">
             <svg class="w-16 h-16 mx-auto mb-4 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/></svg>
-            <p class="text-lg font-medium mb-1">Sin avisos</p>
-            <p class="text-sm">No hay comunicados publicados todav&iacute;a</p>
+            <p class="text-lg font-medium mb-1"><?php echo __('avi_sin_avisos'); ?></p>
+            <p class="text-sm"><?php echo __('avi_sin_desc'); ?></p>
         </div>
     </template>
 
@@ -150,19 +150,19 @@ include 'includes/sidebar.php';
     <div x-show="showModal" x-transition x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div @click="showModal = false" class="absolute inset-0 bg-black/60"></div>
         <div class="relative w-full max-w-lg dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl p-6 max-h-[90vh] overflow-y-auto" @click.outside="showModal = false">
-            <h3 class="text-lg font-bold mb-4" x-text="editId ? 'Editar Aviso' : 'Nuevo Aviso'"></h3>
+            <h3 class="text-lg font-bold mb-4" x-text="editId ? '<?php echo __('avi_editar'); ?>' : '<?php echo __('avi_nuevo'); ?>'"></h3>
             <form @submit.prevent="saveAviso()" class="space-y-4">
                 <div>
-                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">T&iacute;tulo *</label>
-                    <input type="text" x-model="form.titulo" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="T&iacute;tulo del aviso">
+                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('avi_titulo_campo'); ?> *</label>
+                    <input type="text" x-model="form.titulo" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50" placeholder="<?php echo __('avi_titulo_ph'); ?>">
                 </div>
                 <div>
-                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Contenido *</label>
-                    <textarea x-model="form.contenido" required rows="6" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="Escribe el comunicado..."></textarea>
+                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('avi_contenido'); ?> *</label>
+                    <textarea x-model="form.contenido" required rows="6" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none" placeholder="<?php echo __('avi_contenido_ph'); ?>"></textarea>
                 </div>
                 <!-- Image upload -->
                 <div>
-                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Imagen (opcional)</label>
+                    <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('avi_imagen'); ?></label>
                     <!-- Existing image preview -->
                     <div x-show="editId && existingImg && !removeImg" class="mb-2 relative inline-block">
                         <img :src="'uploads/avisos/'+existingImg" class="rounded-xl max-h-32 border dark:border-white/10 border-gray-200">
@@ -172,7 +172,7 @@ include 'includes/sidebar.php';
                         <template x-if="!imgPreview">
                             <div>
                                 <svg class="w-6 h-6 mx-auto mb-1 dark:text-white/20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <p class="text-xs dark:text-white/40 text-gray-400">Click para subir imagen</p>
+                                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('avi_subir_img'); ?></p>
                                 <p class="text-[10px] dark:text-white/20 text-gray-300">JPG, PNG, GIF, WebP</p>
                             </div>
                         </template>
@@ -184,14 +184,14 @@ include 'includes/sidebar.php';
                         </template>
                     </div>
                     <input type="file" x-ref="imgInput" @change="handleImg($event)" accept="image/*" class="hidden">
-                    <button type="button" x-show="imgPreview" @click="clearImg()" class="mt-1 text-xs text-red-400 hover:text-red-300">Quitar imagen</button>
+                    <button type="button" x-show="imgPreview" @click="clearImg()" class="mt-1 text-xs text-red-400 hover:text-red-300"><?php echo __('avi_quitar_img'); ?></button>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-xs dark:text-white/50 text-gray-500 mb-2 block">Prioridad</label>
+                        <label class="text-xs dark:text-white/50 text-gray-500 mb-2 block"><?php echo __('avi_prioridad'); ?></label>
                         <div class="flex gap-2">
-                            <template x-for="p in [{k:'normal',l:'Normal',c:'bg-emerald-400'},{k:'importante',l:'Importante',c:'bg-amber-400'},{k:'urgente',l:'Urgente',c:'bg-red-400'}]" :key="p.k">
+                            <template x-for="p in [{k:'normal',l:'<?php echo __('avi_normal'); ?>',c:'bg-emerald-400'},{k:'importante',l:'<?php echo __('avi_importante'); ?>',c:'bg-amber-400'},{k:'urgente',l:'<?php echo __('avi_urgente'); ?>',c:'bg-red-400'}]" :key="p.k">
                                 <button type="button" @click="form.prioridad = p.k" class="flex-1 px-2 py-2 rounded-xl text-xs font-medium border-2 transition-all text-center flex items-center justify-center gap-1.5" :class="form.prioridad === p.k ? 'border-nexo-500/50 dark:bg-white/5 bg-gray-50' : 'border-transparent dark:bg-white/5 bg-gray-50 opacity-50'">
                                     <span class="w-2 h-2 rounded-full shrink-0" :class="p.c"></span>
                                     <span x-text="p.l"></span>
@@ -203,13 +203,13 @@ include 'includes/sidebar.php';
                         <label class="flex items-center gap-2 cursor-pointer px-3 py-2.5 rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 w-full">
                             <input type="checkbox" x-model="form.fijado" class="w-4 h-4 rounded accent-nexo-600">
                             <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-                            <span class="text-xs dark:text-white/60 text-gray-600">Fijar arriba</span>
+                            <span class="text-xs dark:text-white/60 text-gray-600"><?php echo __('avi_fijar_arriba'); ?></span>
                         </label>
                     </div>
                 </div>
                 <div class="flex gap-3 pt-2">
-                    <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
-                    <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white" x-text="saving ? 'Guardando...' : (editId ? 'Guardar' : 'Publicar')" :disabled="saving"></button>
+                    <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
+                    <button type="submit" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white" x-text="saving ? '<?php echo __('usr_guardando'); ?>' : (editId ? '<?php echo __('btn_guardar'); ?>' : '<?php echo __('avi_publicar'); ?>')" :disabled="saving"></button>
                 </div>
             </form>
         </div>
@@ -226,11 +226,11 @@ include 'includes/sidebar.php';
         <div @click="showDel = false" class="absolute inset-0 bg-black/60"></div>
         <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl p-6 text-center">
             <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-red-500/10 flex items-center justify-center"><svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></div>
-            <h3 class="text-lg font-bold mb-1">Eliminar Aviso</h3>
+            <h3 class="text-lg font-bold mb-1"><?php echo __('avi_eliminar_aviso'); ?></h3>
             <p class="text-sm dark:text-white/50 text-gray-500 mb-4">¿Eliminar "<strong x-text="delName"></strong>"? Esto no se puede deshacer.</p>
             <div class="flex gap-3">
-                <button @click="showDel = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100">Cancelar</button>
-                <button @click="deleteAviso()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors">Eliminar</button>
+                <button @click="showDel = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100"><?php echo __('btn_cancelar'); ?></button>
+                <button @click="deleteAviso()" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors"><?php echo __('btn_eliminar'); ?></button>
             </div>
         </div>
     </div>
@@ -264,7 +264,7 @@ function avisosApp() {
         regular() { return this.filtered().filter(a => parseInt(a.fijado) !== 1); },
 
         prioridadDot(p) { return {urgente:'bg-red-400',importante:'bg-amber-400',normal:'bg-emerald-400'}[p] || 'bg-emerald-400'; },
-        prioridadLabel(p) { return {urgente:'Urgente',importante:'Importante',normal:'Normal'}[p] || p; },
+        prioridadLabel(p) { return {urgente:<?php echo json_encode(__('avi_urgente')); ?>,importante:<?php echo json_encode(__('avi_importante')); ?>,normal:<?php echo json_encode(__('avi_normal')); ?>}[p] || p; },
         prioridadBg(p) { return {urgente:'bg-red-500/10',importante:'bg-amber-500/10',normal:'bg-emerald-500/10'}[p] || 'bg-emerald-500/10'; },
         prioridadBadge(p) { return {urgente:'bg-red-500/10 text-red-400',importante:'bg-amber-500/10 text-amber-400',normal:'bg-emerald-500/10 text-emerald-400'}[p] || ''; },
         prioridadBorder(p) { return ''; /* pinned cards already have amber border */ },

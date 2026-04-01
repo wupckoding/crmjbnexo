@@ -16,7 +16,7 @@
         <!-- Global Search Trigger -->
         <button @click="openSearch()" class="flex items-center gap-2 px-3 py-1.5 rounded-xl dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors text-sm dark:text-white/40 text-gray-400">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <span class="hidden sm:inline">Buscar...</span>
+            <span class="hidden sm:inline"><?php echo __('topbar_buscar'); ?>...</span>
             <kbd class="hidden sm:inline text-[10px] px-1.5 py-0.5 rounded dark:bg-white/10 bg-gray-200 font-mono">Ctrl K</kbd>
         </button>
 
@@ -55,12 +55,12 @@
             </button>
             <div x-show="notifOpen" x-transition @click.outside="notifOpen = false" x-cloak class="absolute right-0 top-12 w-80 sm:w-96 dark:bg-dark-800 bg-white rounded-2xl shadow-2xl border dark:border-white/10 border-gray-200 overflow-hidden">
                 <div class="p-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                    <h3 class="font-semibold text-sm">Notificaciones</h3>
-                    <button x-show="unread > 0" @click="readAll()" class="text-[10px] text-nexo-400 hover:text-nexo-300">Marcar todas leídas</button>
+                    <h3 class="font-semibold text-sm"><?php echo __('topbar_notificaciones'); ?></h3>
+                    <button x-show="unread > 0" @click="readAll()" class="text-[10px] text-nexo-400 hover:text-nexo-300"><?php echo __('topbar_marcar_leidas'); ?></button>
                 </div>
                 <div class="max-h-80 overflow-y-auto">
                     <template x-if="notifs.length === 0">
-                        <div class="p-6 text-center dark:text-white/30 text-gray-400 text-sm">Sin notificaciones</div>
+                        <div class="p-6 text-center dark:text-white/30 text-gray-400 text-sm"><?php echo __('topbar_sin_notificaciones'); ?></div>
                     </template>
                     <template x-for="n in notifs" :key="n.id">
                         <div @click="readNotif(n)" class="p-3 hover:dark:bg-white/5 hover:bg-gray-50 transition-colors cursor-pointer border-b dark:border-white/[0.04] border-gray-50 flex gap-3" :class="!parseInt(n.leida) ? 'dark:bg-nexo-900/10 bg-nexo-50/50' : ''">
@@ -109,11 +109,11 @@
                 <div class="p-2">
                     <a href="perfil.php" class="flex items-center gap-2 px-3 py-2 rounded-lg dark:hover:bg-white/5 hover:bg-gray-50 text-sm transition-colors">
                         <svg class="w-4 h-4 dark:text-white/40 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                        Mi Perfil
+                        <?php echo __('nav_perfil'); ?>
                     </a>
                     <a href="auth/logout.php" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-red-500/10 text-sm text-red-400 transition-colors">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-                        Cerrar Sesión
+                        <?php echo __('nav_cerrar_sesion'); ?>
                     </a>
                 </div>
             </div>
@@ -127,7 +127,7 @@
             <!-- Search input -->
             <div class="flex items-center gap-3 px-5 py-4 border-b dark:border-white/[0.06] border-gray-100">
                 <svg class="w-5 h-5 dark:text-white/30 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input x-ref="searchInput" type="text" x-model="searchQuery" @input.debounce.300ms="doSearch()" placeholder="Buscar clientes, facturas, servicios..." class="w-full bg-transparent text-sm outline-none dark:placeholder-white/30 placeholder-gray-400">
+                <input x-ref="searchInput" type="text" x-model="searchQuery" @input.debounce.300ms="doSearch()" :placeholder="'<?php echo __('topbar_buscar'); ?>'" class="w-full bg-transparent text-sm outline-none dark:placeholder-white/30 placeholder-gray-400">
                 <kbd class="text-[10px] px-1.5 py-0.5 rounded dark:bg-white/10 bg-gray-200 font-mono dark:text-white/40 text-gray-500 shrink-0">ESC</kbd>
             </div>
             <!-- Results -->
@@ -136,7 +136,7 @@
                     <div class="p-6 text-center"><div class="w-5 h-5 border-2 border-nexo-500 border-t-transparent rounded-full animate-spin mx-auto"></div></div>
                 </template>
                 <template x-if="!searchLoading && searchResults.length === 0 && searchQuery.length >= 2">
-                    <div class="p-6 text-center text-sm dark:text-white/30 text-gray-400">No se encontraron resultados</div>
+                    <div class="p-6 text-center text-sm dark:text-white/30 text-gray-400"><?php echo __('msg_sin_resultados'); ?></div>
                 </template>
                 <template x-if="!searchLoading && searchQuery.length < 2">
                     <div class="p-4 space-y-2">

@@ -19,9 +19,15 @@ foreach ($_gcRows as $_gcR) $_gc[$_gcR['clave']] = $_gcR['valor'];
 $_empresaNombre = $_gc['empresa_nombre'] ?? 'NEXO';
 $_empresaLogo   = $_gc['logo_url'] ?? '';
 $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
+
+// Load language
+require_once 'includes/helpers.php';
+$_idioma = $_gc['idioma'] ?? 'es';
+$_langFile = __DIR__ . '/config/lang/' . basename($_idioma) . '.php';
+if (file_exists($_langFile)) { $_LANG = require $_langFile; } else { $_LANG = require __DIR__ . '/config/lang/es.php'; }
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo htmlspecialchars($_idioma); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -206,14 +212,14 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
 
                     <!-- Big headline -->
                     <h2 class="text-4xl font-black text-white leading-tight mb-2 tracking-tight">
-                        GESTIONA TUS
+                        <?php echo __('login_headline1', 'GESTIONA TUS'); ?>
                     </h2>
                     <h2 class="text-4xl font-black leading-tight mb-6 tracking-tight text-gradient-animated">
-                        VENTAS DIGITALES
+                        <?php echo __('login_headline2', 'VENTAS DIGITALES'); ?>
                     </h2>
 
                     <p class="text-sm text-white/40 max-w-[280px] mx-auto leading-relaxed">
-                        Controla clientes, cotizaciones y el pipeline de ventas de tu agencia desde un solo lugar.
+                        <?php echo __('login_descripcion', 'Controla clientes, cotizaciones y el pipeline de ventas de tu agencia desde un solo lugar.'); ?>
                     </p>
                 </div>
 
@@ -249,10 +255,10 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                 <!-- Header -->
                 <div class="mb-10">
                     <h1 id="title" class="text-3xl sm:text-4xl font-extrabold text-white mb-2.5 gsap-hidden tracking-tight">
-                        Bienvenido
+                        <?php echo __('login_bienvenido'); ?>
                     </h1>
                     <p id="subtitle" class="text-white/40 text-sm sm:text-base gsap-hidden">
-                        Ingresa tus datos para acceder al CRM
+                        <?php echo __('login_subtitulo'); ?>
                     </p>
                 </div>
 
@@ -278,7 +284,7 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                     
                     <!-- Email -->
                     <div id="fieldEmail" class="gsap-hidden">
-                        <label for="email" class="block text-sm font-medium text-white/60 mb-2">E-mail</label>
+                        <label for="email" class="block text-sm font-medium text-white/60 mb-2"><?php echo __('login_email'); ?></label>
                         <div class="input-underline relative">
                             <input 
                                 type="email" 
@@ -286,7 +292,7 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                                 name="email" 
                                 required 
                                 autocomplete="email"
-                                placeholder="Ingresa tu e-mail"
+                                placeholder="<?php echo __('login_email_placeholder', 'Ingresa tu e-mail'); ?>"
                                 class="input-glow w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3.5 text-white placeholder-white/25 outline-none transition-all duration-300 focus:border-nexo-600/50 focus:bg-white/[0.06] text-sm"
                             >
                             <div class="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20">
@@ -299,7 +305,7 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
 
                     <!-- Password -->
                     <div id="fieldPassword" class="gsap-hidden">
-                        <label for="password" class="block text-sm font-medium text-white/60 mb-2">Contraseña</label>
+                        <label for="password" class="block text-sm font-medium text-white/60 mb-2"><?php echo __('login_contrasena'); ?></label>
                         <div class="input-underline relative">
                             <input 
                                 type="password" 
@@ -326,10 +332,10 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                     <div id="fieldOptions" class="flex items-center justify-between gsap-hidden">
                         <label class="flex items-center gap-2 cursor-pointer group">
                             <input type="checkbox" name="remember" class="custom-checkbox w-4 h-4 rounded border-white/20 bg-white/5 cursor-pointer">
-                            <span class="text-sm text-white/40 group-hover:text-white/60 transition-colors">Recordarme</span>
+                            <span class="text-sm text-white/40 group-hover:text-white/60 transition-colors"><?php echo __('login_recordarme'); ?></span>
                         </label>
                         <a href="forgot_password.php" class="text-sm text-nexo-400/80 hover:text-nexo-400 transition-colors hover:underline underline-offset-4">
-                            ¿Olvidaste tu contraseña?
+                            <?php echo __('login_olvidaste'); ?>
                         </a>
                     </div>
 
@@ -340,7 +346,7 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                             id="btnLogin"
                             class="btn-purple w-full text-white font-semibold py-3.5 px-6 rounded-full transition-all duration-300 text-sm flex items-center justify-center gap-2"
                         >
-                            <span id="btnText">Iniciar Sesión</span>
+                            <span id="btnText"><?php echo __('login_iniciar'); ?></span>
                             <svg id="btnArrow" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                             </svg>
@@ -351,7 +357,7 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
 
                 <!-- Branding -->
                 <div id="branding" class="mt-10 text-center gsap-hidden">
-                    <p class="text-xs text-white/15">© <?php echo date('Y'); ?> <?php echo htmlspecialchars($_empresaNombre, ENT_QUOTES, 'UTF-8'); ?> · Todos los derechos reservados</p>
+                    <p class="text-xs text-white/15">© <?php echo date('Y'); ?> <?php echo htmlspecialchars($_empresaNombre, ENT_QUOTES, 'UTF-8'); ?> · <?php echo __('login_derechos', 'Todos los derechos reservados'); ?></p>
                 </div>
             </div>
         </div>
@@ -366,11 +372,11 @@ $_initials = mb_strtoupper(mb_substr($_empresaNombre, 0, 2));
                 </svg>
             </div>
             <div class="flex-1">
-                <p class="text-sm font-medium text-white">Instalar CRM <?php echo htmlspecialchars($_empresaNombre, ENT_QUOTES, 'UTF-8'); ?></p>
-                <p class="text-xs text-white/40">Accede más rápido desde tu pantalla</p>
+                <p class="text-sm font-medium text-white"><?php echo __('login_instalar', 'Instalar CRM'); ?> <?php echo htmlspecialchars($_empresaNombre, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p class="text-xs text-white/40"><?php echo __('login_instalar_desc', 'Accede más rápido desde tu pantalla'); ?></p>
             </div>
             <button id="installBtn" class="px-4 py-2 bg-nexo-600/20 hover:bg-nexo-600/30 text-nexo-400 rounded-lg text-xs font-medium transition-colors">
-                Instalar
+                <?php echo __('login_instalar_btn', 'Instalar'); ?>
             </button>
             <button id="dismissInstall" class="text-white/30 hover:text-white/50 transition-colors">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -40,3 +40,12 @@ $_gcRows = $pdo->query("SELECT clave, valor FROM configuracion_global")->fetchAl
 foreach ($_gcRows as $_gcR) $_globalConfig[$_gcR['clave']] = $_gcR['valor'];
 $_empresaNombre = $_globalConfig['empresa_nombre'] ?? 'NEXO';
 $_empresaLogo = $_globalConfig['logo_url'] ?? '';
+
+// Load language
+$_idioma = $_globalConfig['idioma'] ?? 'es';
+$_langFile = __DIR__ . '/../config/lang/' . $_idioma . '.php';
+if (file_exists($_langFile)) {
+    $_LANG = require $_langFile;
+} else {
+    $_LANG = require __DIR__ . '/../config/lang/es.php';
+}

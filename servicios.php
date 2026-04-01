@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Servicios';
+$pageTitle = __('nav_servicios');
 $currentPage = 'servicios';
 
 include 'includes/header.php';
@@ -19,7 +19,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold" x-text="servicios.length"></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Total Servicios</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('srv_total'); ?></p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold" x-text="servicios.filter(s => s.activo == 1).length"></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Activos</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('srv_activos'); ?></p>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold" x-text="totalFacturado"></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Veces Facturado</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('srv_veces_fact'); ?></p>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-2xl font-bold">$<span x-text="totalIngresos"></span></p>
-                    <p class="text-[11px] dark:text-white/40 text-gray-400">Ingresos Generados</p>
+                    <p class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('srv_ingresos_gen'); ?></p>
                 </div>
             </div>
         </div>
@@ -64,28 +64,28 @@ include 'includes/sidebar.php';
             <!-- Search -->
             <div class="relative">
                 <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/30 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" x-model="search" placeholder="Buscar servicio..." class="pl-10 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 w-52">
+                <input type="text" x-model="search" placeholder="<?php echo __('srv_buscar'); ?>" class="pl-10 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 w-52">
             </div>
             <!-- Category filter -->
             <select x-model="filterCat" class="px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none">
-                <option value="">Todas categorías</option>
-                <option value="desarrollo_web">Desarrollo Web</option>
-                <option value="saas">SaaS</option>
-                <option value="marketing">Marketing</option>
-                <option value="diseño">Diseño</option>
-                <option value="hosting">Hosting</option>
-                <option value="mantenimiento">Mantenimiento</option>
+                <option value=""><?php echo __('srv_todas_cat'); ?></option>
+                <option value="desarrollo_web"><?php echo __('srv_desarrollo_web'); ?></option>
+                <option value="saas"><?php echo __('srv_saas'); ?></option>
+                <option value="marketing"><?php echo __('srv_marketing'); ?></option>
+                <option value="diseño"><?php echo __('srv_diseno'); ?></option>
+                <option value="hosting"><?php echo __('srv_hosting'); ?></option>
+                <option value="mantenimiento"><?php echo __('srv_mantenimiento'); ?></option>
             </select>
             <!-- Status filter -->
             <select x-model="filterStatus" class="px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none">
-                <option value="">Todos</option>
-                <option value="1">Activos</option>
-                <option value="0">Inactivos</option>
+                <option value=""><?php echo __('filtro_todos'); ?></option>
+                <option value="1"><?php echo __('srv_activos'); ?></option>
+                <option value="0"><?php echo __('srv_inactivos'); ?></option>
             </select>
         </div>
         <button @click="openCreate()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white flex items-center gap-2 shrink-0">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Nuevo Servicio
+            <?php echo __('srv_nuevo'); ?>
         </button>
     </div>
 
@@ -152,7 +152,7 @@ include 'includes/sidebar.php';
         <template x-if="filtered.length === 0">
             <div class="col-span-full py-16 text-center">
                 <svg class="w-12 h-12 mx-auto mb-3 dark:text-white/10 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                <p class="text-sm dark:text-white/30 text-gray-400">No se encontraron servicios</p>
+                <p class="text-sm dark:text-white/30 text-gray-400"><?php echo __('srv_sin_resultados'); ?></p>
             </div>
         </template>
     </div>
@@ -165,42 +165,42 @@ include 'includes/sidebar.php';
                 <div class="h-1 bg-nexo-500"></div>
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-5">
-                        <h3 class="text-lg font-bold" x-text="editing ? 'Editar Servicio' : 'Nuevo Servicio'"></h3>
+                        <h3 class="text-lg font-bold" x-text="editing ? '<?php echo __('srv_editar'); ?>' : '<?php echo __('srv_nuevo'); ?>'"></h3>
                         <button @click="showModal = false" class="w-8 h-8 flex items-center justify-center rounded-lg dark:hover:bg-white/10 hover:bg-gray-100 transition-colors">
                             <svg class="w-5 h-5 dark:text-white/40 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </button>
                     </div>
                     <form @submit.prevent="save()" class="space-y-4">
                         <div>
-                            <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Nombre *</label>
+                            <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('srv_nombre'); ?> *</label>
                             <input type="text" x-model="form.nombre" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
                         </div>
                         <div>
-                            <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Descripción</label>
+                            <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('srv_descripcion'); ?></label>
                             <textarea x-model="form.descripcion" rows="3" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 resize-none"></textarea>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Precio (USD) *</label>
+                                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('srv_precio'); ?> (USD) *</label>
                                 <input type="number" x-model="form.precio" step="0.01" min="0" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
                             </div>
                             <div>
-                                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Categoría</label>
+                                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('srv_categoria'); ?></label>
                                 <select x-model="form.categoria" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
-                                    <option value="desarrollo_web">Desarrollo Web</option>
-                                    <option value="saas">SaaS</option>
-                                    <option value="marketing">Marketing</option>
-                                    <option value="diseño">Diseño</option>
-                                    <option value="hosting">Hosting</option>
-                                    <option value="mantenimiento">Mantenimiento</option>
+                                    <option value="desarrollo_web"><?php echo __('srv_desarrollo_web'); ?></option>
+                                    <option value="saas"><?php echo __('srv_saas'); ?></option>
+                                    <option value="marketing"><?php echo __('srv_marketing'); ?></option>
+                                    <option value="diseño"><?php echo __('srv_diseno'); ?></option>
+                                    <option value="hosting"><?php echo __('srv_hosting'); ?></option>
+                                    <option value="mantenimiento"><?php echo __('srv_mantenimiento'); ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="flex gap-3 pt-2">
-                            <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
+                            <button type="button" @click="showModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                             <button type="submit" :disabled="saving" class="flex-1 btn-purple px-4 py-2.5 rounded-xl text-sm font-medium text-white disabled:opacity-50">
-                                <span x-show="!saving" x-text="editing ? 'Guardar Cambios' : 'Crear Servicio'"></span>
-                                <span x-show="saving">Guardando...</span>
+                                <span x-show="!saving" x-text="editing ? '<?php echo __('btn_guardar_cambios'); ?>' : '<?php echo __('srv_nuevo'); ?>'"></span>
+                                <span x-show="saving"><?php echo __('usr_guardando'); ?></span>
                             </button>
                         </div>
                     </form>
@@ -217,10 +217,10 @@ include 'includes/sidebar.php';
                 <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-red-500/10 flex items-center justify-center">
                     <svg class="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </div>
-                <h3 class="text-lg font-bold mb-1">Eliminar Servicio</h3>
+                <h3 class="text-lg font-bold mb-1"><?php echo __('srv_eliminar_conf'); ?></h3>
                 <p class="text-sm dark:text-white/50 text-gray-500 mb-5">¿Eliminar <strong x-text="deleteTarget?.nombre"></strong>? Esta acción no se puede deshacer.</p>
                 <div class="flex gap-3">
-                    <button @click="showDeleteModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
+                    <button @click="showDeleteModal = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                     <button @click="doDelete()" :disabled="deleting" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium bg-red-500 hover:bg-red-600 text-white transition-colors disabled:opacity-50">
                         <span x-show="!deleting">Eliminar</span>
                         <span x-show="deleting">Eliminando...</span>
@@ -240,6 +240,16 @@ include 'includes/sidebar.php';
 </main>
 
 <script>
+const _srv = {
+    catLabels: {
+        desarrollo_web: <?php echo json_encode(__('srv_desarrollo_web')); ?>,
+        saas: <?php echo json_encode(__('srv_saas')); ?>,
+        marketing: <?php echo json_encode(__('srv_marketing')); ?>,
+        'diseño': <?php echo json_encode(__('srv_diseno')); ?>,
+        hosting: <?php echo json_encode(__('srv_hosting')); ?>,
+        mantenimiento: <?php echo json_encode(__('srv_mantenimiento')); ?>
+    }
+};
 function serviciosApp() {
     return {
         servicios: [],
@@ -309,15 +319,7 @@ function serviciosApp() {
         },
 
         catLabel(cat) {
-            const m = {
-                desarrollo_web: 'Desarrollo Web',
-                saas: 'SaaS',
-                marketing: 'Marketing',
-                'diseño': 'Diseño',
-                hosting: 'Hosting',
-                mantenimiento: 'Mantenimiento'
-            };
-            return m[cat] || cat;
+            return _srv.catLabels[cat] || cat;
         },
 
         openCreate() {

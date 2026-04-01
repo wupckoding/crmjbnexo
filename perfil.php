@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Perfil';
+$pageTitle = __('perf_titulo', 'Mi Perfil');
 $currentPage = 'usuarios';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['user_id'];
@@ -105,36 +105,36 @@ include 'includes/sidebar.php';
                 <p class="dark:text-white/40 text-gray-400 text-sm"><?php echo htmlspecialchars($perfil['email']); ?></p>
                 <div class="flex items-center gap-2 justify-center sm:justify-start mt-2">
                     <span class="text-[10px] font-medium px-2 py-0.5 rounded-full <?php echo $perfil['rol'] === 'admin' ? 'bg-nexo-500/20 text-nexo-400' : 'bg-blue-500/20 text-blue-400'; ?>"><?php echo ucfirst($perfil['rol']); ?></span>
-                    <span class="text-[10px] dark:text-white/30 text-gray-400">Desde <?php echo date('M Y', strtotime($perfil['creado_en'])); ?></span>
+                    <span class="text-[10px] dark:text-white/30 text-gray-400"><?php echo __('perf_desde', 'Desde'); ?> <?php echo date('M Y', strtotime($perfil['creado_en'])); ?></span>
                 </div>
             </div>
         </div>
         
         <!-- Stats -->
         <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t dark:border-white/[0.06] border-gray-100">
-            <div class="text-center"><p class="text-2xl font-bold"><?php echo $totalClientes; ?></p><p class="text-xs dark:text-white/40 text-gray-400">Clientes</p></div>
-            <div class="text-center"><p class="text-2xl font-bold"><?php echo $totalFacturas; ?></p><p class="text-xs dark:text-white/40 text-gray-400">Facturas</p></div>
-            <div class="text-center"><p class="text-2xl font-bold text-emerald-400">$<?php echo number_format($ingresoTotal, 0, ',', '.'); ?></p><p class="text-xs dark:text-white/40 text-gray-400">Ingreso Total</p></div>
+            <div class="text-center"><p class="text-2xl font-bold"><?php echo $totalClientes; ?></p><p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('perf_clientes', 'Clientes'); ?></p></div>
+            <div class="text-center"><p class="text-2xl font-bold"><?php echo $totalFacturas; ?></p><p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('perf_facturas', 'Facturas'); ?></p></div>
+            <div class="text-center"><p class="text-2xl font-bold text-emerald-400">$<?php echo number_format($ingresoTotal, 0, ',', '.'); ?></p><p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('perf_ingreso_total', 'Ingreso Total'); ?></p></div>
         </div>
     </div>
 
     <?php if ($esPropio || $esAdmin): ?>
     <!-- Edit form -->
     <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-6">
-        <h3 class="font-semibold mb-4">Editar Perfil</h3>
+        <h3 class="font-semibold mb-4"><?php echo __('perf_editar', 'Editar Perfil'); ?></h3>
         <form method="POST" class="space-y-4">
             <input type="hidden" name="update_profile" value="1">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Nombre</label>
+                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('perf_nombre', 'Nombre'); ?></label>
                     <input type="text" name="nombre" value="<?php echo htmlspecialchars($perfil['nombre']); ?>" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
-                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Email</label>
+                <div><label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('perf_email', 'Email'); ?></label>
                     <input type="email" name="email" value="<?php echo htmlspecialchars($perfil['email']); ?>" required class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50"></div>
             </div>
             <div>
-                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Nueva Contraseña</label>
-                <input type="password" name="new_password" placeholder="Dejar vacío para no cambiar" minlength="6" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
+                <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('perf_nueva_contrasena', 'Nueva Contraseña'); ?></label>
+                <input type="password" name="new_password" placeholder="<?php echo __('perf_dejar_vacio', 'Dejar vacío para no cambiar'); ?>" minlength="6" class="w-full px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50">
             </div>
-            <button type="submit" class="btn-purple px-6 py-2.5 rounded-xl text-sm font-medium text-white">Guardar Cambios</button>
+            <button type="submit" class="btn-purple px-6 py-2.5 rounded-xl text-sm font-medium text-white"><?php echo __('perf_guardar', 'Guardar Cambios'); ?></button>
         </form>
     </div>
 
@@ -143,38 +143,38 @@ include 'includes/sidebar.php';
     <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-6" x-data="twoFactorApp()">
         <div class="flex items-center justify-between mb-4">
             <div>
-                <h3 class="font-semibold flex items-center gap-2">🔐 Autenticación de Dos Factores (2FA)</h3>
-                <p class="text-xs dark:text-white/40 text-gray-400 mt-0.5">Protege tu cuenta con un código temporal</p>
+                <h3 class="font-semibold flex items-center gap-2">🔐 <?php echo __('perf_2fa_titulo', 'Autenticación de Dos Factores (2FA)'); ?></h3>
+                <p class="text-xs dark:text-white/40 text-gray-400 mt-0.5"><?php echo __('perf_2fa_desc', 'Protege tu cuenta con un código temporal'); ?></p>
             </div>
             <?php if ($perfil['totp_activo']): ?>
-            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400">Activo</span>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400"><?php echo __('perf_2fa_activo', 'Activo'); ?></span>
             <?php else: ?>
-            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400">Inactivo</span>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400"><?php echo __('perf_2fa_inactivo', 'Inactivo'); ?></span>
             <?php endif; ?>
         </div>
 
         <?php if (!$perfil['totp_activo']): ?>
         <!-- Enable 2FA -->
         <div x-show="!setupMode">
-            <p class="text-sm dark:text-white/60 text-gray-500 mb-3">Agrega una capa extra de seguridad a tu cuenta usando una app como Google Authenticator o Authy.</p>
-            <button @click="startSetup()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white">Activar 2FA</button>
+            <p class="text-sm dark:text-white/60 text-gray-500 mb-3"><?php echo __('perf_2fa_intro', 'Agrega una capa extra de seguridad a tu cuenta usando una app como Google Authenticator o Authy.'); ?></p>
+            <button @click="startSetup()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white"><?php echo __('perf_activar_2fa', 'Activar 2FA'); ?></button>
         </div>
         <div x-show="setupMode" x-cloak class="space-y-4">
-            <p class="text-sm dark:text-white/60 text-gray-500">Escanea el código QR con tu app de autenticación:</p>
+            <p class="text-sm dark:text-white/60 text-gray-500"><?php echo __('perf_2fa_escanear', 'Escanea el código QR con tu app de autenticación:'); ?></p>
             <div class="flex flex-col sm:flex-row items-center gap-6">
                 <div class="bg-white p-3 rounded-xl">
                     <img :src="qrUrl" class="w-48 h-48" x-show="qrUrl">
                 </div>
                 <div class="space-y-3 flex-1">
                     <div>
-                        <p class="text-xs dark:text-white/40 text-gray-400 mb-1">O ingresa este código manualmente:</p>
+                        <p class="text-xs dark:text-white/40 text-gray-400 mb-1"><?php echo __('perf_2fa_manual', 'O ingresa este código manualmente:'); ?></p>
                         <code class="text-sm font-mono bg-nexo-600/10 text-nexo-400 px-3 py-1.5 rounded-lg block" x-text="secret"></code>
                     </div>
                     <div>
-                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block">Código de verificación</label>
+                        <label class="text-xs dark:text-white/50 text-gray-500 mb-1 block"><?php echo __('perf_2fa_codigo', 'Código de verificación'); ?></label>
                         <div class="flex gap-2">
                             <input type="text" x-model="verifyCode" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="000000" class="w-32 px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 text-center font-mono tracking-widest">
-                            <button @click="enableTwoFactor()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white" :disabled="loading">Verificar</button>
+                            <button @click="enableTwoFactor()" class="btn-purple px-4 py-2 rounded-xl text-sm font-medium text-white" :disabled="loading"><?php echo __('perf_2fa_verificar', 'Verificar'); ?></button>
                         </div>
                         <p x-show="error" class="text-xs text-red-400 mt-1" x-text="error"></p>
                     </div>
@@ -184,10 +184,10 @@ include 'includes/sidebar.php';
         <?php else: ?>
         <!-- Disable 2FA -->
         <div class="space-y-3">
-            <p class="text-sm dark:text-white/60 text-gray-500">La autenticación de dos factores está activa. Para desactivarla, ingresa un código de tu app:</p>
+            <p class="text-sm dark:text-white/60 text-gray-500"><?php echo __('perf_2fa_activo_desc', 'La autenticación de dos factores está activa. Para desactivarla, ingresa un código de tu app:'); ?></p>
             <div class="flex gap-2">
                 <input type="text" x-model="verifyCode" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="000000" class="w-32 px-3 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/10 border-gray-200 outline-none focus:border-nexo-500/50 text-center font-mono tracking-widest">
-                <button @click="disableTwoFactor()" class="px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors" :disabled="loading">Desactivar 2FA</button>
+                <button @click="disableTwoFactor()" class="px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-600 hover:bg-red-700 transition-colors" :disabled="loading"><?php echo __('perf_desactivar_2fa', 'Desactivar 2FA'); ?></button>
             </div>
             <p x-show="error" class="text-xs text-red-400 mt-1" x-text="error"></p>
         </div>

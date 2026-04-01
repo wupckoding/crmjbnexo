@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Finanzas';
+$pageTitle = __('fin_titulo');
 $currentPage = 'finanzas';
 
 $isAdmin = ($_SESSION['user_role'] ?? '') === 'admin';
@@ -17,6 +17,14 @@ $filtroBusqueda = trim($_GET['q'] ?? '');
 $filtroTipo = trim($_GET['tipo'] ?? ''); // gasto|ingreso
 
 $meses = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+if (function_exists('__')) {
+    $mesesI18n = [
+        'es' => ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+        'pt' => ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        'en' => ['','January','February','March','April','May','June','July','August','September','October','November','December'],
+    ];
+    $meses = $mesesI18n[$_idioma ?? 'es'] ?? $meses;
+}
 
 $prevM = $mesVer - 1; $prevY = $anioVer;
 if ($prevM < 1) { $prevM = 12; $prevY--; }
@@ -140,20 +148,20 @@ include 'includes/sidebar.php';
                 <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
-                <h1 class="text-lg font-bold dark:text-white text-gray-900">Finanzas</h1>
-                <p class="text-xs dark:text-white/40 text-gray-400">Control de ingresos, gastos y flujo de caja</p>
+                <h1 class="text-lg font-bold dark:text-white text-gray-900"><?php echo __('fin_titulo'); ?></h1>
+                <p class="text-xs dark:text-white/40 text-gray-400"><?php echo __('fin_subtitulo'); ?></p>
             </div>
         </div>
         <div class="flex items-center gap-2">
             <button @click="openGasto()" class="px-3.5 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-colors shadow-lg shadow-red-500/20 flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
-                Gasto
+                <?php echo __('fin_gasto'); ?>
             </button>
             <button @click="openIngreso()" class="px-3.5 py-2 rounded-xl text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20 flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Ingreso
+                <?php echo __('fin_ingreso'); ?>
             </button>
-            <button @click="showCatModal = true" class="w-9 h-9 rounded-xl dark:bg-white/5 bg-gray-100 flex items-center justify-center dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="Gestionar Categorías">
+            <button @click="showCatModal = true" class="w-9 h-9 rounded-xl dark:bg-white/5 bg-gray-100 flex items-center justify-center dark:hover:bg-white/10 hover:bg-gray-200 transition-colors" title="<?php echo __('fin_gestionar_cat'); ?>">
                 <svg class="w-4 h-4 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
             </button>
         </div>
@@ -170,7 +178,7 @@ include 'includes/sidebar.php';
                 <svg class="w-4 h-4 dark:text-white/60 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
             <?php if ($mesVer !== $mesActual || $anioVer !== $anioActual): ?>
-            <a href="finanzas.php" class="px-2.5 py-1 text-[10px] font-medium rounded-lg dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10 hover:bg-gray-200 transition-colors">Actual</a>
+            <a href="finanzas.php" class="px-2.5 py-1 text-[10px] font-medium rounded-lg dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('fin_actual'); ?></a>
             <?php endif; ?>
         </div>
         <!-- Search bar -->
@@ -179,10 +187,10 @@ include 'includes/sidebar.php';
             <input type="hidden" name="anio" value="<?php echo $anioVer; ?>">
             <div class="relative">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-white/25 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" name="q" value="<?php echo htmlspecialchars($filtroBusqueda); ?>" placeholder="Buscar transacciones..." class="pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 w-48 sm:w-56 transition-colors">
+                <input type="text" name="q" value="<?php echo htmlspecialchars($filtroBusqueda); ?>" placeholder="<?php echo __('fin_buscar_trans'); ?>" class="pl-9 pr-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 w-48 sm:w-56 transition-colors">
             </div>
             <?php if ($filtroBusqueda || $filtroCategoria || $filtroMetodo): ?>
-            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2 py-1 rounded-lg bg-red-500/10 text-red-400 font-medium hover:bg-red-500/20 transition-colors">Limpiar</a>
+            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2 py-1 rounded-lg bg-red-500/10 text-red-400 font-medium hover:bg-red-500/20 transition-colors"><?php echo __('fin_limpiar'); ?></a>
             <?php endif; ?>
         </form>
     </div>
@@ -193,7 +201,7 @@ include 'includes/sidebar.php';
         <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-500/5 rounded-full -translate-y-8 translate-x-8"></div>
             <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider">Ingresos</span>
+                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_ingresos'); ?></span>
                 <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                 </div>
@@ -208,7 +216,7 @@ include 'includes/sidebar.php';
         <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-20 h-20 bg-red-500/5 rounded-full -translate-y-8 translate-x-8"></div>
             <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider">Gastos</span>
+                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_gastos'); ?></span>
                 <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
                 </div>
@@ -222,7 +230,7 @@ include 'includes/sidebar.php';
         <!-- Balance -->
         <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider">Balance</span>
+                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_balance'); ?></span>
                 <div class="w-8 h-8 rounded-lg <?php echo $balance >= 0 ? 'bg-emerald-500/10' : 'bg-red-500/10'; ?> flex items-center justify-center">
                     <svg class="w-4 h-4 <?php echo $balance >= 0 ? 'text-emerald-400' : 'text-red-400'; ?>" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
                 </div>
@@ -235,14 +243,14 @@ include 'includes/sidebar.php';
         <!-- Por Recibir -->
         <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-4">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider">Por Recibir</span>
+                <span class="text-[11px] font-medium dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_por_recibir'); ?></span>
                 <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
                     <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
             </div>
             <p class="text-2xl font-bold dark:text-amber-400 text-amber-600">$<?php echo number_format($porRecibir, 0, ',', '.'); ?></p>
             <div class="flex items-center gap-1 mt-1">
-                <span class="text-[10px] dark:text-white/30 text-gray-400"><?php echo $factPendCount; ?> facturas</span>
+                <span class="text-[10px] dark:text-white/30 text-gray-400"><?php echo $factPendCount; ?> <?php echo __('fin_facturas'); ?></span>
             </div>
         </div>
     </div>
@@ -251,12 +259,12 @@ include 'includes/sidebar.php';
     <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
         <div class="flex items-center justify-between mb-4">
             <div>
-                <h3 class="text-sm font-bold dark:text-white text-gray-900">Flujo de Caja</h3>
-                <p class="text-[11px] dark:text-white/30 text-gray-400 mt-0.5">Últimos 12 meses</p>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_flujo_caja'); ?></h3>
+                <p class="text-[11px] dark:text-white/30 text-gray-400 mt-0.5"><?php echo __('fin_ultimos_12'); ?></p>
             </div>
             <div class="flex items-center gap-3">
-                <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></div><span class="text-[11px] dark:text-white/40 text-gray-400">Ingresos</span></div>
-                <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-sm bg-red-400"></div><span class="text-[11px] dark:text-white/40 text-gray-400">Gastos</span></div>
+                <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></div><span class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('fin_ingresos'); ?></span></div>
+                <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-sm bg-red-400"></div><span class="text-[11px] dark:text-white/40 text-gray-400"><?php echo __('fin_gastos'); ?></span></div>
             </div>
         </div>
         <div class="h-56 sm:h-64"><canvas id="finChart"></canvas></div>
@@ -264,9 +272,9 @@ include 'includes/sidebar.php';
 
     <!-- ========== TABS ========== -->
     <div class="flex items-center gap-1.5 border-b dark:border-white/[0.06] border-gray-200 pb-px">
-        <button @click="tab = 'resumen'" :class="tab==='resumen' ? 'text-nexo-400 border-b-2 border-nexo-500 dark:bg-nexo-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors">Resumen</button>
-        <button @click="tab = 'gastos'" :class="tab==='gastos' ? 'text-red-400 border-b-2 border-red-500 dark:bg-red-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors">Gastos</button>
-        <button @click="tab = 'ingresos'" :class="tab==='ingresos' ? 'text-emerald-400 border-b-2 border-emerald-500 dark:bg-emerald-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors">Ingresos</button>
+        <button @click="tab = 'resumen'" :class="tab==='resumen' ? 'text-nexo-400 border-b-2 border-nexo-500 dark:bg-nexo-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors"><?php echo __('fin_resumen'); ?></button>
+        <button @click="tab = 'gastos'" :class="tab==='gastos' ? 'text-red-400 border-b-2 border-red-500 dark:bg-red-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors"><?php echo __('fin_gastos'); ?></button>
+        <button @click="tab = 'ingresos'" :class="tab==='ingresos' ? 'text-emerald-400 border-b-2 border-emerald-500 dark:bg-emerald-500/5' : 'dark:text-white/40 text-gray-400 border-b-2 border-transparent'" class="px-3.5 py-2 text-xs font-semibold transition-colors"><?php echo __('fin_ingresos'); ?></button>
     </div>
 
     <!-- ========== TAB: RESUMEN ========== -->
@@ -276,11 +284,11 @@ include 'includes/sidebar.php';
             <!-- Categories breakdown -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-sm font-bold dark:text-white text-gray-900">Gastos por Categoría</h3>
-                    <span class="text-xs dark:text-white/30 text-gray-400"><?php echo count($catBreakdown); ?> categorías</span>
+                    <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_gastos_por_cat'); ?></h3>
+                    <span class="text-xs dark:text-white/30 text-gray-400"><?php echo count($catBreakdown); ?> <?php echo __('fin_categorias'); ?></span>
                 </div>
                 <?php if (empty($catBreakdown)): ?>
-                <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400">Sin gastos este mes</p></div>
+                <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('fin_sin_gastos'); ?></p></div>
                 <?php else: foreach ($catBreakdown as $cat):
                     $pct = $gastosMes > 0 ? round(($cat['total'] / $gastosMes) * 100) : 0;
                     $catInfo = $catMap[$cat['categoria']] ?? null;
@@ -307,9 +315,9 @@ include 'includes/sidebar.php';
 
             <!-- Income by method -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-4">Ingresos por Método</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-4"><?php echo __('fin_ingresos_por_metodo'); ?></h3>
                 <?php if (empty($metodoBreakdown)): ?>
-                <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400">Sin ingresos este mes</p></div>
+                <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('fin_sin_ingresos'); ?></p></div>
                 <?php else: ?>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <?php foreach ($metodoBreakdown as $met):
@@ -331,7 +339,7 @@ include 'includes/sidebar.php';
             <!-- Top Gastos -->
             <?php if ($topGastos): ?>
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-3">Mayores Gastos del Mes</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-3"><?php echo __('fin_mayores_gastos'); ?></h3>
                 <div class="space-y-2">
                     <?php foreach ($topGastos as $idx => $tg):
                         $catInfo = $catMap[$tg['categoria']] ?? null;
@@ -358,12 +366,12 @@ include 'includes/sidebar.php';
         <div class="space-y-4">
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 overflow-hidden">
                 <div class="px-4 py-3 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                    <h3 class="text-sm font-bold dark:text-white text-gray-900">Facturas Pendientes</h3>
-                    <a href="facturas.php" class="text-[10px] text-nexo-400 hover:text-nexo-300 font-medium">Ver todas</a>
+                    <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_fact_pendientes'); ?></h3>
+                    <a href="facturas.php" class="text-[10px] text-nexo-400 hover:text-nexo-300 font-medium"><?php echo __('fin_ver_todas'); ?></a>
                 </div>
                 <div class="p-2 max-h-[450px] overflow-y-auto">
                     <?php if (empty($factPendientes)): ?>
-                    <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400">Sin facturas pendientes</p></div>
+                    <div class="text-center py-8"><p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('fin_sin_fact_pend'); ?></p></div>
                     <?php else: foreach ($factPendientes as $fp):
                         $vencida = $fp['estado'] === 'vencida' || ($fp['fecha_vencimiento'] && strtotime($fp['fecha_vencimiento']) < time());
                         $diasRestantes = $fp['fecha_vencimiento'] ? (int)((strtotime($fp['fecha_vencimiento']) - time()) / 86400) : null;
@@ -377,7 +385,7 @@ include 'includes/sidebar.php';
                         <div class="text-right shrink-0">
                             <p class="text-xs font-bold dark:text-white text-gray-900">$<?php echo number_format($fp['total'], 0, ',', '.'); ?></p>
                             <p class="text-[10px] font-medium <?php echo $vencida ? 'text-red-400' : 'text-amber-400'; ?>">
-                                <?php if ($vencida): ?>Vencida<?php elseif ($diasRestantes !== null): ?><?php echo $diasRestantes; ?>d<?php endif; ?>
+                                <?php if ($vencida): ?><?php echo __('fin_vencida'); ?><?php elseif ($diasRestantes !== null): ?><?php echo $diasRestantes; ?>d<?php endif; ?>
                             </p>
                         </div>
                     </div>
@@ -387,7 +395,7 @@ include 'includes/sidebar.php';
 
             <!-- Quick donut -->
             <div class="dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/[0.06] border-gray-200 p-5">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-3">Distribución</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900 mb-3"><?php echo __('fin_distribucion'); ?></h3>
                 <div class="flex items-center justify-center mb-3">
                     <div class="relative w-32 h-32">
                         <canvas id="donutChart"></canvas>
@@ -395,17 +403,17 @@ include 'includes/sidebar.php';
                             <p class="text-sm font-bold <?php echo $balance >= 0 ? 'text-emerald-400' : 'text-red-400'; ?>">
                                 <?php echo $margen; ?>%
                             </p>
-                            <p class="text-[9px] dark:text-white/30 text-gray-400">Margen</p>
+                            <p class="text-[9px] dark:text-white/30 text-gray-400"><?php echo __('fin_margen'); ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between text-xs">
-                        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="dark:text-white/50 text-gray-500">Ingresos</span></div>
+                        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="dark:text-white/50 text-gray-500"><?php echo __('fin_ingresos'); ?></span></div>
                         <span class="font-semibold text-emerald-400">$<?php echo number_format($ingresosMes, 0, ',', '.'); ?></span>
                     </div>
                     <div class="flex items-center justify-between text-xs">
-                        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-red-400"></div><span class="dark:text-white/50 text-gray-500">Gastos</span></div>
+                        <div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-red-400"></div><span class="dark:text-white/50 text-gray-500"><?php echo __('fin_gastos'); ?></span></div>
                         <span class="font-semibold text-red-400">$<?php echo number_format($gastosMes, 0, ',', '.'); ?></span>
                     </div>
                 </div>
@@ -417,8 +425,8 @@ include 'includes/sidebar.php';
     <div x-show="tab === 'gastos'" class="space-y-3">
         <!-- Filter pills -->
         <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/25 text-gray-400">Filtrar:</span>
-            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors <?php echo !$filtroCategoria ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>">Todos</a>
+            <span class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/25 text-gray-400"><?php echo __('fin_filtrar'); ?></span>
+            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors <?php echo !$filtroCategoria ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>"><?php echo __('filtro_todos'); ?></a>
             <?php foreach ($categoriasGasto as $cg): ?>
             <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>&cat=<?php echo urlencode($cg['nombre']); ?>"
                class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors flex items-center gap-1 <?php echo $filtroCategoria === $cg['nombre'] ? 'text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>"
@@ -435,11 +443,11 @@ include 'includes/sidebar.php';
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="dark:bg-white/[0.02] bg-gray-50">
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Fecha</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Descripción</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Categoría</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell">Registrado por</th>
-                            <th class="px-4 py-3 text-right text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Monto</th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_fecha'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_descripcion'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_categoria'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell"><?php echo __('fin_registrado_por'); ?></th>
+                            <th class="px-4 py-3 text-right text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_monto'); ?></th>
                             <th class="px-4 py-3 w-10"></th>
                         </tr>
                     </thead>
@@ -478,8 +486,8 @@ include 'includes/sidebar.php';
     <div x-show="tab === 'ingresos'" class="space-y-3">
         <!-- Filter pills -->
         <div class="flex items-center gap-2 flex-wrap">
-            <span class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/25 text-gray-400">Método:</span>
-            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors <?php echo !$filtroMetodo ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>">Todos</a>
+            <span class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/25 text-gray-400"><?php echo __('fin_metodo'); ?></span>
+            <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>" class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors <?php echo !$filtroMetodo ? 'bg-nexo-600 text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>"><?php echo __('filtro_todos'); ?></a>
             <?php foreach ($metodosConfig as $mk => $mv): ?>
             <a href="?mes=<?php echo $mesVer; ?>&anio=<?php echo $anioVer; ?>&metodo=<?php echo $mk; ?>"
                class="text-[10px] px-2.5 py-1 rounded-lg font-medium transition-colors flex items-center gap-1 <?php echo $filtroMetodo === $mk ? 'text-white' : 'dark:bg-white/5 bg-gray-100 dark:text-white/50 text-gray-500 hover:dark:bg-white/10'; ?>"
@@ -497,11 +505,11 @@ include 'includes/sidebar.php';
                     <thead>
                         <tr class="dark:bg-white/[0.02] bg-gray-50">
                             <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Fecha</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Descripción</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Cliente</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell">Método</th>
-                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell">Factura</th>
-                            <th class="px-4 py-3 text-right text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider">Monto</th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_descripcion'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_cliente'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell"><?php echo __('fin_metodo'); ?></th>
+                            <th class="px-4 py-3 text-left text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider hidden sm:table-cell"><?php echo __('fin_factura'); ?></th>
+                            <th class="px-4 py-3 text-right text-[11px] font-semibold dark:text-white/40 text-gray-400 uppercase tracking-wider"><?php echo __('fin_monto'); ?></th>
                             <th class="px-4 py-3 w-10"></th>
                         </tr>
                     </thead>
@@ -541,21 +549,21 @@ include 'includes/sidebar.php';
         <div class="relative w-full max-w-md dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
             <div class="h-1 bg-red-500"></div>
             <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900">Nuevo Gasto</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_nuevo_gasto'); ?></h3>
                 <button @click="showGasto = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <div class="p-5 space-y-4">
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Descripción *</label>
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_descripcion'); ?> *</label>
                     <input type="text" x-model="gForm.descripcion" placeholder="Ej: Hosting Mensual" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Monto *</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_monto'); ?> *</label>
                         <input type="number" x-model="gForm.monto" step="0.01" min="0" placeholder="0.00" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Categoría</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_categoria'); ?></label>
                         <select x-model="gForm.categoria" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
                             <?php foreach ($categoriasGasto as $cg): ?>
                             <option value="<?php echo htmlspecialchars($cg['nombre']); ?>"><?php echo htmlspecialchars($cg['nombre']); ?></option>
@@ -565,24 +573,24 @@ include 'includes/sidebar.php';
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Fecha</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_fecha'); ?></label>
                         <input type="date" x-model="gForm.fecha" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Recurrente</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_recurrente'); ?></label>
                         <select x-model="gForm.frecuencia" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="unico">Único</option>
-                            <option value="mensual">Mensual</option>
-                            <option value="anual">Anual</option>
+                            <option value="unico"><?php echo __('fin_unico'); ?></option>
+                            <option value="mensual"><?php echo __('fin_mensual'); ?></option>
+                            <option value="anual"><?php echo __('fin_anual'); ?></option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="px-5 py-4 border-t dark:border-white/[0.06] border-gray-100 flex gap-3">
-                <button @click="showGasto = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
+                <button @click="showGasto = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                 <button @click="saveGasto()" :disabled="!gForm.descripcion.trim() || !gForm.monto || saving" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 disabled:opacity-40 transition-colors flex items-center justify-center gap-2">
                     <svg x-show="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                    Registrar Gasto
+                    <?php echo __('fin_registrar_gasto'); ?>
                 </button>
             </div>
         </div>
@@ -594,40 +602,40 @@ include 'includes/sidebar.php';
         <div class="relative w-full max-w-md dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
             <div class="h-1 bg-emerald-500"></div>
             <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900">Nuevo Ingreso</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_nuevo_ingreso'); ?></h3>
                 <button @click="showIngreso = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <div class="p-5 space-y-4">
                 <div>
-                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Descripción *</label>
+                    <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_descripcion'); ?> *</label>
                     <input type="text" x-model="iForm.descripcion" placeholder="Ej: Pago servicio web" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Monto *</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_monto'); ?> *</label>
                         <input type="number" x-model="iForm.monto" step="0.01" min="0" placeholder="0.00" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Método de Pago</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_metodo_pago', 'Método de Pago'); ?></label>
                         <select x-model="iForm.metodo_pago" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="transferencia">Transferencia</option>
+                            <option value="transferencia"><?php echo __('fin_transferencia', 'Transferencia'); ?></option>
                             <option value="paypal">PayPal</option>
                             <option value="stripe">Stripe</option>
-                            <option value="efectivo">Efectivo</option>
+                            <option value="efectivo"><?php echo __('fin_efectivo', 'Efectivo'); ?></option>
                             <option value="crypto">Crypto</option>
-                            <option value="otro">Otro</option>
+                            <option value="otro"><?php echo __('fin_otro', 'Otro'); ?></option>
                         </select>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Fecha</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_fecha'); ?></label>
                         <input type="date" x-model="iForm.fecha" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
                     </div>
                     <div>
-                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Cliente</label>
+                        <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('fin_cliente'); ?></label>
                         <select x-model="iForm.cliente_id" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
-                            <option value="">Ninguno</option>
+                            <option value=""><?php echo __('fin_ninguno', 'Ninguno'); ?></option>
                             <?php foreach ($clientes as $cl): ?>
                             <option value="<?php echo $cl['id']; ?>"><?php echo htmlspecialchars($cl['nombre']); ?></option>
                             <?php endforeach; ?>
@@ -636,10 +644,10 @@ include 'includes/sidebar.php';
                 </div>
             </div>
             <div class="px-5 py-4 border-t dark:border-white/[0.06] border-gray-100 flex gap-3">
-                <button @click="showIngreso = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors">Cancelar</button>
+                <button @click="showIngreso = false" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 transition-colors"><?php echo __('btn_cancelar'); ?></button>
                 <button @click="saveIngreso()" :disabled="!iForm.descripcion.trim() || !iForm.monto || saving" class="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 transition-colors flex items-center justify-center gap-2">
                     <svg x-show="saving" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
-                    Registrar Ingreso
+                    <?php echo __('fin_registrar_ingreso'); ?>
                 </button>
             </div>
         </div>
@@ -650,7 +658,7 @@ include 'includes/sidebar.php';
         <div @click="showCatModal = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div class="relative w-full max-w-md dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
             <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-                <h3 class="text-sm font-bold dark:text-white text-gray-900">Gestionar Categorías</h3>
+                <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('fin_gestionar_cat'); ?></h3>
                 <button @click="showCatModal = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center"><svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <div class="p-4 max-h-[60vh] overflow-y-auto space-y-2">
@@ -669,13 +677,13 @@ include 'includes/sidebar.php';
             </div>
             <!-- Add new category -->
             <div class="p-4 border-t dark:border-white/[0.06] border-gray-100">
-                <p class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2">Nueva Categoría</p>
+                <p class="text-[10px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2"><?php echo __('fin_nueva_cat'); ?></p>
                 <div class="flex items-center gap-2">
-                    <input type="text" x-model="newCat.nombre" placeholder="Nombre" class="flex-1 px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
+                    <input type="text" x-model="newCat.nombre" placeholder="<?php echo __('fin_nombre'); ?>" class="flex-1 px-3 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
                     <select x-model="newCat.tipo" class="px-2 py-2 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none">
-                        <option value="gasto">Gasto</option>
-                        <option value="ingreso">Ingreso</option>
-                        <option value="ambos">Ambos</option>
+                        <option value="gasto"><?php echo __('fin_gasto'); ?></option>
+                        <option value="ingreso"><?php echo __('fin_ingreso'); ?></option>
+                        <option value="ambos"><?php echo __('fin_ambos'); ?></option>
                     </select>
                     <input type="color" x-model="newCat.color" class="w-8 h-8 rounded-lg cursor-pointer border-0 p-0">
                     <button @click="saveCat()" :disabled="!newCat.nombre.trim()" class="w-8 h-8 rounded-lg bg-nexo-600 hover:bg-nexo-700 disabled:opacity-40 flex items-center justify-center transition-colors">

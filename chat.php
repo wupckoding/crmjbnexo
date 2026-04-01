@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/auth_check.php';
-$pageTitle = 'Chat';
+$pageTitle = __('chat_titulo');
 $currentPage = 'chat';
 $uid = $_SESSION['user_id'];
 
@@ -64,15 +64,15 @@ include 'includes/sidebar.php';
                         <svg class="w-4 h-4 text-nexo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                     </div>
                     <div>
-                        <h1 class="text-sm font-bold dark:text-white text-gray-900">Mensajes</h1>
-                        <p class="text-[10px] dark:text-white/30 text-gray-400"><?php echo $totalUnread; ?> sin leer</p>
+                        <h1 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('chat_titulo'); ?></h1>
+                        <p class="text-[10px] dark:text-white/30 text-gray-400"><?php echo $totalUnread; ?> <?php echo __('chat_sin_leer'); ?></p>
                     </div>
                 </div>
                 <div class="flex items-center gap-1">
-                    <button @click="showNewGroup = true" class="w-8 h-8 rounded-lg dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 flex items-center justify-center transition-colors" title="Crear grupo">
+                    <button @click="showNewGroup = true" class="w-8 h-8 rounded-lg dark:bg-white/5 bg-gray-100 dark:hover:bg-white/10 hover:bg-gray-200 flex items-center justify-center transition-colors" title="<?php echo __('chat_crear_grupo'); ?>">
                         <svg class="w-4 h-4 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </button>
-                    <button @click="showNewChat = true" class="w-8 h-8 rounded-lg bg-nexo-600 hover:bg-nexo-700 flex items-center justify-center transition-colors" title="Nuevo chat">
+                    <button @click="showNewChat = true" class="w-8 h-8 rounded-lg bg-nexo-600 hover:bg-nexo-700 flex items-center justify-center transition-colors" title="<?php echo __('chat_nuevo'); ?>">
                         <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     </button>
                 </div>
@@ -80,13 +80,13 @@ include 'includes/sidebar.php';
             <!-- Search -->
             <div class="relative">
                 <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/25 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" x-model="busqueda" placeholder="Buscar conversación..." class="w-full pl-9 pr-4 py-2 text-xs rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
+                <input type="text" x-model="busqueda" placeholder="<?php echo __('chat_buscar'); ?>" class="w-full pl-9 pr-4 py-2 text-xs rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors">
             </div>
             <!-- Tabs -->
             <div class="flex mt-3 gap-1 p-0.5 rounded-lg dark:bg-white/5 bg-gray-100">
-                <button @click="tab='todos'" :class="tab==='todos' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all">Todos</button>
-                <button @click="tab='privados'" :class="tab==='privados' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all">Privados</button>
-                <button @click="tab='grupos'" :class="tab==='grupos' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all">Grupos</button>
+                <button @click="tab='todos'" :class="tab==='todos' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all"><?php echo __('chat_todos'); ?></button>
+                <button @click="tab='privados'" :class="tab==='privados' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all"><?php echo __('chat_privados'); ?></button>
+                <button @click="tab='grupos'" :class="tab==='grupos' ? 'dark:bg-white/10 bg-white shadow-sm dark:text-white text-gray-900' : 'dark:text-white/40 text-gray-500'" class="flex-1 text-[11px] font-medium py-1.5 rounded-md transition-all"><?php echo __('chat_grupos'); ?></button>
             </div>
         </div>
 
@@ -98,9 +98,9 @@ include 'includes/sidebar.php';
                 $initial = mb_strtoupper(mb_substr($c['display_name'], 0, 1));
                 $isGroup = $c['tipo'] === 'grupo';
                 $lastMsg = $c['ultimo_msg'] ? htmlspecialchars(mb_substr($c['ultimo_msg'], 0, 40)) : 'Sin mensajes aún';
-                if ($c['ultimo_msg_tipo'] === 'imagen') $lastMsg = '📷 Imagen';
-                elseif ($c['ultimo_msg_tipo'] === 'audio') $lastMsg = '🎵 Audio';
-                elseif ($c['ultimo_msg_tipo'] === 'archivo') $lastMsg = '📎 Archivo';
+                if ($c['ultimo_msg_tipo'] === 'imagen') $lastMsg = '📷 ' . __('chat_imagen');
+                elseif ($c['ultimo_msg_tipo'] === 'audio') $lastMsg = '🎵 ' . __('chat_audio');
+                elseif ($c['ultimo_msg_tipo'] === 'archivo') $lastMsg = '📎 ' . __('chat_archivo');
                 $time = $c['ultimo_msg_fecha'] ? date('H:i', strtotime($c['ultimo_msg_fecha'])) : '';
                 $partCount = count($c['participantes']);
             ?>
@@ -141,8 +141,8 @@ include 'includes/sidebar.php';
                 <div class="w-14 h-14 rounded-2xl dark:bg-white/5 bg-gray-100 flex items-center justify-center mb-3">
                     <svg class="w-6 h-6 dark:text-white/20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                 </div>
-                <p class="text-sm dark:text-white/40 text-gray-400">No hay conversaciones</p>
-                <p class="text-xs dark:text-white/20 text-gray-300 mt-1">Inicia un chat nuevo</p>
+                <p class="text-sm dark:text-white/40 text-gray-400"><?php echo __('chat_sin_conv'); ?></p>
+                <p class="text-xs dark:text-white/20 text-gray-300 mt-1"><?php echo __('chat_inicia_nuevo'); ?></p>
             </div>
             <?php endif; ?>
         </div>
@@ -162,7 +162,7 @@ include 'includes/sidebar.php';
                 </div>
                 <div>
                     <p class="text-sm font-semibold dark:text-white text-gray-900" x-text="convNombre"></p>
-                    <p class="text-[10px] dark:text-white/30 text-gray-400" x-text="convTipo === 'grupo' ? convParticipantes + ' participantes' : 'En línea'"></p>
+                    <p class="text-[10px] dark:text-white/30 text-gray-400" x-text="convTipo === 'grupo' ? convParticipantes + ' <?php echo __('chat_participantes_n'); ?>' : '<?php echo __('chat_en_linea'); ?>'"></p>
                 </div>
             </div>
             <div class="flex items-center gap-1" x-show="convTipo === 'grupo'">
@@ -208,7 +208,7 @@ include 'includes/sidebar.php';
                                 <div x-show="contextMsg === msg.id" @click.outside="contextMsg = null" x-transition class="absolute right-0 top-8 dark:bg-dark-800 bg-white border dark:border-white/10 border-gray-200 rounded-xl shadow-2xl py-1 w-48 z-20">
                                     <button @click="deleteMsg(msg.id); contextMsg = null" class="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium text-red-400 dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                        Eliminar para todos
+                                        <?php echo __('chat_eliminar_todos'); ?>
                                     </button>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@ include 'includes/sidebar.php';
                                 <div class="px-3.5 py-2.5 rounded-2xl dark:bg-white/[0.03] bg-gray-50 border dark:border-white/[0.04] border-gray-100 shadow-sm" :class="msg.usuario_id == <?php echo $uid; ?> ? 'rounded-br-sm' : 'rounded-bl-sm'">
                                     <p class="text-[13px] italic dark:text-white/25 text-gray-400 flex items-center gap-1.5">
                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
-                                        <span x-text="msg.usuario_id == <?php echo $uid; ?> ? 'Eliminaste este mensaje' : 'Mensaje eliminado'"></span>
+                                        <span x-text="msg.usuario_id == <?php echo $uid; ?> ? '<?php echo __('chat_eliminaste'); ?>' : '<?php echo __('chat_eliminado'); ?>'"></span>
                                     </p>
                                     <p class="text-[10px] mt-1 dark:text-white/15 text-gray-300" x-text="msg.hora"></p>
                                 </div>
@@ -306,8 +306,8 @@ include 'includes/sidebar.php';
                 <div class="w-20 h-20 mx-auto rounded-2xl dark:bg-white/5 bg-gray-100 flex items-center justify-center mb-4">
                     <svg class="w-9 h-9 dark:text-white/15 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                 </div>
-                <p class="text-sm font-medium dark:text-white/40 text-gray-400">Selecciona una conversación</p>
-                <p class="text-xs dark:text-white/20 text-gray-300 mt-1">O inicia un chat nuevo</p>
+                <p class="text-sm font-medium dark:text-white/40 text-gray-400"><?php echo __('chat_selecciona'); ?></p>
+                <p class="text-xs dark:text-white/20 text-gray-300 mt-1"><?php echo __('chat_o_inicia'); ?></p>
             </div>
         </div>
 
@@ -341,12 +341,12 @@ include 'includes/sidebar.php';
                     <div x-show="attachOpen" @click.outside="attachOpen = false" x-transition class="absolute bottom-12 left-0 dark:bg-dark-800 bg-white border dark:border-white/10 border-gray-200 rounded-xl shadow-2xl py-1 w-44 z-10" x-cloak>
                         <button type="button" @click="$refs.imgInput.click(); attachOpen = false" class="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
                             <div class="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
-                            <span class="dark:text-white/70 text-gray-700">Imagen</span>
+                            <span class="dark:text-white/70 text-gray-700"><?php echo __('chat_imagen'); ?></span>
                         </button>
 
                         <button type="button" @click="$refs.fileInput.click(); attachOpen = false" class="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-medium dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
                             <div class="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center"><svg class="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
-                            <span class="dark:text-white/70 text-gray-700">Documento</span>
+                            <span class="dark:text-white/70 text-gray-700"><?php echo __('chat_documento'); ?></span>
                         </button>
                     </div>
                 </div>
@@ -355,7 +355,7 @@ include 'includes/sidebar.php';
                 <input type="file" x-ref="fileInput" @change="handleFile($event, 'archivo')" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar,.txt,.csv" class="hidden">
                 <!-- Text input / Recording indicator -->
                 <template x-if="!recording">
-                    <input type="text" x-model="nuevoMsg" placeholder="Escribe un mensaje..." class="flex-1 px-4 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors" autocomplete="off" @keydown.enter.prevent="enviar()">
+                    <input type="text" x-model="nuevoMsg" placeholder="<?php echo __('chat_escribir'); ?>" class="flex-1 px-4 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50 transition-colors" autocomplete="off" @keydown.enter.prevent="enviar()">
                 </template>
                 <template x-if="recording">
                     <div class="flex-1 flex items-center gap-3 px-4 py-2.5 rounded-xl dark:bg-red-500/10 bg-red-50 border border-red-500/30">
@@ -395,7 +395,7 @@ include 'includes/sidebar.php';
     <!-- ========== GROUP INFO PANEL ========== -->
     <div x-show="showGroupInfo" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="w-72 shrink-0 border-l dark:border-white/[0.06] border-gray-200 dark:bg-dark-900 bg-white flex flex-col overflow-hidden" x-cloak>
         <div class="px-4 py-3 border-b dark:border-white/[0.06] border-gray-200 flex items-center justify-between">
-            <span class="text-sm font-semibold">Info del Grupo</span>
+            <span class="text-sm font-semibold"><?php echo __('chat_info_grupo'); ?></span>
             <button @click="showGroupInfo = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
                 <svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -406,10 +406,10 @@ include 'includes/sidebar.php';
                     <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
                 <p class="text-sm font-bold dark:text-white text-gray-900" x-text="convNombre"></p>
-                <p class="text-xs dark:text-white/30 text-gray-400" x-text="convParticipantes + ' participantes'"></p>
+                <p class="text-xs dark:text-white/30 text-gray-400" x-text="convParticipantes + ' <?php echo __('chat_participantes_n'); ?>'"></p>
             </div>
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2">Participantes</p>
+                <p class="text-[11px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2"><?php echo __('chat_participantes'); ?></p>
                 <div class="space-y-1">
                     <template x-for="p in groupMembers" :key="p.id">
                         <div class="flex items-center gap-2.5 p-2 rounded-lg dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
@@ -435,7 +435,7 @@ include 'includes/sidebar.php';
     <div @click="showNewChat = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
     <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
         <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-            <h3 class="text-sm font-bold dark:text-white text-gray-900">Nueva Conversación</h3>
+            <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('chat_nueva_conv'); ?></h3>
             <button @click="showNewChat = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
                 <svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -465,18 +465,18 @@ include 'includes/sidebar.php';
     <div @click="showNewGroup = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
     <div class="relative w-full max-w-md dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
         <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
-            <h3 class="text-sm font-bold dark:text-white text-gray-900">Crear Grupo</h3>
+            <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('chat_crear_grupo'); ?></h3>
             <button @click="showNewGroup = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
                 <svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
         <div class="p-5 space-y-4">
             <div>
-                <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Nombre del grupo</label>
+                <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('chat_nombre_grupo'); ?></label>
                 <input type="text" x-model="groupName" placeholder="Ej: Equipo de ventas" class="w-full px-3.5 py-2.5 text-sm rounded-xl dark:bg-white/5 bg-gray-50 border dark:border-white/[0.06] border-gray-200 outline-none focus:border-nexo-500/50">
             </div>
             <div>
-                <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block">Participantes <span class="dark:text-white/25 text-gray-400" x-text="'(' + selectedUsers.length + ' seleccionados)'"></span></label>
+                <label class="text-xs font-medium dark:text-white/50 text-gray-500 mb-1.5 block"><?php echo __('chat_participantes'); ?> <span class="dark:text-white/25 text-gray-400" x-text="'(' + selectedUsers.length + ' <?php echo __('chat_seleccionados'); ?>)'"></span></label>
                 <div class="space-y-1 max-h-48 overflow-y-auto rounded-xl dark:bg-white/[0.02] bg-gray-50 p-2 border dark:border-white/[0.04] border-gray-100">
                     <?php foreach ($usuarios as $u):
                         if ($u['id'] == $uid) continue;
@@ -497,7 +497,7 @@ include 'includes/sidebar.php';
                 </div>
             </div>
             <button @click="createGroup()" :disabled="!groupName.trim() || selectedUsers.length < 1" class="w-full py-2.5 rounded-xl text-sm font-medium text-white bg-nexo-600 hover:bg-nexo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">
-                Crear Grupo
+                <?php echo __('chat_crear_grupo'); ?>
             </button>
         </div>
     </div>
