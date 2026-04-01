@@ -1,0 +1,263 @@
+/* =============================================
+   CRM JBNEXO - Custom Animations & Styles
+   Paleta: Dark + Purple/Violet (#7c3aed)
+   ============================================= */
+
+/* ---- Light-mode contrast fix ----
+   400-level text colors are too faint on white backgrounds.
+   Darken them to 600-level in light mode for readability. */
+html:not(.dark) .text-emerald-400 { color: #059669 !important; }
+html:not(.dark) .text-amber-400   { color: #d97706 !important; }
+html:not(.dark) .text-blue-400    { color: #2563eb !important; }
+html:not(.dark) .text-red-400     { color: #dc2626 !important; }
+html:not(.dark) .text-nexo-400    { color: #7c3aed !important; }
+
+/* Glow effects */
+.glow-purple {
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.12),
+                0 0 60px rgba(124, 58, 237, 0.06);
+}
+
+.glow-purple-strong {
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.3),
+                0 0 80px rgba(124, 58, 237, 0.15);
+}
+
+/* Glassmorphism card */
+.glass-card {
+    background: rgba(12, 10, 20, 0.72);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+/* Input focus glow */
+.input-glow:focus {
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.35),
+                0 0 20px rgba(124, 58, 237, 0.1);
+}
+
+/* Button hover glow */
+.btn-glow {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-glow:hover {
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.35),
+                0 0 60px rgba(124, 58, 237, 0.18);
+    transform: translateY(-2px);
+}
+.btn-glow:active {
+    transform: translateY(0px);
+}
+
+/* ==========================================
+   WAVE TEXTURE BACKGROUND
+   ========================================== */
+.wave-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+@keyframes waveFlow {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-2%, 1%) rotate(0.5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes waveFlow2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(1.5%, -1%) rotate(-0.5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.wave-layer-1 { animation: waveFlow 20s ease-in-out infinite; }
+.wave-layer-2 { animation: waveFlow2 25s ease-in-out infinite; }
+.wave-layer-3 { animation: waveFlow 30s ease-in-out infinite reverse; }
+
+/* Floating orbs */
+@keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -20px) scale(1.05); }
+    50% { transform: translate(-10px, 20px) scale(0.95); }
+    75% { transform: translate(20px, 10px) scale(1.02); }
+}
+
+@keyframes orbFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-20px, 30px) scale(1.08); }
+    66% { transform: translate(15px, -15px) scale(0.96); }
+}
+
+.orb-float-1 { animation: orbFloat 15s ease-in-out infinite; }
+.orb-float-2 { animation: orbFloat2 18s ease-in-out infinite; }
+.orb-float-3 { animation: orbFloat 22s ease-in-out infinite reverse; }
+
+/* Logo pulse */
+@keyframes logoPulse {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.4)); }
+    50% { filter: drop-shadow(0 0 18px rgba(124, 58, 237, 0.7)); }
+}
+.logo-pulse { animation: logoPulse 3s ease-in-out infinite; }
+
+/* Shimmer */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+.shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(124, 58, 237, 0.06) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s infinite;
+}
+
+/* Fade in up */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+
+/* Particles */
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+}
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(124, 58, 237, 0.4);
+    border-radius: 50%;
+    animation: particleFloat linear infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.5); }
+
+/* Checkbox */
+.custom-checkbox { accent-color: #7c3aed; }
+
+/* Custom row select checkbox */
+.nexo-check {
+    position: relative;
+    width: 18px; height: 18px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+.nexo-check:hover {
+    border-color: rgba(139,92,246,0.5);
+    background: rgba(139,92,246,0.08);
+}
+.nexo-check:checked {
+    border-color: #7c3aed;
+    background: #7c3aed;
+}
+.nexo-check:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 1px;
+    width: 6px; height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+@media (prefers-color-scheme: light) {
+    .nexo-check { border-color: rgba(0,0,0,0.2); background: rgba(0,0,0,0.02); }
+    .nexo-check:hover { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.05); }
+}
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+    border: 2px solid rgba(124,58,237,0.2);
+    border-top-color: #7c3aed;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    animation: spin 0.8s linear infinite;
+}
+
+/* BG pulse */
+@keyframes bgPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.6; } }
+.bg-animated-gradient { animation: bgPulse 6s ease-in-out infinite; }
+
+/* Input underline */
+.input-underline { position: relative; }
+.input-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+.input-underline:focus-within::after { width: 100%; }
+
+/* Toast */
+.toast { animation: fadeInUp 0.4s ease-out, fadeOut 0.4s ease-in 2.6s forwards; }
+@keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+
+/* PWA install */
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.slide-up { animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Dot ping (como no site JBNEXO) */
+@keyframes dotPing {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.8); opacity: 0.3; }
+}
+.dot-ping { animation: dotPing 2s ease-in-out infinite; }
+
+/* Text gradient animated */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.text-gradient-animated {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed, #c084fc, #7c3aed);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 6s ease-in-out infinite;
+}
+
+/* Button purple gradient (como Solicita una Consulta) */
+.btn-purple {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #7c3aed 100%);
+    background-size: 200% 200%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-purple:hover {
+    background-position: 100% 100%;
+    box-shadow: 0 0 30px rgba(124,58,237,0.4), 0 0 60px rgba(124,58,237,0.2);
+    transform: translateY(-2px);
+}
+.btn-purple:active { transform: translateY(0); }

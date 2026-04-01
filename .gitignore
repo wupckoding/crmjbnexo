@@ -1,0 +1,14 @@
+*.bak
+desktop.ini
+Thumbs.db
+.DS_Store
+uploads/avatars/*
+uploads/avisos/*
+uploads/boveda/*
+uploads/chat/*
+uploads/clientes/*
+uploads/*.jpg
+uploads/*.jpeg
+uploads/*.png
+!uploads/.gitignore
+!uploads/boveda/.htaccess

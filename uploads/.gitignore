@@ -1,0 +1,9 @@
+# Uploads directory - user files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.pdf
+*.zip
+!.gitkeep
