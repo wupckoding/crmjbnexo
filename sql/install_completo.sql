@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     totp_secret VARCHAR(255) DEFAULT NULL,
     totp_activo TINYINT(1) DEFAULT 0,
     comision_porcentaje DECIMAL(5,2) DEFAULT 20.00,
+    meta_mensual DECIMAL(12,2) DEFAULT 0.00,
+    onboarding_completado TINYINT(1) DEFAULT 0,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
