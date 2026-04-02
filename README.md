@@ -29,7 +29,7 @@
 | **Bóveda** | Gestor de contraseñas encriptado (AES-256-CBC) con categorías |
 | **Avisos** | Tablón de anuncios interno con prioridades e imágenes |
 | **Scripts** | Guías de venta: script de llamada, objeciones, templates WhatsApp, checklist |
-| **Permisos** | Control granular por rol (admin/vendedor/soporte) y módulo |
+| **Permisos** | Control granular por rol (admin/vendedor/soporte/gerente) y módulo |
 | **Actividad** | Log de auditoría completo de todas las acciones del sistema |
 | **2FA** | Autenticación de dos factores con TOTP |
 | **PWA** | Instalable como app en móviles y escritorio |
@@ -86,7 +86,8 @@ crmjbnexo/
 │   ├── sidebar.php
 │   └── topbar.php
 ├── sql/
-│   └── install_completo.sql  # 🗄️ Todas las 26 tablas
+│   ├── install_completo.sql  # 🗄️ Todas las 27 tablas (fresh install)
+│   └── fix_missing_columns.sql  # 🔧 Migration para DBs existentes
 ├── uploads/              # Archivos subidos
 ├── index.php             # Login page
 ├── dashboard.php
@@ -118,7 +119,7 @@ crmjbnexo/
 ### Requisitos
 - PHP 8.0+
 - MySQL 8.0 / MariaDB 10.4+
-- Apache con `mod_rewrite`
+- Apache con `mod_rewrite` (o LiteSpeed)
 
 ### Local (XAMPP)
 
@@ -139,19 +140,21 @@ git clone https://github.com/wupckoding/crmjbnexo.git
 # http://localhost/crmjbnexo/
 ```
 
-### Hosting (Hostinger / cPanel)
+### Hosting (Hostinger / cPanel / LiteSpeed)
 
 ```bash
 # 1. Crear base de datos MySQL en el panel del hosting
 # 2. Importar sql/install_completo.sql en phpMyAdmin
-# 3. Editar config/database.php con las credenciales del hosting:
+# 3. Editar config/database.php — cambiar las credenciales en el bloque else:
 #    DB_HOST = 'localhost'
-#    DB_USER = 'u123456789_usuario'
+#    DB_USER = 'tu_usuario_db'
 #    DB_PASS = 'tu_contraseña_segura'
-#    DB_NAME = 'u123456789_crmjbnexo'
-# 4. Subir archivos a public_html/ (o public_html/crmjbnexo/)
+#    DB_NAME = 'tu_nombre_db'
+# 4. Subir todos los archivos a public_html/ (o public_html/crmjbnexo/)
 # 5. Listo!
 ```
+
+> **Nota LiteSpeed:** El proyecto ya incluye `.user.ini` para hostings con LiteSpeed (Hostinger). No se usan directivas `php_value` en `.htaccess`.
 
 ---
 
@@ -178,6 +181,17 @@ El CRM usa un dark theme con paleta **nexo purple**:
 | `nexo-700` | `#6b28e6` | 🟣 |
 | `dark-900` | `#0c0a14` | ⚫ |
 | `dark-800` | `#12101c` | ⚫ |
+
+---
+
+## 🌐 Idiomas (i18n)
+
+El CRM soporta 3 idiomas:
+- 🇪🇸 Español (por defecto)
+- 🇧🇷 Português
+- 🇺🇸 English
+
+Cada usuario puede cambiar su idioma en **Ajustes**. Los archivos de traducción están en `config/lang/`.
 
 ---
 
