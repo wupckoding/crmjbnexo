@@ -21,23 +21,6 @@ $usuarios = $pdo->query("SELECT id, nombre FROM usuarios WHERE activo = 1 ORDER 
 // Load pipeline stages for bulk send
 $etapas = $pdo->query("SELECT * FROM pipeline_etapas ORDER BY orden")->fetchAll();
 
-// Build estado_clave map (fallback if column doesn't exist yet)
-$etapaFallback = [
-    'prospecto'=>'nuevo','nuevo'=>'nuevo',
-    'contacto inicial'=>'contactado','contactado'=>'contactado',
-    'propuesta enviada'=>'propuesta','propuesta'=>'propuesta',
-    'negociación'=>'negociando','negociando'=>'negociando',
-    'cerrado ganado'=>'ganado','ganado'=>'ganado',
-    'cerrado perdido'=>'perdido','perdido'=>'perdido'
-];
-foreach ($etapas as &$et) {
-    $lowName = strtolower($et['nombre']);
-    if (empty($et['estado_clave']) || ($et['estado_clave'] === 'nuevo' && $lowName !== 'prospecto' && $lowName !== 'nuevo')) {
-        $et['estado_clave'] = $etapaFallback[$lowName] ?? $lowName;
-    }
-}
-unset($et);
-
 // KPI stats
 $totalClientes = count($clientes);
 $mesActual = date('Y-m');
@@ -315,8 +298,12 @@ include 'includes/sidebar.php';
             </div>
             <p class="text-sm dark:text-white/50 text-gray-500 mb-4">Selecciona la etapa del pipeline a la cual enviar los clientes:</p>
             <div class="space-y-2 mb-5">
-                <?php foreach ($etapas as $et):
-                    $etKey = $et['estado_clave'] ?? strtolower($et['nombre']);
+                <?php
+                $__estadoMap = ['prospecto'=>'nuevo','nuevo'=>'nuevo','contacto inicial'=>'contactado','contactado'=>'contactado','propuesta enviada'=>'propuesta','propuesta'=>'propuesta','negociando'=>'negociando','cerrado ganado'=>'ganado','ganado'=>'ganado','cerrado perdido'=>'perdido','perdido'=>'perdido'];
+                foreach ($etapas as $et):
+                    $low = strtolower($et['nombre']);
+                    if (strpos($low, 'negociaci') === 0) $low = 'negociando';
+                    $etKey = $__estadoMap[$low] ?? $low;
                 ?>
                 <button type="button"
                     @click="pipelineEtapa = '<?php echo htmlspecialchars($etKey, ENT_QUOTES, 'UTF-8'); ?>'"
