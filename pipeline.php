@@ -19,8 +19,9 @@ $etapaFallback = [
     'cerrado perdido'=>'perdido','perdido'=>'perdido'
 ];
 foreach ($etapas as &$et) {
-    if (empty($et['estado_clave']) || $et['estado_clave'] === 'nuevo' && mb_strtolower($et['nombre']) !== 'prospecto' && mb_strtolower($et['nombre']) !== 'nuevo') {
-        $et['estado_clave'] = $etapaFallback[mb_strtolower($et['nombre'])] ?? mb_strtolower($et['nombre']);
+    $lowName = strtolower($et['nombre']);
+    if (empty($et['estado_clave']) || ($et['estado_clave'] === 'nuevo' && $lowName !== 'prospecto' && $lowName !== 'nuevo')) {
+        $et['estado_clave'] = $etapaFallback[$lowName] ?? $lowName;
     }
 }
 unset($et);

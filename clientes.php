@@ -31,8 +31,9 @@ $etapaFallback = [
     'cerrado perdido'=>'perdido','perdido'=>'perdido'
 ];
 foreach ($etapas as &$et) {
-    if (empty($et['estado_clave']) || $et['estado_clave'] === 'nuevo' && mb_strtolower($et['nombre']) !== 'prospecto' && mb_strtolower($et['nombre']) !== 'nuevo') {
-        $et['estado_clave'] = $etapaFallback[mb_strtolower($et['nombre'])] ?? mb_strtolower($et['nombre']);
+    $lowName = strtolower($et['nombre']);
+    if (empty($et['estado_clave']) || ($et['estado_clave'] === 'nuevo' && $lowName !== 'prospecto' && $lowName !== 'nuevo')) {
+        $et['estado_clave'] = $etapaFallback[$lowName] ?? $lowName;
     }
 }
 unset($et);
@@ -315,7 +316,7 @@ include 'includes/sidebar.php';
             <p class="text-sm dark:text-white/50 text-gray-500 mb-4">Selecciona la etapa del pipeline a la cual enviar los clientes:</p>
             <div class="space-y-2 mb-5">
                 <?php foreach ($etapas as $et):
-                    $etKey = $et['estado_clave'] ?? mb_strtolower($et['nombre']);
+                    $etKey = $et['estado_clave'] ?? strtolower($et['nombre']);
                 ?>
                 <button type="button"
                     @click="pipelineEtapa = '<?php echo htmlspecialchars($etKey, ENT_QUOTES, 'UTF-8'); ?>'"
