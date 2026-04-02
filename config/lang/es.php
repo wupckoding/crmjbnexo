@@ -704,6 +704,11 @@ return [
     'chat_seleccionados' => 'seleccionados',
     'chat_info_grupo' => 'Info del Grupo',
     'chat_participantes_n' => 'participantes',
+    'chat_agregar_miembro' => 'Agregar miembro',
+    'chat_remover' => 'Remover',
+    'chat_creador' => 'Creador',
+    'chat_salir_grupo' => 'Salir del grupo',
+    'chat_todos_en_grupo' => 'Todos los usuarios ya están en el grupo',
 
     // ── Extras Usuarios ──
     'usr_subtitulo' => 'Gestión de usuarios del sistema',

@@ -43,7 +43,7 @@ switch ($action) {
         $msgs = $stmt->fetchAll();
 
         // Get conversation info
-        $conv = $pdo->prepare("SELECT nombre, tipo FROM conversaciones WHERE id = :c");
+        $conv = $pdo->prepare("SELECT nombre, tipo, creado_por FROM conversaciones WHERE id = :c");
         $conv->execute(['c'=>$conv_id]);
         $convData = $conv->fetch();
 
@@ -96,6 +96,7 @@ switch ($action) {
             'tipo' => $convData['tipo'] ?? 'privada',
             'participantes' => $participantes,
             'participantes_count' => count($participantes),
+            'creado_por' => (int)($convData['creado_por'] ?? 0),
         ]);
         break;
 
@@ -263,8 +264,8 @@ switch ($action) {
 
         $pdo->beginTransaction();
         try {
-            $stmt = $pdo->prepare("INSERT INTO conversaciones (tipo, nombre) VALUES ('grupo', :n)");
-            $stmt->execute(['n' => $nombre]);
+            $stmt = $pdo->prepare("INSERT INTO conversaciones (tipo, nombre, creado_por) VALUES ('grupo', :n, :cp)");
+            $stmt->execute(['n' => $nombre, 'cp' => $uid]);
             $newConvId = $pdo->lastInsertId();
 
             $ins = $pdo->prepare("INSERT INTO conversacion_participantes (conversacion_id, usuario_id) VALUES (:c, :u)");
@@ -278,6 +279,81 @@ switch ($action) {
             $pdo->rollBack();
             echo json_encode(['error' => 'Error al crear grupo']);
         }
+        break;
+
+    case 'add_member':
+        header('Content-Type: application/json');
+        $conv_id = (int)($_POST['conv_id'] ?? 0);
+        $target_id = (int)($_POST['usuario_id'] ?? 0);
+        if (!$conv_id || !$target_id) { echo json_encode(['error'=>'Datos requeridos']); exit; }
+
+        // Check conv is group and user is participant
+        $convCheck = $pdo->prepare("SELECT tipo, creado_por FROM conversaciones WHERE id = :c");
+        $convCheck->execute(['c'=>$conv_id]);
+        $convInfo = $convCheck->fetch();
+        if (!$convInfo || $convInfo['tipo'] !== 'grupo') { echo json_encode(['error'=>'Solo grupos']); exit; }
+
+        $partCheck = $pdo->prepare("SELECT 1 FROM conversacion_participantes WHERE conversacion_id = :c AND usuario_id = :u");
+        $partCheck->execute(['c'=>$conv_id, 'u'=>$uid]);
+        if (!$partCheck->fetch()) { echo json_encode(['error'=>'No autorizado']); exit; }
+
+        // Check not already member
+        $alreadyCheck = $pdo->prepare("SELECT 1 FROM conversacion_participantes WHERE conversacion_id = :c AND usuario_id = :u");
+        $alreadyCheck->execute(['c'=>$conv_id, 'u'=>$target_id]);
+        if ($alreadyCheck->fetch()) { echo json_encode(['error'=>'Ya es miembro']); exit; }
+
+        $ins = $pdo->prepare("INSERT INTO conversacion_participantes (conversacion_id, usuario_id) VALUES (:c, :u)");
+        $ins->execute(['c'=>$conv_id, 'u'=>$target_id]);
+
+        // Return updated member list
+        $partStmt = $pdo->prepare("SELECT u.id, u.nombre, u.avatar FROM conversacion_participantes cp JOIN usuarios u ON u.id = cp.usuario_id WHERE cp.conversacion_id = :c ORDER BY u.nombre");
+        $partStmt->execute(['c'=>$conv_id]);
+        $members = $partStmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode(['ok'=>true, 'participantes'=>$members, 'participantes_count'=>count($members)]);
+        break;
+
+    case 'remove_member':
+        header('Content-Type: application/json');
+        $conv_id = (int)($_POST['conv_id'] ?? 0);
+        $target_id = (int)($_POST['usuario_id'] ?? 0);
+        if (!$conv_id || !$target_id) { echo json_encode(['error'=>'Datos requeridos']); exit; }
+
+        // Check conv is group
+        $convCheck = $pdo->prepare("SELECT tipo, creado_por FROM conversaciones WHERE id = :c");
+        $convCheck->execute(['c'=>$conv_id]);
+        $convInfo = $convCheck->fetch();
+        if (!$convInfo || $convInfo['tipo'] !== 'grupo') { echo json_encode(['error'=>'Solo grupos']); exit; }
+
+        // Only creator can remove others
+        if ((int)$convInfo['creado_por'] !== $uid) { echo json_encode(['error'=>'Solo el creador puede remover miembros']); exit; }
+
+        // Can't remove self (use leave_group)
+        if ($target_id === $uid) { echo json_encode(['error'=>'Usa salir del grupo']); exit; }
+
+        $del = $pdo->prepare("DELETE FROM conversacion_participantes WHERE conversacion_id = :c AND usuario_id = :u");
+        $del->execute(['c'=>$conv_id, 'u'=>$target_id]);
+
+        // Return updated member list
+        $partStmt = $pdo->prepare("SELECT u.id, u.nombre, u.avatar FROM conversacion_participantes cp JOIN usuarios u ON u.id = cp.usuario_id WHERE cp.conversacion_id = :c ORDER BY u.nombre");
+        $partStmt->execute(['c'=>$conv_id]);
+        $members = $partStmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode(['ok'=>true, 'participantes'=>$members, 'participantes_count'=>count($members)]);
+        break;
+
+    case 'leave_group':
+        header('Content-Type: application/json');
+        $conv_id = (int)($_POST['conv_id'] ?? 0);
+        if (!$conv_id) { echo json_encode(['error'=>'ID requerido']); exit; }
+
+        $convCheck = $pdo->prepare("SELECT tipo FROM conversaciones WHERE id = :c");
+        $convCheck->execute(['c'=>$conv_id]);
+        $convInfo = $convCheck->fetch();
+        if (!$convInfo || $convInfo['tipo'] !== 'grupo') { echo json_encode(['error'=>'Solo grupos']); exit; }
+
+        $del = $pdo->prepare("DELETE FROM conversacion_participantes WHERE conversacion_id = :c AND usuario_id = :u");
+        $del->execute(['c'=>$conv_id, 'u'=>$uid]);
+
+        echo json_encode(['ok'=>true]);
         break;
 
     case 'delete_msg':

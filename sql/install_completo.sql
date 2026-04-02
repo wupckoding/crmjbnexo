@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS conversaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('privada','grupo') DEFAULT 'privada',
     nombre VARCHAR(100) DEFAULT NULL,
+    creado_por INT DEFAULT NULL,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -252,6 +253,7 @@ CREATE TABLE IF NOT EXISTS mensajes (
     tipo ENUM('texto','imagen','archivo','audio') DEFAULT 'texto',
     archivo_url VARCHAR(255) DEFAULT NULL,
     leido TINYINT(1) DEFAULT 0,
+    eliminado TINYINT(1) DEFAULT 0,
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (conversacion_id) REFERENCES conversaciones(id) ON DELETE CASCADE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE

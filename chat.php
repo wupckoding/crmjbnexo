@@ -393,7 +393,7 @@ include 'includes/sidebar.php';
     </div>
 
     <!-- ========== GROUP INFO PANEL ========== -->
-    <div x-show="showGroupInfo" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="w-72 shrink-0 border-l dark:border-white/[0.06] border-gray-200 dark:bg-dark-900 bg-white flex flex-col overflow-hidden" x-cloak>
+    <div x-show="showGroupInfo" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full" class="w-80 shrink-0 border-l dark:border-white/[0.06] border-gray-200 dark:bg-dark-900 bg-white flex flex-col overflow-hidden" x-cloak>
         <div class="px-4 py-3 border-b dark:border-white/[0.06] border-gray-200 flex items-center justify-between">
             <span class="text-sm font-semibold"><?php echo __('chat_info_grupo'); ?></span>
             <button @click="showGroupInfo = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
@@ -401,18 +401,32 @@ include 'includes/sidebar.php';
             </button>
         </div>
         <div class="flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Group header -->
             <div class="text-center">
                 <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-2">
                     <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 </div>
                 <p class="text-sm font-bold dark:text-white text-gray-900" x-text="convNombre"></p>
-                <p class="text-xs dark:text-white/30 text-gray-400" x-text="convParticipantes + ' <?php echo __('chat_participantes_n'); ?>'"></p>
+                <div class="flex items-center justify-center gap-1.5 mt-1">
+                    <span class="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full dark:bg-blue-500/10 bg-blue-50 dark:text-blue-400 text-blue-500">
+                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span x-text="convParticipantes + ' <?php echo __('chat_participantes_n'); ?>'"></span>
+                    </span>
+                </div>
             </div>
+
+            <!-- Members section -->
             <div>
-                <p class="text-[11px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400 mb-2"><?php echo __('chat_participantes'); ?></p>
-                <div class="space-y-1">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-[11px] font-semibold uppercase tracking-wider dark:text-white/30 text-gray-400"><?php echo __('chat_participantes'); ?> (<span x-text="groupMembers.length"></span>)</p>
+                    <!-- Add member button (visible to creator or all participants) -->
+                    <button @click="showAddMember = true" class="w-6 h-6 rounded-md bg-nexo-600 hover:bg-nexo-700 flex items-center justify-center transition-colors" title="<?php echo __('chat_agregar_miembro', 'Agregar miembro'); ?>">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    </button>
+                </div>
+                <div class="space-y-0.5">
                     <template x-for="p in groupMembers" :key="p.id">
-                        <div class="flex items-center gap-2.5 p-2 rounded-lg dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
+                        <div class="flex items-center gap-2.5 p-2 rounded-lg group dark:hover:bg-white/5 hover:bg-gray-50 transition-colors">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-nexo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold overflow-hidden shrink-0">
                                 <template x-if="p.avatar">
                                     <img :src="'uploads/avatars/' + p.avatar" class="w-full h-full object-cover">
@@ -421,9 +435,64 @@ include 'includes/sidebar.php';
                                     <span x-text="p.nombre.charAt(0).toUpperCase()"></span>
                                 </template>
                             </div>
-                            <span class="text-xs font-medium dark:text-white/70 text-gray-600 truncate" x-text="p.nombre"></span>
+                            <div class="flex-1 min-w-0">
+                                <span class="text-xs font-medium dark:text-white/70 text-gray-600 truncate block" x-text="p.nombre"></span>
+                                <span x-show="p.id === convCreador" class="text-[9px] font-medium dark:text-nexo-400 text-nexo-600"><?php echo __('chat_creador', 'Creador'); ?></span>
+                            </div>
+                            <!-- Remove button (only for creator, not on self) -->
+                            <button x-show="convCreador === <?php echo $uid; ?> && p.id !== <?php echo $uid; ?>" @click="removeMember(p.id, p.nombre)" class="w-6 h-6 rounded-md opacity-0 group-hover:opacity-100 dark:bg-red-500/10 bg-red-50 dark:hover:bg-red-500/20 hover:bg-red-100 flex items-center justify-center transition-all shrink-0" title="<?php echo __('chat_remover', 'Remover'); ?>">
+                                <svg class="w-3 h-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
                         </div>
                     </template>
+                </div>
+            </div>
+
+            <!-- Leave group button -->
+            <div class="pt-2 border-t dark:border-white/[0.06] border-gray-100">
+                <button @click="leaveGroup()" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium text-red-400 dark:bg-red-500/5 bg-red-50 dark:hover:bg-red-500/10 hover:bg-red-100 transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    <?php echo __('chat_salir_grupo', 'Salir del grupo'); ?>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL: ADD MEMBER TO GROUP ========== -->
+    <div x-show="showAddMember" x-transition x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div @click="showAddMember = false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative w-full max-w-sm dark:bg-dark-800 bg-white rounded-2xl border dark:border-white/10 border-gray-200 shadow-2xl overflow-hidden">
+            <div class="px-5 py-4 border-b dark:border-white/[0.06] border-gray-100 flex items-center justify-between">
+                <h3 class="text-sm font-bold dark:text-white text-gray-900"><?php echo __('chat_agregar_miembro', 'Agregar miembro'); ?></h3>
+                <button @click="showAddMember = false" class="w-7 h-7 rounded-lg dark:bg-white/5 bg-gray-100 flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 dark:text-white/50 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-2 max-h-72 overflow-y-auto">
+                <?php foreach ($usuarios as $u):
+                    if ($u['id'] == $uid) continue;
+                    $uAvatar = $u['avatar'];
+                    $uInitial = mb_strtoupper(mb_substr($u['nombre'], 0, 1));
+                ?>
+                <button x-show="!groupMembers.some(m => m.id === <?php echo $u['id']; ?>)" @click="addMember(<?php echo $u['id']; ?>)" class="w-full flex items-center gap-3 p-3 rounded-xl dark:hover:bg-white/[0.04] hover:bg-gray-50 transition-colors text-left">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-nexo-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold shrink-0 overflow-hidden">
+                        <?php if ($uAvatar): ?><img src="uploads/avatars/<?php echo htmlspecialchars($uAvatar); ?>" class="w-full h-full object-cover"><?php else: echo $uInitial; endif; ?>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-sm font-medium dark:text-white text-gray-900"><?php echo htmlspecialchars($u['nombre']); ?></span>
+                        <p class="text-[10px] dark:text-white/30 text-gray-400"><?php echo htmlspecialchars($u['email']); ?></p>
+                    </div>
+                    <div class="w-7 h-7 rounded-lg bg-nexo-600/10 flex items-center justify-center shrink-0">
+                        <svg class="w-3.5 h-3.5 text-nexo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    </div>
+                </button>
+                <?php endforeach; ?>
+                <!-- Empty state when all users are already members -->
+                <div x-show="<?php
+                    $nonSelfUsers = array_filter($usuarios, fn($u) => $u['id'] != $uid);
+                    echo count($nonSelfUsers);
+                ?> <= groupMembers.length - 1" class="p-6 text-center">
+                    <p class="text-xs dark:text-white/30 text-gray-400"><?php echo __('chat_todos_en_grupo', 'Todos los usuarios ya están en el grupo'); ?></p>
                 </div>
             </div>
         </div>
@@ -523,6 +592,7 @@ function chatApp() {
         showNewChat: false,
         showNewGroup: false,
         showGroupInfo: false,
+        showAddMember: false,
         showPreview: false,
         previewImg: '',
         sending: false,
@@ -534,6 +604,7 @@ function chatApp() {
         groupName: '',
         selectedUsers: [],
         groupMembers: [],
+        convCreador: 0,
         contextMsg: null,
         showScrollBtn: false,
         recording: false,
@@ -564,6 +635,7 @@ function chatApp() {
                 this.convNombre = data.nombre || nombre || 'Chat';
                 this.convParticipantes = data.participantes_count || 0;
                 this.groupMembers = data.participantes || [];
+                this.convCreador = data.creado_por || 0;
                 this.$nextTick(() => this.scrollBottom());
                 fetch('api/chat.php?action=read&conv_id=' + id);
                 clearInterval(this.polling);
@@ -763,6 +835,57 @@ function chatApp() {
                     this.selectedUsers = [];
                     location.reload();
                 }
+            } catch(e) { console.error(e); }
+        },
+
+        async addMember(userId) {
+            if (!this.convActiva) return;
+            try {
+                const fd = new FormData();
+                fd.append('action', 'add_member');
+                fd.append('conv_id', this.convActiva);
+                fd.append('usuario_id', userId);
+                const r = await fetch('api/chat.php', { method: 'POST', body: fd });
+                const data = await r.json();
+                if (data.ok) {
+                    this.groupMembers = data.participantes || [];
+                    this.convParticipantes = data.participantes_count || this.groupMembers.length;
+                    this.showAddMember = false;
+                } else {
+                    alert(data.error || 'Error');
+                }
+            } catch(e) { console.error(e); }
+        },
+
+        async removeMember(userId, nombre) {
+            if (!this.convActiva) return;
+            if (!confirm('¿Remover a ' + nombre + ' del grupo?')) return;
+            try {
+                const fd = new FormData();
+                fd.append('action', 'remove_member');
+                fd.append('conv_id', this.convActiva);
+                fd.append('usuario_id', userId);
+                const r = await fetch('api/chat.php', { method: 'POST', body: fd });
+                const data = await r.json();
+                if (data.ok) {
+                    this.groupMembers = data.participantes || [];
+                    this.convParticipantes = data.participantes_count || this.groupMembers.length;
+                } else {
+                    alert(data.error || 'Error');
+                }
+            } catch(e) { console.error(e); }
+        },
+
+        async leaveGroup() {
+            if (!this.convActiva) return;
+            if (!confirm('¿Salir de este grupo?')) return;
+            try {
+                const fd = new FormData();
+                fd.append('action', 'leave_group');
+                fd.append('conv_id', this.convActiva);
+                const r = await fetch('api/chat.php', { method: 'POST', body: fd });
+                const data = await r.json();
+                if (data.ok) location.reload();
             } catch(e) { console.error(e); }
         },
 

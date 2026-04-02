@@ -127,7 +127,31 @@ EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 
 -- =============================================
--- 6. Permisos do gerente
+-- 6. Coluna creado_por em conversaciones (chat groups)
+-- =============================================
+SET @col_exists = (SELECT COUNT(*) FROM information_schema.columns 
+    WHERE table_schema = DATABASE() AND table_name = 'conversaciones' AND column_name = 'creado_por');
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE conversaciones ADD COLUMN creado_por INT DEFAULT NULL AFTER nombre',
+    'SELECT 1');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- =============================================
+-- 7. Coluna eliminado em mensajes (chat)
+-- =============================================
+SET @col_exists = (SELECT COUNT(*) FROM information_schema.columns 
+    WHERE table_schema = DATABASE() AND table_name = 'mensajes' AND column_name = 'eliminado');
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE mensajes ADD COLUMN eliminado TINYINT(1) DEFAULT 0 AFTER leido',
+    'SELECT 1');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- =============================================
+-- 8. Permisos do gerente
 -- =============================================
 INSERT IGNORE INTO permisos (rol, modulo, puede_ver, puede_crear, puede_editar, puede_eliminar) VALUES
 ('gerente', 'clientes', 1, 1, 1, 1),
