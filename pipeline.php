@@ -9,6 +9,22 @@ $userId  = $_SESSION['usuario_id'];
 
 $etapas = $pdo->query("SELECT * FROM pipeline_etapas ORDER BY orden")->fetchAll();
 
+// Build estado_clave map (fallback if column doesn't exist yet)
+$etapaFallback = [
+    'prospecto'=>'nuevo','nuevo'=>'nuevo',
+    'contacto inicial'=>'contactado','contactado'=>'contactado',
+    'propuesta enviada'=>'propuesta','propuesta'=>'propuesta',
+    'negociación'=>'negociando','negociando'=>'negociando',
+    'cerrado ganado'=>'ganado','ganado'=>'ganado',
+    'cerrado perdido'=>'perdido','perdido'=>'perdido'
+];
+foreach ($etapas as &$et) {
+    if (empty($et['estado_clave']) || $et['estado_clave'] === 'nuevo' && mb_strtolower($et['nombre']) !== 'prospecto' && mb_strtolower($et['nombre']) !== 'nuevo') {
+        $et['estado_clave'] = $etapaFallback[mb_strtolower($et['nombre'])] ?? mb_strtolower($et['nombre']);
+    }
+}
+unset($et);
+
 // Admin sees all, others see only their assigned clients
 if ($isAdmin) {
     $clientes = $pdo->query("
