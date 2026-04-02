@@ -196,7 +196,7 @@ include 'includes/sidebar.php';
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-xl font-bold dark:text-white text-gray-900"><?php echo __('dash_hola'); ?>, <?php echo htmlspecialchars(explode(' ', $userNombre)[0]); ?>! 👋</h2>
-                    <p class="text-sm dark:text-white/50 text-gray-500 mt-0.5"><?php echo __('dash_resumen'); ?> — <?php echo strftime('%A %d de %B, %Y', strtotime('today')); ?></p>
+                    <p class="text-sm dark:text-white/50 text-gray-500 mt-0.5"><?php echo __('dash_resumen'); ?> — <?php echo date('l d \d\e F, Y'); ?></p>
                 </div>
                 <div class="flex items-center gap-3 flex-wrap">
                     <!-- Conversion rate badge -->

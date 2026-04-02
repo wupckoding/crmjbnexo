@@ -1,16 +1,25 @@
 <?php
 /**
  * CRM JBNEXO - Conexión a la base de datos
- * 
- * ⚠️ CONFIGURAR ANTES DE SUBIR AL HOSTING:
- *    Cambia DB_USER, DB_PASS (y DB_HOST si es necesario)
- *    con los datos del panel de tu hosting (Hostinger, cPanel, etc.)
+ * Auto-detecta si está en local (XAMPP) o en hosting
  */
 
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');           // ← Cambiar: usuario MySQL del hosting
-define('DB_PASS', '');               // ← Cambiar: contraseña MySQL del hosting
-define('DB_NAME', 'crmjbnexo');      // ← Cambiar si el hosting usa prefijo (ej: u123456789_crmjbnexo)
+$isLocal = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'])
+        || php_sapi_name() === 'cli';
+
+if ($isLocal) {
+    // XAMPP local
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    define('DB_NAME', 'crmjbnexo');
+} else {
+    // Hostinger hosting
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'u862354873_crm');
+    define('DB_PASS', 'Brulugahenz100');
+    define('DB_NAME', 'u862354873_crm');
+}
 
 try {
     $pdo = new PDO(
