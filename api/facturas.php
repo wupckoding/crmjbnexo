@@ -37,7 +37,7 @@ switch ($action) {
 
         $pdo->beginTransaction();
         try {
-            $stmt = $pdo->prepare("INSERT INTO facturas (numero, cliente_id, usuario_id, fecha_emision, fecha_vencimiento, subtotal, impuesto, total, estado, notas) VALUES (:n, :c, :u, :fe, :fv, :st, 0, :t, 'borrador', :no)");
+            $stmt = $pdo->prepare("INSERT INTO facturas (numero, cliente_id, usuario_id, fecha_emision, fecha_vencimiento, subtotal, impuesto_monto, total, estado, notas) VALUES (:n, :c, :u, :fe, :fv, :st, 0, :t, 'borrador', :no)");
             $stmt->execute([
                 'n'=>$numero, 'c'=>$cliente_id, 'u'=>$_SESSION['user_id'],
                 'fe'=>$fecha_emision, 'fv'=>$fecha_vencimiento ?: null,
@@ -80,8 +80,8 @@ switch ($action) {
             $stmtF->execute(['id'=>$id]);
             $f = $stmtF->fetch(PDO::FETCH_ASSOC);
             if ($f) {
-                $pdo->prepare("INSERT INTO ingresos (factura_id, monto, fecha, descripcion, metodo_pago) VALUES (:f, :m, CURDATE(), :d, 'transferencia')")
-                    ->execute(['f'=>$id, 'm'=>$f['total'], 'd'=>'Pago factura '.$f['numero']]);
+                $pdo->prepare("INSERT INTO ingresos (factura_id, monto, fecha, descripcion, metodo_pago, usuario_id) VALUES (:f, :m, CURDATE(), :d, 'transferencia', :u)")
+                    ->execute(['f'=>$id, 'm'=>$f['total'], 'd'=>'Pago factura '.$f['numero'], 'u'=>$_SESSION['user_id']]);
             }
         }
         echo json_encode(['ok' => true]);

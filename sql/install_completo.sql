@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('admin', 'vendedor', 'soporte') DEFAULT 'vendedor',
+    rol ENUM('admin', 'gerente', 'vendedor', 'soporte') DEFAULT 'vendedor',
     avatar VARCHAR(255) DEFAULT NULL,
     activo TINYINT(1) DEFAULT 1,
     ultimo_acceso DATETIME DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS clientes (
     sitio_web VARCHAR(255) DEFAULT NULL,
     direccion TEXT DEFAULT NULL,
     notas TEXT DEFAULT NULL,
-    estado ENUM('nuevo', 'contactado', 'negociando', 'ganado', 'perdido') DEFAULT 'nuevo',
+    estado ENUM('nuevo', 'contactado', 'negociando', 'propuesta', 'ganado', 'perdido') DEFAULT 'nuevo',
     foto VARCHAR(255) DEFAULT NULL,
     archivado TINYINT(1) DEFAULT 0,
     asignado_a INT DEFAULT NULL,
@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS servicios (
     descripcion TEXT DEFAULT NULL,
     precio DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     activo TINYINT(1) DEFAULT 1,
+    categoria VARCHAR(50) DEFAULT 'desarrollo_web',
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -129,9 +130,9 @@ CREATE TABLE IF NOT EXISTS interacciones (
 ) ENGINE=InnoDB;
 
 -- =============================================
--- 8. TABLA PIPELINE
+-- 8. TABLA PIPELINE (ETAPAS)
 -- =============================================
-CREATE TABLE IF NOT EXISTS pipeline (
+CREATE TABLE IF NOT EXISTS pipeline_etapas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     orden INT DEFAULT 0,
@@ -262,7 +263,7 @@ CREATE TABLE IF NOT EXISTS eventos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(200) NOT NULL,
     descripcion TEXT DEFAULT NULL,
-    tipo ENUM('reunion','tarea','recordatorio','evento','feriado') DEFAULT 'evento',
+    tipo ENUM('reunion','llamada','tarea','recordatorio','seguimiento','entrega','evento','feriado') DEFAULT 'evento',
     color VARCHAR(7) DEFAULT '#7c3aed',
     fecha_inicio DATETIME NOT NULL,
     fecha_fin DATETIME DEFAULT NULL,
@@ -433,7 +434,7 @@ CREATE TABLE IF NOT EXISTS metas_diarias (
 -- =============================================
 
 -- Etapas del pipeline
-INSERT INTO pipeline (nombre, orden, color) VALUES
+INSERT INTO pipeline_etapas (nombre, orden, color) VALUES
 ('Prospecto', 1, '#84cc16'),
 ('Contacto inicial', 2, '#a3e635'),
 ('Propuesta enviada', 3, '#facc15'),
@@ -512,6 +513,48 @@ INSERT INTO boveda_categorias (nombre, color) VALUES
 ('Redes Sociales', '#ec4899'),
 ('Clientes', '#8b5cf6'),
 ('General', '#6b7280');
+
+-- Gerente: acceso amplio sin eliminar
+INSERT INTO permisos (rol, modulo, puede_ver, puede_crear, puede_editar, puede_eliminar) VALUES
+('gerente', 'clientes', 1, 1, 1, 1),
+('gerente', 'facturas', 1, 1, 1, 1),
+('gerente', 'finanzas', 1, 1, 1, 0),
+('gerente', 'pipeline', 1, 1, 1, 1),
+('gerente', 'chat', 1, 1, 1, 0),
+('gerente', 'calendario', 1, 1, 1, 1),
+('gerente', 'usuarios', 1, 0, 0, 0),
+('gerente', 'permisos', 1, 0, 0, 0),
+('gerente', 'avisos', 1, 1, 1, 0),
+('gerente', 'boveda', 1, 1, 1, 0),
+('gerente', 'leadscraper', 1, 1, 1, 0),
+('gerente', 'actividad', 1, 0, 0, 0),
+('gerente', 'servicios', 1, 1, 1, 0),
+('gerente', 'scripts', 1, 0, 0, 0);
+
+-- =============================================
+-- 27. TABLA CATEGORÍAS FINANCIERAS
+-- =============================================
+CREATE TABLE IF NOT EXISTS categorias_financieras (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    tipo ENUM('gasto','ingreso','ambos') DEFAULT 'gasto',
+    color VARCHAR(7) DEFAULT '#7c3aed',
+    activo TINYINT(1) DEFAULT 1,
+    usuario_id INT DEFAULT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- Categorías financieras por defecto
+INSERT INTO categorias_financieras (nombre, tipo, color) VALUES
+('Hosting', 'gasto', '#22c55e'),
+('Dominio', 'gasto', '#3b82f6'),
+('Software', 'gasto', '#f59e0b'),
+('Publicidad', 'gasto', '#ec4899'),
+('Personal', 'gasto', '#8b5cf6'),
+('Oficina', 'gasto', '#6b7280'),
+('Impuestos', 'gasto', '#ef4444'),
+('Otros', 'ambos', '#94a3b8');
 
 SET FOREIGN_KEY_CHECKS = 1;
 
