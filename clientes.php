@@ -299,12 +299,12 @@ include 'includes/sidebar.php';
             <p class="text-sm dark:text-white/50 text-gray-500 mb-4">Selecciona la etapa del pipeline a la cual enviar los clientes:</p>
             <div class="space-y-2 mb-5">
                 <?php foreach ($etapas as $et):
-                    $etKey = mb_strtolower($et['nombre']);
+                    $etKey = $et['estado_clave'] ?? mb_strtolower($et['nombre']);
                 ?>
                 <button type="button"
                     @click="pipelineEtapa = '<?php echo htmlspecialchars($etKey, ENT_QUOTES, 'UTF-8'); ?>'"
                     class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all text-left"
-                    :class="pipelineEtapa === '<?php echo htmlspecialchars($etKey, ENT_QUOTES, 'UTF-8'); ?>' ? 'border-nexo-500/50 dark:bg-white/5 bg-gray-50' : 'border-transparent dark:bg-white/[0.03] bg-gray-50 dark:hover:bg-white/5 hover:bg-gray-100'">
+                    :class="pipelineEtapa === '<?php echo htmlspecialchars($etKey, ENT_QUOTES, 'UTF-8'); ?>' ? 'border-nexo-500/50 dark:bg-white/5 bg-gray-50' : 'border-transparent dark:bg-white/[0.03] bg-gray-50 dark:hover:bg-white/5 hover:bg-gray-100'">>
                     <span class="w-3 h-3 rounded-full shrink-0" style="background: <?php echo htmlspecialchars($et['color'], ENT_QUOTES, 'UTF-8'); ?>"></span>
                     <span class="text-sm font-medium"><?php echo htmlspecialchars($et['nombre'], ENT_QUOTES, 'UTF-8'); ?></span>
                 </button>

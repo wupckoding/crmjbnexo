@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS interacciones (
 CREATE TABLE IF NOT EXISTS pipeline_etapas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
+    estado_clave VARCHAR(20) NOT NULL DEFAULT 'nuevo',
     orden INT DEFAULT 0,
     color VARCHAR(7) DEFAULT '#84cc16',
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -434,13 +435,13 @@ CREATE TABLE IF NOT EXISTS metas_diarias (
 -- =============================================
 
 -- Etapas del pipeline
-INSERT INTO pipeline_etapas (nombre, orden, color) VALUES
-('Prospecto', 1, '#84cc16'),
-('Contacto inicial', 2, '#a3e635'),
-('Propuesta enviada', 3, '#facc15'),
-('Negociación', 4, '#fb923c'),
-('Cerrado ganado', 5, '#22c55e'),
-('Cerrado perdido', 6, '#ef4444');
+INSERT INTO pipeline_etapas (nombre, estado_clave, orden, color) VALUES
+('Prospecto', 'nuevo', 1, '#84cc16'),
+('Contacto inicial', 'contactado', 2, '#a3e635'),
+('Propuesta enviada', 'propuesta', 3, '#facc15'),
+('Negociación', 'negociando', 4, '#fb923c'),
+('Cerrado ganado', 'ganado', 5, '#22c55e'),
+('Cerrado perdido', 'perdido', 6, '#ef4444');
 
 -- Servicios por defecto
 INSERT INTO servicios (nombre, descripcion, precio) VALUES

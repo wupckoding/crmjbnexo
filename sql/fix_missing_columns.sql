@@ -12,19 +12,38 @@ SET NAMES utf8mb4;
 CREATE TABLE IF NOT EXISTS pipeline_etapas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
+    estado_clave VARCHAR(20) NOT NULL DEFAULT 'nuevo',
     orden INT DEFAULT 0,
     color VARCHAR(7) DEFAULT '#84cc16',
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+-- Adicionar coluna estado_clave se não existir (DBs antigos)
+SET @col_exists = (SELECT COUNT(*) FROM information_schema.columns 
+    WHERE table_schema = DATABASE() AND table_name = 'pipeline_etapas' AND column_name = 'estado_clave');
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE pipeline_etapas ADD COLUMN estado_clave VARCHAR(20) NOT NULL DEFAULT ''nuevo'' AFTER nombre',
+    'SELECT 1');
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Preencher estado_clave para etapas existentes (cobre ambos formatos de nome)
+UPDATE pipeline_etapas SET estado_clave = 'nuevo' WHERE LOWER(nombre) IN ('prospecto', 'nuevo') AND estado_clave = 'nuevo';
+UPDATE pipeline_etapas SET estado_clave = 'contactado' WHERE LOWER(nombre) IN ('contacto inicial', 'contactado');
+UPDATE pipeline_etapas SET estado_clave = 'propuesta' WHERE LOWER(nombre) IN ('propuesta enviada', 'propuesta');
+UPDATE pipeline_etapas SET estado_clave = 'negociando' WHERE LOWER(nombre) IN ('negociando') OR LOWER(nombre) LIKE 'negociaci%';
+UPDATE pipeline_etapas SET estado_clave = 'ganado' WHERE LOWER(nombre) IN ('cerrado ganado', 'ganado');
+UPDATE pipeline_etapas SET estado_clave = 'perdido' WHERE LOWER(nombre) IN ('cerrado perdido', 'perdido');
+
 -- Dados padrão (IGNORE = não duplica se já existir)
-INSERT IGNORE INTO pipeline_etapas (nombre, orden, color) VALUES
-('Prospecto', 1, '#84cc16'),
-('Contacto inicial', 2, '#a3e635'),
-('Propuesta enviada', 3, '#facc15'),
-('Negociación', 4, '#fb923c'),
-('Cerrado ganado', 5, '#22c55e'),
-('Cerrado perdido', 6, '#ef4444');
+INSERT IGNORE INTO pipeline_etapas (nombre, estado_clave, orden, color) VALUES
+('Prospecto', 'nuevo', 1, '#84cc16'),
+('Contacto inicial', 'contactado', 2, '#a3e635'),
+('Propuesta enviada', 'propuesta', 3, '#facc15'),
+('Negociación', 'negociando', 4, '#fb923c'),
+('Cerrado ganado', 'ganado', 5, '#22c55e'),
+('Cerrado perdido', 'perdido', 6, '#ef4444');
 
 -- =============================================
 -- 2. TABELA categorias_financieras (usada em finanzas.php)

@@ -546,7 +546,7 @@ include 'includes/sidebar.php';
 
 <script>
 function pipelineApp() {
-    const stageMap = {nuevo:'Nuevo',contactado:'Contactado',negociando:'Negociando',propuesta:'Propuesta',ganado:'Ganado',perdido:'Perdido'};
+    const stageMap = <?php echo json_encode(array_column($etapas, 'nombre', 'estado_clave')); ?>;
     const reverseMap = {};
     Object.entries(stageMap).forEach(([k,v]) => reverseMap[v.toLowerCase()] = k);
 
